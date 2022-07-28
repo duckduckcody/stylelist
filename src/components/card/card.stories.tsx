@@ -50,8 +50,8 @@ Discounted.args = {
   },
 };
 
-export const isFavourited = Template.bind({});
-isFavourited.args = {
+export const IsFavourited = Template.bind({});
+IsFavourited.args = {
   clothe: {
     name: 'Snoh White Knit Tank',
     price: 100,
