@@ -3,4 +3,5 @@ export interface Clothe {
   price: number;
   oldPrice?: number;
   image: string;
+  link: string;
 }
