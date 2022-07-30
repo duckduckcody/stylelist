@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+import { useState } from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import { Card, CardProps } from './card';
 
@@ -61,4 +62,29 @@ IsFavourited.args = {
       'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
   },
   isFavourited: true,
+};
+
+const FavouriteInteractionTemplate: Story<CardProps> = (args) => {
+  const [isFavourited, setIsFavourited] = useState(false);
+  const onFavouriteClick = () => setIsFavourited((prev) => !prev);
+
+  return (
+    <Card
+      {...args}
+      isFavourited={isFavourited}
+      onFavouriteClick={onFavouriteClick}
+    />
+  );
+};
+
+export const FavouriteInteraction = FavouriteInteractionTemplate.bind({});
+FavouriteInteraction.args = {
+  clothe: {
+    name: 'Snoh White Knit Tank',
+    price: 100,
+    oldPrice: 120,
+    link: 'https://google.com',
+    image:
+      'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
+  },
 };

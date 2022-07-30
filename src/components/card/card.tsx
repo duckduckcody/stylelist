@@ -1,9 +1,10 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Clothe } from '../../types/Clothe';
 import {
   Container,
   HeartContainer,
   HeartIcon,
+  HeartSolidIcon,
   HeartStamp,
   Image,
   ImageContainer,
@@ -20,9 +21,14 @@ import {
 export interface CardProps {
   clothe: Clothe;
   isFavourited: boolean;
+  onFavouriteClick?: VoidFunction;
 }
 
-export const Card: FC<CardProps> = ({ clothe, isFavourited }) => {
+export const Card: FC<CardProps> = ({
+  clothe,
+  isFavourited,
+  onFavouriteClick = () => undefined,
+}) => {
   const percentageOff = useMemo(
     () =>
       clothe.oldPrice
@@ -30,6 +36,13 @@ export const Card: FC<CardProps> = ({ clothe, isFavourited }) => {
         : undefined,
     [clothe.oldPrice, clothe.price]
   );
+
+  // don't show stamp animation on mount, only when interacting;
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const favouriteClick = () => {
+    setHasInteracted(true);
+    onFavouriteClick();
+  };
 
   return (
     <Container>
@@ -47,11 +60,15 @@ export const Card: FC<CardProps> = ({ clothe, isFavourited }) => {
           </PercentageOffContainer>
         )}
 
-        <HeartContainer aria-label={`favourite ${clothe.name}`}>
-          <HeartIcon />
+        <HeartContainer
+          aria-label={`favourite ${clothe.name}`}
+          onClick={favouriteClick}
+        >
+          {isFavourited && <HeartSolidIcon />}
+          {!isFavourited && <HeartIcon />}
         </HeartContainer>
 
-        {isFavourited && <HeartStamp />}
+        {isFavourited && hasInteracted && <HeartStamp />}
       </ImageContainer>
       <TextContainer>
         <Name>{clothe.name}</Name>

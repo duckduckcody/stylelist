@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import HeartSolid from '../../icons/heart-solid.svg';
 import Heart from '../../icons/heart.svg';
 
@@ -52,11 +52,6 @@ export const HeartContainer = styled.button`
   }
 `;
 
-export const HeartIcon = styled(Heart)`
-  width: 24px;
-  height: 24px;
-`;
-
 export const TextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -107,13 +102,50 @@ export const OldPrice = styled.span`
   text-decoration: line-through;
 `;
 
-export const HeartStamp = styled(HeartSolid)`
+export const HeartIcon = styled(Heart)`
+  width: 24px;
+  height: 24px;
+`;
+
+export const HeartSolidIcon = styled(HeartSolid)`
+  width: 24px;
+  height: 24px;
+  color: red;
+`;
+
+const stamp = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(1.1) rotate(-10deg);
+  }
+
+  10% {
+    opacity: 1;
+    transform: scale(0.9) rotate(-10deg);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1) rotate(-10deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(1) rotate(-10deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2) rotate(-10deg);
+  }
+`;
+
+export const HeartStamp = styled(HeartSolidIcon)`
+  opacity: 0;
   position: absolute;
   bottom: 128px;
   right: 32px;
-
-  color: red;
   width: 128px;
   height: 128px;
-  transform: rotate(-13deg);
+  animation: ${stamp} 1s linear;
 `;
