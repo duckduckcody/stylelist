@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import { withDesign } from 'storybook-addon-designs';
-import { mockClothe } from '../../mock/mockClothe';
+import { mockClothe } from '../../mocks/mockClothe';
 import { CardList, CardListProps } from './card-list';
 
 export default {

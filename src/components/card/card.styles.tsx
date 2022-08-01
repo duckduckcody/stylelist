@@ -2,25 +2,21 @@ import NextImage from 'next/image';
 import styled, { keyframes } from 'styled-components';
 import HeartSolid from '../../icons/heart-solid.svg';
 import Heart from '../../icons/heart.svg';
+import { MOBILE_BREAKPOINT } from '../../styles/global';
 
 export const Container = styled.div`
-  width: 400px;
+  width: 100%;
 `;
 
 export const ImageContainer = styled.div`
   all: unset;
 
-  height: 600px;
-  width: inherit;
   position: relative;
   cursor: pointer;
 `;
 
 export const ImageLink = styled.a`
   all: unset;
-
-  height: inherit;
-  width: inherit;
 
   &:focus {
     border: 1px solid grey;
@@ -60,9 +56,16 @@ export const TextContainer = styled.div`
   margin: 12px 0;
 
   font-family: 'Lato', sans-serif;
+  font-weight: normal;
   font-size: 1rem;
   line-height: 1.1875rem;
-  font-weight: normal;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    font-size: 0.875rem;
+    line-height: 1.1875rem;
+    gap: 4px;
+    margin: 6px 0;
+  } ;
 `;
 
 export const Name = styled.h3`
