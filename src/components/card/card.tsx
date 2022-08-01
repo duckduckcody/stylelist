@@ -20,13 +20,13 @@ import {
 
 export interface CardProps {
   clothe: Clothe;
-  isFavourited: boolean;
+  isFavourited?: boolean;
   onFavouriteClick?: VoidFunction;
 }
 
 export const Card: FC<CardProps> = ({
   clothe,
-  isFavourited,
+  isFavourited = false,
   onFavouriteClick = () => undefined,
 }) => {
   const percentageOff = useMemo(
@@ -51,7 +51,12 @@ export const Card: FC<CardProps> = ({
           href={clothe.link}
           aria-label={`link to ${clothe.name} product page`}
         >
-          <Image src={clothe.image} alt={clothe.name} />
+          <Image
+            src={clothe.image}
+            width={400}
+            height={600}
+            alt={clothe.name}
+          />
         </ImageLink>
 
         {percentageOff && (

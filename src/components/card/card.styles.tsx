@@ -1,3 +1,4 @@
+import NextImage from 'next/image';
 import styled, { keyframes } from 'styled-components';
 import HeartSolid from '../../icons/heart-solid.svg';
 import Heart from '../../icons/heart.svg';
@@ -26,7 +27,7 @@ export const ImageLink = styled.a`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled(NextImage)`
   height: inherit;
   width: inherit;
   object-fit: cover;
