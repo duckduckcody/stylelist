@@ -1,10 +1,13 @@
 import { Meta, Story } from '@storybook/react';
 import { withDesign } from 'storybook-addon-designs';
-import { FilterButton, FilterButtonProps } from './filterButton';
+import {
+  FilterButtonDropdown,
+  FilterButtonDropdownProps,
+} from './filterButtonDropdown';
 
 export default {
-  title: 'atoms/Filter Button',
-  component: FilterButton,
+  title: 'atoms/Filter Button Dropdown',
+  component: FilterButtonDropdown,
   decorators: [withDesign],
   parameters: {
     design: {
@@ -14,7 +17,9 @@ export default {
   },
 } as Meta;
 
-const Template: Story<FilterButtonProps> = (args) => <FilterButton {...args} />;
+const Template: Story<FilterButtonDropdownProps> = (args) => (
+  <FilterButtonDropdown {...args} />
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
