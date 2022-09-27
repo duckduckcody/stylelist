@@ -23,6 +23,7 @@ const Chevron = styled(ChevronIcon)<{ active: boolean }>`
 
 export interface FilterButtonDropdownProps {
   text: string;
+  type: 'checkbox' | 'radio';
   active: boolean;
   values: string[];
   onValueClear: VoidFunction;
@@ -31,6 +32,7 @@ export interface FilterButtonDropdownProps {
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   text,
+  type,
   active = false,
   values,
   onValueClear = () => undefined,
@@ -63,6 +65,8 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       </FilterButtonContainer>
       {active && (
         <StyledFilterButtonDropdownMenu
+          type={type}
+          name={text}
           options={[
             { label: 'Womens', value: 'Womens' },
             { label: 'Mens', value: 'Mens' },
