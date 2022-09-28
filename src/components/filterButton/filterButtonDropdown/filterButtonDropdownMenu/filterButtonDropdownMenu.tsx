@@ -27,13 +27,13 @@ const Input = styled.input`
   border: 1px solid black;
 `;
 
-interface Option {
+export interface DropdownMenuOption {
   label: string;
   value: string;
 }
 
 export interface FilterButtonDropdownMenuProps {
-  options: Option[];
+  options: DropdownMenuOption[];
   checkedOptions?: string[];
   onInputClick?: (value: string) => void;
   type: 'checkbox' | 'radio';

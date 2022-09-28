@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
-import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
+import {
+  DropdownMenuOption,
+  FilterButtonDropdownMenu,
+} from './filterButtonDropdownMenu/filterButtonDropdownMenu';
 
 const Container = styled.div`
   position: relative;
@@ -22,19 +25,24 @@ const Chevron = styled(ChevronIcon)<{ active: boolean }>`
 `;
 
 export interface FilterButtonDropdownProps {
+  type: 'dropdown';
   text: string;
-  type: 'checkbox' | 'radio';
+  menuType: 'checkbox' | 'radio';
   active: boolean;
   values: string[];
+  options: DropdownMenuOption[];
+  onInputClick?: (value: string) => void;
   onValueClear: VoidFunction;
   onButtonClick: VoidFunction;
 }
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   text,
-  type,
+  menuType,
   active = false,
   values,
+  options,
+  onInputClick = () => undefined,
   onValueClear = () => undefined,
   onButtonClick = () => undefined,
 }) => {
@@ -51,12 +59,12 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         as={valueString ? 'div' : 'button'}
         onClick={onButtonClick}
       >
-        {!values && (
+        {values.length === 0 && (
           <>
             {text} <Chevron active={active} />
           </>
         )}
-        {values && (
+        {values.length !== 0 && (
           <>
             {valueString}
             <FilterButtonCrossButton onValueClear={onValueClear} />
@@ -65,12 +73,11 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       </FilterButtonContainer>
       {active && (
         <StyledFilterButtonDropdownMenu
-          type={type}
+          type={menuType}
           name={text}
-          options={[
-            { label: 'Womens', value: 'Womens' },
-            { label: 'Mens', value: 'Mens' },
-          ]}
+          options={options}
+          checkedOptions={values}
+          onInputClick={onInputClick}
         />
       )}
     </Container>
