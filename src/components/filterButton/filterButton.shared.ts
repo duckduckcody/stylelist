@@ -10,8 +10,7 @@ export const FilterButtonContainer = styled.button<{
   gap: 12px;
   align-items: center;
 
-  background: ${(p) =>
-    p.active ? COLOURS.clicked : p.hasValues ? 'black' : 'white'};
+  background: ${(p) => (p.hasValues ? 'black' : 'white')};
   padding: 12px 24px;
   border: 1px solid black;
   width: fit-content;
@@ -23,7 +22,7 @@ export const FilterButtonContainer = styled.button<{
   font-size: 18px;
   line-height: 22px;
 
-  cursor: ${(p) => (p.hasValues ? '' : 'pointer')};
+  cursor: pointer;
 
   &:hover {
     background: ${(p) => (p.hasValues ? '' : COLOURS.hover)};

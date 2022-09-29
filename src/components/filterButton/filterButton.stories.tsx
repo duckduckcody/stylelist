@@ -58,7 +58,7 @@ const DropdownTemplate: Story<FilterButtonDropdownProps> = (args) => {
       ]}
       active={active}
       onButtonClick={() => setActive((prev) => !prev)}
-      onValueClear={() => setActive(false)}
+      onValueClear={() => setValues([])}
       onInputClick={(val) => onInputClick(val)}
     />
   );

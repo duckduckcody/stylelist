@@ -56,7 +56,6 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       <FilterButtonContainer
         active={active}
         hasValues={Boolean(valueString)}
-        as={valueString ? 'div' : 'button'}
         onClick={onButtonClick}
       >
         {values.length === 0 && (
