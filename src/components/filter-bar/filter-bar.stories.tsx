@@ -181,8 +181,6 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
         />
       </SortButtonContainer>
     </FilterBar>
-
-    // cursor: pointer on with value dropdown
   );
 };
 export const WithFilterButtons = WithFilterButtonsTemplate.bind({});
