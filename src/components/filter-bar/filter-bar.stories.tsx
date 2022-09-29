@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import styled from 'styled-components';
 import { useOnClickOutside } from 'usehooks-ts';
+import shallow from 'zustand/shallow';
 import { useStore } from '../../store/useStore';
 import { FilterButton } from '../filterButton/filterButton';
 import { FilterBar, FilterBarProps } from './filter-bar';
@@ -40,16 +41,28 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
   const [onSale, setOnSale] = useState(false);
   const [selectedSort, setSelectedSort] = useState('');
 
-  const activeFilterId = useStore((s) => s.filters.activeFilterId);
-  const clearActiveFilerId = useStore((s) => s.filters.clearActiveFilerId);
-  const filterClick = useStore((s) => s.filters.filterClick);
-  const clearFilters = useStore((s) => s.filters.clearFilters);
-
-  const selectedGenders = useStore((s) => s.filters.selectedGenders);
-  const clearSelectedGenders = useStore((s) => s.filters.clearSelectedGenders);
-
-  const selectedSizes = useStore((s) => s.filters.selectedSizes);
-  const clearSelectedSizes = useStore((s) => s.filters.clearSelectedSizes);
+  const [
+    activeFilterId,
+    clearActiveFilerId,
+    filterClick,
+    clearFilters,
+    selectedGenders,
+    clearSelectedGenders,
+    selectedSizes,
+    clearSelectedSizes,
+  ] = useStore(
+    ({ filters }) => [
+      filters.activeFilterId,
+      filters.clearActiveFilerId,
+      filters.filterClick,
+      filters.clearFilters,
+      filters.selectedGenders,
+      filters.clearSelectedGenders,
+      filters.selectedSizes,
+      filters.clearSelectedSizes,
+    ],
+    shallow
+  );
 
   const onCheckboxClick = (
     val: string,
