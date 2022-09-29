@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
-import {
-  DropdownMenuOption,
-  FilterButtonDropdownMenu,
-} from './filterButtonDropdownMenu/filterButtonDropdownMenu';
+import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
 
 const Container = styled.div`
   position: relative;
@@ -29,8 +26,8 @@ export interface FilterButtonDropdownProps {
   text: string;
   menuType: 'checkbox' | 'radio';
   active: boolean;
-  options: DropdownMenuOption[];
-  selectedOptions: string[];
+  options: string[];
+  selectedOptions: string[] | string;
   onInputClick: (value: string) => void;
   onValueClear: VoidFunction;
   onButtonClick: VoidFunction;
@@ -46,10 +43,13 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   onValueClear = () => undefined,
   onButtonClick = () => undefined,
 }) => {
-  const valueString = useMemo(
-    () => (selectedOptions ? selectedOptions.join(', ') : undefined),
-    [selectedOptions]
-  );
+  const valueString = useMemo(() => {
+    if (Array.isArray(selectedOptions)) {
+      return selectedOptions.join(', ');
+    } else {
+      return selectedOptions;
+    }
+  }, [selectedOptions]);
 
   return (
     <Container>

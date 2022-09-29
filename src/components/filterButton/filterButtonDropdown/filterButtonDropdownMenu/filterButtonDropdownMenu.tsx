@@ -14,27 +14,23 @@ const Container = styled.div`
   gap: 18px;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.label`
   display: flex;
   flex-flow: row nowrap;
   gap: 14px;
+  cursor: pointer;
 `;
 
 const Input = styled.input`
   margin: 0;
   padding: 0;
-  cursor: pointer;
   border: 1px solid black;
+  cursor: pointer;
 `;
 
-export interface DropdownMenuOption {
-  label: string;
-  value: string;
-}
-
 export interface FilterButtonDropdownMenuProps {
-  options: DropdownMenuOption[];
-  selectedOptions?: string[];
+  options: string[];
+  selectedOptions?: string[] | string;
   onInputClick?: (value: string) => void;
   type: 'checkbox' | 'radio';
   name: string;
@@ -51,15 +47,15 @@ export const FilterButtonDropdownMenu: FC<FilterButtonDropdownMenuProps> = ({
 }) => (
   <Container className={className}>
     {options.map((option) => (
-      <InputContainer key={option.value}>
+      <InputContainer key={option}>
         <Input
           name={name}
           type={type}
-          value={option.value}
-          checked={selectedOptions?.includes(option.value)}
-          onChange={() => onInputClick(option.value)}
+          value={option}
+          checked={selectedOptions?.includes(option)}
+          onChange={() => onInputClick(option)}
         />
-        {option.label}
+        {option}
       </InputContainer>
     ))}
   </Container>
