@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import styled from 'styled-components';
 import { useOnClickOutside } from 'usehooks-ts';
+import { useStore } from '../../store/useStore';
 import { FilterButton } from '../filterButton/filterButton';
 import { FilterBar, FilterBarProps } from './filter-bar';
 
@@ -30,22 +31,25 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
   const priceRef = useRef<HTMLDivElement>(null);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const [activeFilterId, setActiveFilterId] = useState('');
-  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  // const [activeFilterId, setActiveFilterId] = useState('');
+  // const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
+  // const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [onSale, setOnSale] = useState(false);
   const [selectedSort, setSelectedSort] = useState('');
 
-  const filterClick = (id: string) => {
-    if (activeFilterId === id) {
-      setActiveFilterId('');
-    } else {
-      setActiveFilterId(id);
-    }
-  };
+  const activeFilterId = useStore((s) => s.filters.activeFilterId);
+  const clearActiveFilerId = useStore((s) => s.filters.clearActiveFilerId);
+  const filterClick = useStore((s) => s.filters.filterClick);
+  const clearFilters = useStore((s) => s.filters.clearFilters);
+
+  const selectedGenders = useStore((s) => s.filters.selectedGenders);
+  const clearSelectedGenders = useStore((s) => s.filters.clearSelectedGenders);
+
+  const selectedSizes = useStore((s) => s.filters.selectedSizes);
+  const clearSelectedSizes = useStore((s) => s.filters.clearSelectedSizes);
 
   const onCheckboxClick = (
     val: string,
@@ -61,17 +65,8 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
 
   const closeDropdownIfActive = (id: string) => {
     if (id === activeFilterId) {
-      setActiveFilterId('');
+      clearActiveFilerId();
     }
-  };
-
-  const clearFilters = () => {
-    setSelectedGenders([]);
-    setSelectedSizes([]);
-    setSelectedCategories([]);
-    setSelectedBrands([]);
-    setSelectedPrices([]);
-    setOnSale(false);
   };
 
   useOnClickOutside(genderRef, () => closeDropdownIfActive('Gender'));
@@ -92,8 +87,8 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           options={['mens', 'womens']}
           selectedOptions={selectedGenders}
           onButtonClick={() => filterClick('Gender')}
-          onValueClear={() => setSelectedGenders([])}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedGenders)}
+          onValueClear={clearSelectedGenders}
+          onInputClick={(val) => onCheckboxClick(val, setSelectedCategories)}
         />
       </div>
 
@@ -106,8 +101,8 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           options={['12', '13', '14', '15']}
           selectedOptions={selectedSizes}
           onButtonClick={() => filterClick('Size')}
-          onValueClear={() => setSelectedSizes([])}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedSizes)}
+          onValueClear={clearSelectedSizes}
+          onInputClick={(val) => onCheckboxClick(val, setSelectedCategories)}
         />
       </div>
 
