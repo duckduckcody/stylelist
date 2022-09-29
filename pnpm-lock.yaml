@@ -26,12 +26,14 @@ specifiers:
   storybook-addon-next: ^1.6.7
   styled-components: ^5.3.5
   typescript: 4.7.4
+  usehooks-ts: ^2.7.1
 
 dependencies:
   next: 12.2.3_qugu52izettqdqqm5qcjcltcia
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   styled-components: 5.3.5_pumtretovylab5lwhztzjp2kuy
+  usehooks-ts: 2.7.1_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
   '@babel/core': 7.18.9
@@ -11912,6 +11914,17 @@ packages:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /usehooks-ts/2.7.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-7WgP5ELpmJ/5rZ4P+YnfhLXdiGf1Xpy4iLnjcifBGmwBWXBBa9FZRRHNOiJJw1NKIAU9LOaKaps4G3KXLPhZ6w==}
+    engines: {node: '>=16.15.0', npm: '>=8'}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}

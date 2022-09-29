@@ -1,6 +1,7 @@
 import { Meta, Story } from '@storybook/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { withDesign } from 'storybook-addon-designs';
+import { useOnClickOutside } from 'usehooks-ts';
 import { FilterButton } from '../filterButton/filterButton';
 import { FilterBar, FilterBarProps } from './filter-bar';
 
@@ -17,10 +18,14 @@ export default {
 } as Meta;
 
 const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
+  const genderDropdownContainerRef = useRef<HTMLDivElement>(null);
+
   const [activeFilterId, setActiveFilterId] = useState('');
   const [selectedGenderOptions, setSelectedGenderOptions] = useState<string[]>(
     []
   );
+
+  useOnClickOutside(genderDropdownContainerRef, () => setActiveFilterId(''));
 
   const filterClick = (id: string) => {
     if (activeFilterId === id) {
@@ -40,20 +45,22 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
 
   return (
     <FilterBar>
-      <FilterButton
-        type='dropdown'
-        text='Gender'
-        active={activeFilterId === 'Gender'}
-        menuType='checkbox'
-        options={[
-          { label: 'mens', value: 'mens' },
-          { label: 'womens', value: 'womens' },
-        ]}
-        selectedOptions={selectedGenderOptions}
-        onButtonClick={() => filterClick('Gender')}
-        onValueClear={() => setSelectedGenderOptions([])}
-        onInputClick={(val) => onInputClick(val)}
-      />
+      <div ref={genderDropdownContainerRef}>
+        <FilterButton
+          type='dropdown'
+          text='Gender'
+          active={activeFilterId === 'Gender'}
+          menuType='checkbox'
+          options={[
+            { label: 'mens', value: 'mens' },
+            { label: 'womens', value: 'womens' },
+          ]}
+          selectedOptions={selectedGenderOptions}
+          onButtonClick={() => filterClick('Gender')}
+          onValueClear={() => setSelectedGenderOptions([])}
+          onInputClick={(val) => onInputClick(val)}
+        />
+      </div>
 
       <FilterButton
         type='action'
