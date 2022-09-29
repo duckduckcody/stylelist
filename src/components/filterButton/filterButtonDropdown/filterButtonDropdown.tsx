@@ -29,9 +29,9 @@ export interface FilterButtonDropdownProps {
   text: string;
   menuType: 'checkbox' | 'radio';
   active: boolean;
-  values: string[];
   options: DropdownMenuOption[];
-  onInputClick?: (value: string) => void;
+  selectedOptions: string[];
+  onInputClick: (value: string) => void;
   onValueClear: VoidFunction;
   onButtonClick: VoidFunction;
 }
@@ -40,15 +40,15 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   text,
   menuType,
   active = false,
-  values,
   options,
+  selectedOptions,
   onInputClick = () => undefined,
   onValueClear = () => undefined,
   onButtonClick = () => undefined,
 }) => {
   const valueString = useMemo(
-    () => (values ? values.join(', ') : undefined),
-    [values]
+    () => (selectedOptions ? selectedOptions.join(', ') : undefined),
+    [selectedOptions]
   );
 
   return (
@@ -58,12 +58,12 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         hasValues={Boolean(valueString)}
         onClick={onButtonClick}
       >
-        {values.length === 0 && (
+        {selectedOptions.length === 0 && (
           <>
             {text} <Chevron active={active} />
           </>
         )}
-        {values.length !== 0 && (
+        {selectedOptions.length !== 0 && (
           <>
             {valueString}
             <FilterButtonCrossButton onValueClear={onValueClear} />
@@ -75,7 +75,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
           type={menuType}
           name={text}
           options={options}
-          checkedOptions={values}
+          selectedOptions={selectedOptions}
           onInputClick={onInputClick}
         />
       )}

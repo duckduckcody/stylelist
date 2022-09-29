@@ -34,7 +34,7 @@ export interface DropdownMenuOption {
 
 export interface FilterButtonDropdownMenuProps {
   options: DropdownMenuOption[];
-  checkedOptions?: string[];
+  selectedOptions?: string[];
   onInputClick?: (value: string) => void;
   type: 'checkbox' | 'radio';
   name: string;
@@ -43,7 +43,7 @@ export interface FilterButtonDropdownMenuProps {
 
 export const FilterButtonDropdownMenu: FC<FilterButtonDropdownMenuProps> = ({
   options,
-  checkedOptions,
+  selectedOptions,
   onInputClick = () => undefined,
   type,
   name,
@@ -56,7 +56,7 @@ export const FilterButtonDropdownMenu: FC<FilterButtonDropdownMenuProps> = ({
           name={name}
           type={type}
           value={option.value}
-          checked={checkedOptions?.includes(option.value)}
+          checked={selectedOptions?.includes(option.value)}
           onChange={() => onInputClick(option.value)}
         />
         {option.label}

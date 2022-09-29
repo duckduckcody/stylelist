@@ -32,7 +32,7 @@ export const FilterButtonContainer = styled.button<{
     background: ${(p) => (p.hasValues ? '' : COLOURS.clicked)};
   }
 
-  &:focus {
+  &:focus-visible {
     outline: solid;
   }
 `;

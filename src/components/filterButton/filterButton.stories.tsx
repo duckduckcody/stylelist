@@ -51,7 +51,7 @@ const DropdownTemplate: Story<FilterButtonDropdownProps> = (args) => {
       type='dropdown'
       text='gender'
       menuType='checkbox'
-      values={values}
+      selectedOptions={values}
       options={[
         { label: 'mens', value: 'mens' },
         { label: 'womens', value: 'womens' },

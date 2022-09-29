@@ -18,7 +18,7 @@ export const ImageContainer = styled.div`
 export const ImageLink = styled.a`
   all: unset;
 
-  &:focus {
+  &:focus-visible {
     border: 1px solid grey;
   }
 `;
@@ -44,7 +44,7 @@ export const HeartContainer = styled.button`
   align-items: center;
   justify-content: center;
 
-  &:focus {
+  &:focus-visible {
     border: 1px solid grey;
   }
 `;

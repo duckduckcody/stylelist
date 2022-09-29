@@ -8,7 +8,7 @@ const CrossButton = styled.button`
   height: 18px;
   width: 18px;
 
-  &:focus {
+  &:focus-visible {
     outline: white solid 2px;
   }
 
