@@ -7,7 +7,7 @@ import { FilterButton } from '../filterButton/filterButton';
 import { FilterBar, FilterBarProps } from './filter-bar';
 
 export default {
-  title: 'molecules/Filter Bar',
+  title: 'atoms/Filter Bar',
   component: FilterBar,
   decorators: [withDesign],
   parameters: {
