@@ -1,4 +1,3 @@
-import pull from 'lodash.pull';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -22,6 +21,7 @@ interface CheckboxDropdownFilterOption {
   id: FilterId;
   options: string[];
   selected: string[];
+  set: (value: string) => void;
 }
 
 interface RadioDropdownFilterOption {
@@ -29,6 +29,7 @@ interface RadioDropdownFilterOption {
   id: FilterId;
   options: string[];
   selected: string;
+  set: (value: string) => void;
 }
 
 interface BooleanFilterOption {
@@ -36,10 +37,12 @@ interface BooleanFilterOption {
   id: FilterId;
   options?: string[];
   selected: boolean;
+  set: (value: boolean) => void;
 }
 
 interface FilterOptionsActions {
   setOption: (id: FilterId, val: string[] | string | boolean) => void;
+  checkboxSet: (id: FilterId, val: string) => void;
   toggleOption: (id: FilterId, val: string | string | boolean) => void;
   clearOptions: (id: FilterId) => void;
 }
@@ -87,32 +90,30 @@ export const useStore = create(
           set((state) => {
             state.filters.filterOptions[id].selected = val;
           }),
+        checkboxSet: (id: FilterId, value: string) =>
+          set((state) => {
+            if (state.filters.filterOptions[id].selected.includes(val)) {
+            }
+          }),
         toggleOption: (id, val) =>
           set((state) => {
             let something = state.filters.filterOptions[id];
-            if (
-              something.type === 'checkboxDropdown' &&
-              typeof val === 'string'
-            ) {
-              if (something.selected?.includes(val)) {
-                pull(something.selected, val);
-              } else {
-                something.selected.push(val);
-              }
-            } else {
-              state.filters.filterOptions[id].selected = val;
-            }
           }),
         clearOptions: (id) =>
           set((state) => {
             state.filters.filterOptions[id].selected = [];
           }),
 
+        // each option has its own set, clear and toggle (or whatever it needs)
+        // the methods above then are only used internally
+        // set(val) => setCheckboxDropdown(FilterId.gender, val)
+
         gender: {
           type: 'checkboxDropdown',
           id: FilterId.gender,
           options: ['mens', 'womens', 'unisex'],
           selected: [],
+          set: (value) => {},
         },
         size: {
           type: 'checkboxDropdown',
