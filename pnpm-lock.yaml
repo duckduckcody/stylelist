@@ -11,6 +11,7 @@ specifiers:
   '@storybook/react': ^6.5.9
   '@storybook/testing-library': ^0.0.13
   '@svgr/webpack': ^6.3.1
+  '@types/lodash.pull': ^4.1.7
   '@types/node': 18.6.1
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -19,6 +20,8 @@ specifiers:
   eslint: 8.20.0
   eslint-config-next: 12.2.3
   eslint-plugin-storybook: ^0.6.1
+  immer: ^9.0.15
+  lodash.pull: ^4.1.0
   next: 12.2.3
   react: 18.2.0
   react-dom: 18.2.0
@@ -30,12 +33,14 @@ specifiers:
   zustand: ^4.1.1
 
 dependencies:
+  immer: 9.0.15
+  lodash.pull: 4.1.0
   next: 12.2.3_qugu52izettqdqqm5qcjcltcia
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   styled-components: 5.3.5_pumtretovylab5lwhztzjp2kuy
   usehooks-ts: 2.7.1_biqbaboplfbrettd7655fr4n2y
-  zustand: 4.1.1_react@18.2.0
+  zustand: 4.1.1_immer@9.0.15+react@18.2.0
 
 devDependencies:
   '@babel/core': 7.18.9
@@ -48,6 +53,7 @@ devDependencies:
   '@storybook/react': 6.5.9_lfnxd47hgvfbsmh7y4nzzrmqti
   '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
   '@svgr/webpack': 6.3.1
+  '@types/lodash.pull': 4.1.7
   '@types/node': 18.6.1
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -3733,6 +3739,12 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash.pull/4.1.7:
+    resolution: {integrity: sha512-sHuF4Yu47ALiXLBSZNfMQ8HdboUma0THzi2ds/QHhTw7iGhEL0ROcWHc4wpVgeIM9+4Cohxr2pRkLFDW7gOGGQ==}
+    dependencies:
+      '@types/lodash': 4.14.182
     dev: true
 
   /@types/lodash/4.14.182:
@@ -7699,6 +7711,10 @@ packages:
       queue: 6.0.2
     dev: true
 
+  /immer/9.0.15:
+    resolution: {integrity: sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -8532,6 +8548,10 @@ packages:
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.pull/4.1.0:
+    resolution: {integrity: sha512-EM7CVTzXfkTyusQdN7mgGPh2ZfkKfQ5lA9U+X7NNDeEgKEaO65dB5Kh8+Ppap0X1wQOndPjKP/VVTis7hFvkzg==}
+    dev: false
 
   /lodash.uniq/4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
@@ -12380,7 +12400,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand/4.1.1_react@18.2.0:
+  /zustand/4.1.1_immer@9.0.15+react@18.2.0:
     resolution: {integrity: sha512-h4F3WMqsZgvvaE0n3lThx4MM81Ls9xebjvrABNzf5+jb3/03YjNTSgZXeyrvXDArMeV9untvWXRw1tY+ntPYbA==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -12392,6 +12412,7 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 9.0.15
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false

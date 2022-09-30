@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import styled from 'styled-components';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -32,34 +32,47 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
   const priceRef = useRef<HTMLDivElement>(null);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  // const [activeFilterId, setActiveFilterId] = useState('');
-  // const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
-  // const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
-  const [onSale, setOnSale] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('');
-
   const [
+    filterOptions,
     activeFilterId,
-    clearActiveFilerId,
+    setActiveFilerId,
     filterClick,
-    clearFilters,
     selectedGenders,
-    clearSelectedGenders,
+    setSelectedGenders,
     selectedSizes,
-    clearSelectedSizes,
+    setSelectedSizes,
+    selectedCategories,
+    setSelectedCategories,
+    selectedBrands,
+    setSelectedBrands,
+    selectedPrices,
+    setSelectedPrices,
+    selectedSort,
+    setSelectedSort,
+    onSale,
+    setOnSale,
+    clearFilters,
   ] = useStore(
     ({ filters }) => [
+      filters.filterOptions,
       filters.activeFilterId,
-      filters.clearActiveFilerId,
+      filters.setActiveFilerId,
       filters.filterClick,
-      filters.clearFilters,
       filters.selectedGenders,
-      filters.clearSelectedGenders,
+      filters.setSelectedGenders,
       filters.selectedSizes,
-      filters.clearSelectedSizes,
+      filters.setSelectedSizes,
+      filters.selectedCategories,
+      filters.setSelectedCategories,
+      filters.selectedBrands,
+      filters.setSelectedBrands,
+      filters.selectedPrices,
+      filters.setSelectedPrices,
+      filters.selectedSort,
+      filters.setSelectedSort,
+      filters.onSale,
+      filters.setOnSale,
+      filters.clearFilters,
     ],
     shallow
   );
@@ -78,11 +91,13 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
 
   const closeDropdownIfActive = (id: string) => {
     if (id === activeFilterId) {
-      clearActiveFilerId();
+      setActiveFilerId('');
     }
   };
 
-  useOnClickOutside(genderRef, () => closeDropdownIfActive('Gender'));
+  useOnClickOutside(genderRef, () =>
+    closeDropdownIfActive(filterOptions.gender.id)
+  );
   useOnClickOutside(sizeRef, () => closeDropdownIfActive('Size'));
   useOnClickOutside(categoryRef, () => closeDropdownIfActive('Category'));
   useOnClickOutside(brandRef, () => closeDropdownIfActive('Brand'));
@@ -95,13 +110,17 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
         <FilterButton
           type='dropdown'
           text='Gender'
-          active={activeFilterId === 'Gender'}
+          active={activeFilterId === filterOptions.gender.id}
           menuType='checkbox'
-          options={['mens', 'womens']}
-          selectedOptions={selectedGenders}
-          onButtonClick={() => filterClick('Gender')}
-          onValueClear={clearSelectedGenders}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedCategories)}
+          options={filterOptions.gender.options}
+          selectedOptions={filterOptions.gender.selectedOptions}
+          onButtonClick={() => filterClick(filterOptions.gender.id)}
+          onValueClear={() =>
+            filterOptions.clearOptions(filterOptions.gender.id)
+          }
+          onInputClick={(val) =>
+            filterOptions.toggleOption(filterOptions.gender.id, val)
+          }
         />
       </div>
 
@@ -114,8 +133,8 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           options={['12', '13', '14', '15']}
           selectedOptions={selectedSizes}
           onButtonClick={() => filterClick('Size')}
-          onValueClear={clearSelectedSizes}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedCategories)}
+          onValueClear={() => setSelectedSizes([])}
+          onInputClick={(val) => console.log(val)}
         />
       </div>
 
@@ -129,7 +148,7 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           selectedOptions={selectedCategories}
           onButtonClick={() => filterClick('Category')}
           onValueClear={() => setSelectedCategories([])}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedCategories)}
+          onInputClick={(val) => console.log(val)}
         />
       </div>
 
@@ -143,7 +162,7 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           selectedOptions={selectedBrands}
           onButtonClick={() => filterClick('Brand')}
           onValueClear={() => setSelectedBrands([])}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedBrands)}
+          onInputClick={(val) => console.log(val)}
         />
       </div>
 
@@ -157,7 +176,7 @@ const WithFilterButtonsTemplate: Story<FilterBarProps> = (args) => {
           selectedOptions={selectedPrices}
           onButtonClick={() => filterClick('Price')}
           onValueClear={() => setSelectedPrices([])}
-          onInputClick={(val) => onCheckboxClick(val, setSelectedPrices)}
+          onInputClick={(val) => console.log(val)}
         />
       </div>
 
