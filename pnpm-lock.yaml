@@ -11,6 +11,8 @@ specifiers:
   '@storybook/react': ^6.5.9
   '@storybook/testing-library': ^0.0.13
   '@svgr/webpack': ^6.3.1
+  '@types/lodash.foreach': ^4.5.7
+  '@types/lodash.map': ^4.6.13
   '@types/lodash.pull': ^4.1.7
   '@types/node': 18.6.1
   '@types/react': 18.0.15
@@ -21,6 +23,8 @@ specifiers:
   eslint-config-next: 12.2.3
   eslint-plugin-storybook: ^0.6.1
   immer: ^9.0.15
+  lodash.foreach: ^4.5.0
+  lodash.map: ^4.6.0
   lodash.pull: ^4.1.0
   next: 12.2.3
   react: 18.2.0
@@ -34,6 +38,8 @@ specifiers:
 
 dependencies:
   immer: 9.0.15
+  lodash.foreach: 4.5.0
+  lodash.map: 4.6.0
   lodash.pull: 4.1.0
   next: 12.2.3_qugu52izettqdqqm5qcjcltcia
   react: 18.2.0
@@ -53,6 +59,8 @@ devDependencies:
   '@storybook/react': 6.5.9_lfnxd47hgvfbsmh7y4nzzrmqti
   '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
   '@svgr/webpack': 6.3.1
+  '@types/lodash.foreach': 4.5.7
+  '@types/lodash.map': 4.6.13
   '@types/lodash.pull': 4.1.7
   '@types/node': 18.6.1
   '@types/react': 18.0.15
@@ -3739,6 +3747,18 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash.foreach/4.5.7:
+    resolution: {integrity: sha512-YjBEB6/Bl19V+R70IpyB/MhMb2IvrSgD26maRNyqbGRNDTH9AnPrQoT+ECvhFJ/hwhQ+RgYWaZKvF+knCguMJw==}
+    dependencies:
+      '@types/lodash': 4.14.182
+    dev: true
+
+  /@types/lodash.map/4.6.13:
+    resolution: {integrity: sha512-kppRBzlpuvQQsr7R2nv/DDDZds8fglRFNAK70WUOkOC18KOcuQ22oQF9Kgy5Z2v/eDNkBm0ltrT6FThSkuWwow==}
+    dependencies:
+      '@types/lodash': 4.14.182
     dev: true
 
   /@types/lodash.pull/4.1.7:
@@ -8544,6 +8564,14 @@ packages:
   /lodash.debounce/4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: true
+
+  /lodash.foreach/4.5.0:
+    resolution: {integrity: sha512-aEXTF4d+m05rVOAUG3z4vZZ4xVexLKZGF0lIxuHZ1Hplpk/3B6Z1+/ICICYRLm7c41Z2xiejbkCkJoTlypoXhQ==}
+    dev: false
+
+  /lodash.map/4.6.0:
+    resolution: {integrity: sha512-worNHGKLDetmcEYDvh2stPCrrQRkP20E4l0iIS7F8EvzMqBBi7ltvFN5m1HvTf1P7Jk1txKhvFcmYsCr8O2F1Q==}
+    dev: false
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}

@@ -1,81 +1,59 @@
+import forEach from 'lodash.foreach';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-enum FilterId {
+enum CheckboxFilterId {
   gender = 'gender',
   size = 'size',
   category = 'category',
   brand = 'brand',
   price = 'price',
-  onSale = 'onSale',
+}
+
+enum RadioFilterId {
   sort = 'sort',
 }
 
-type FilterOption =
-  | CheckboxDropdownFilterOption
-  | RadioDropdownFilterOption
-  | BooleanFilterOption;
-
-interface CheckboxDropdownFilterOption {
-  type: 'checkboxDropdown';
-  id: FilterId;
-  options: string[];
-  selected: string[];
-  set: (value: string) => void;
+enum BooleanFilterId {
+  onSale = 'onSale',
 }
 
-interface RadioDropdownFilterOption {
-  type: 'radioDropdown';
-  id: FilterId;
+export interface CheckboxFilter {
+  id: CheckboxFilterId;
+  text: string;
+  options: string[];
+  selected: string[];
+  setSelected: (value: string) => void;
+  clear: VoidFunction;
+}
+
+interface RadioFilterOption {
+  id: RadioFilterId;
+  text: string;
   options: string[];
   selected: string;
-  set: (value: string) => void;
+  setSelected: (value: string) => void;
 }
 
 interface BooleanFilterOption {
-  type: 'boolean';
-  id: FilterId;
-  options?: string[];
+  id: BooleanFilterId;
+  text: string;
   selected: boolean;
-  set: (value: boolean) => void;
-}
-
-interface FilterOptionsActions {
-  setOption: (id: FilterId, val: string[] | string | boolean) => void;
-  checkboxSet: (id: FilterId, val: string) => void;
-  toggleOption: (id: FilterId, val: string | string | boolean) => void;
-  clearOptions: (id: FilterId) => void;
+  setSelected: (value: boolean) => void;
 }
 
 interface FilterState {
+  toggleCheckbox: (id: CheckboxFilterId, value: string) => void;
+
+  checkboxes: Record<CheckboxFilterId, CheckboxFilter>;
+  radios: Record<RadioFilterId, RadioFilterOption>;
+  booleans: Record<BooleanFilterId, BooleanFilterOption>;
+
   activeFilterId: string;
   setActiveFilerId: (filterId: string) => void;
+
   filterClick: (id: string) => void;
-
-  selectedGenders: string[];
-  setSelectedGenders: (genders: string[]) => void;
-
-  selectedSizes: string[];
-  setSelectedSizes: (sizes: string[]) => void;
-
-  selectedCategories: string[];
-  setSelectedCategories: (categories: string[]) => void;
-
-  selectedBrands: string[];
-  setSelectedBrands: (brands: string[]) => void;
-
-  selectedPrices: string[];
-  setSelectedPrices: (prices: string[]) => void;
-
-  selectedSort: string;
-  setSelectedSort: (sort: string) => void;
-
-  onSale: boolean;
-  setOnSale: (onSale: boolean) => void;
-
   clearFilters: VoidFunction;
-
-  filterOptions: Record<FilterId, FilterOption> & FilterOptionsActions;
 }
 
 interface StoreState {
@@ -83,77 +61,107 @@ interface StoreState {
 }
 
 export const useStore = create(
-  immer<StoreState>((set) => ({
+  immer<StoreState>((set, get) => ({
     filters: {
-      filterOptions: {
-        setOption: (id, val) =>
-          set((state) => {
-            state.filters.filterOptions[id].selected = val;
-          }),
-        checkboxSet: (id: FilterId, value: string) =>
-          set((state) => {
-            if (state.filters.filterOptions[id].selected.includes(val)) {
-            }
-          }),
-        toggleOption: (id, val) =>
-          set((state) => {
-            let something = state.filters.filterOptions[id];
-          }),
-        clearOptions: (id) =>
-          set((state) => {
-            state.filters.filterOptions[id].selected = [];
-          }),
+      toggleCheckbox: (id, value) => {
+        set((state) => {
+          let selected = state.filters.checkboxes[id].selected;
+          const indexOf = selected.indexOf(value);
+          if (indexOf !== -1) {
+            selected.splice(indexOf, 1);
+          } else {
+            selected.push(value);
+          }
+        });
+      },
 
-        // each option has its own set, clear and toggle (or whatever it needs)
-        // the methods above then are only used internally
-        // set(val) => setCheckboxDropdown(FilterId.gender, val)
-
+      checkboxes: {
         gender: {
-          type: 'checkboxDropdown',
-          id: FilterId.gender,
+          id: CheckboxFilterId.gender,
+          text: 'Gender',
           options: ['mens', 'womens', 'unisex'],
           selected: [],
-          set: (value) => {},
+          clear: () =>
+            set((s) => {
+              s.filters.checkboxes.gender.selected = [];
+            }),
+          setSelected: (value) =>
+            get().filters.toggleCheckbox(CheckboxFilterId.gender, value),
         },
         size: {
-          type: 'checkboxDropdown',
-          id: FilterId.size,
+          id: CheckboxFilterId.size,
+          text: 'Size',
           options: ['12', '13', '14'],
           selected: [],
+          clear: () =>
+            set((s) => {
+              s.filters.checkboxes.size.selected = [];
+            }),
+          setSelected: (value) =>
+            get().filters.toggleCheckbox(CheckboxFilterId.size, value),
         },
         category: {
-          type: 'checkboxDropdown',
-          id: FilterId.category,
+          id: CheckboxFilterId.category,
+          text: 'Category',
           options: ['hoodies', 'jeans', 'shorts'],
           selected: [],
+          clear: () =>
+            set((s) => {
+              s.filters.checkboxes.category.selected = [];
+            }),
+          setSelected: (value) =>
+            get().filters.toggleCheckbox(CheckboxFilterId.category, value),
         },
         brand: {
-          type: 'checkboxDropdown',
-          id: FilterId.brand,
+          id: CheckboxFilterId.brand,
+          text: 'Brand',
           options: ['nike', 'gucci', 'adidas'],
           selected: [],
+          clear: () =>
+            set((s) => {
+              s.filters.checkboxes.brand.selected = [];
+            }),
+          setSelected: (value) =>
+            get().filters.toggleCheckbox(CheckboxFilterId.brand, value),
         },
         price: {
-          type: 'checkboxDropdown',
-          id: FilterId.price,
+          id: CheckboxFilterId.price,
+          text: 'Price',
           options: ['$10 max', '$20 max', '$30 max'],
           selected: [],
+          clear: () =>
+            set((s) => {
+              s.filters.checkboxes.price.selected = [];
+            }),
+          setSelected: (value) =>
+            get().filters.toggleCheckbox(CheckboxFilterId.price, value),
         },
-        onSale: {
-          type: 'boolean',
-          id: FilterId.onSale,
-          selected: false,
-        },
+      },
+      radios: {
         sort: {
-          type: 'radioDropdown',
-          id: FilterId.sort,
+          id: RadioFilterId.sort,
+          text: 'Sort',
           options: ['popular', 'newest', 'oldest'],
           selected: '',
+          setSelected: (value) =>
+            set((state) => {
+              state.filters.radios.sort.selected = value;
+            }),
+        },
+      },
+      booleans: {
+        onSale: {
+          id: BooleanFilterId.onSale,
+          text: 'On sale',
+          selected: false,
+          setSelected: (value) =>
+            set((state) => {
+              state.filters.booleans.onSale.selected = value;
+            }),
         },
       },
 
       activeFilterId: '',
-
       setActiveFilerId: (filterId: string) =>
         set((state) => {
           state.filters.activeFilterId = filterId;
@@ -167,62 +175,21 @@ export const useStore = create(
             state.filters.activeFilterId = id;
           }
         }),
-
-      selectedGenders: [],
-      setSelectedGenders: (genders: string[]) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedGenders: genders },
-        })),
-
-      selectedSizes: [],
-      setSelectedSizes: (sizes: string[]) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedSizes: sizes },
-        })),
-
-      selectedCategories: [],
-      setSelectedCategories: (categories: string[]) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedCategories: categories },
-        })),
-
-      selectedBrands: [],
-      setSelectedBrands: (brands: string[]) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedBrands: brands },
-        })),
-
-      selectedPrices: [],
-      setSelectedPrices: (genders: string[]) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedBrands: genders },
-        })),
-
-      selectedSort: '',
-      setSelectedSort: (sort: string) =>
-        set((state) => ({
-          filters: { ...state.filters, selectedSort: sort },
-        })),
-
-      onSale: false,
-      setOnSale: (onSale: boolean) =>
-        set((state) => ({
-          filters: { ...state.filters, onSale: onSale },
-        })),
-
       clearFilters: () =>
-        set((state) => ({
-          filters: {
-            ...state.filters,
-            selectedGenders: [],
-            selectedSizes: [],
-            selectedCategories: [],
-            selectedBrands: [],
-            selectedPrices: [],
-            onSale: false,
-            selectedSort: '',
-          },
-        })),
+        set((state) => {
+          state.filters.activeFilterId = '';
+          forEach(state.filters.checkboxes, (checkbox) => {
+            checkbox.selected = [];
+          });
+
+          forEach(state.filters.radios, (radio) => {
+            radio.selected = '';
+          });
+
+          forEach(state.filters.booleans, (boolean) => {
+            boolean.selected = false;
+          });
+        }),
     },
   }))
 );

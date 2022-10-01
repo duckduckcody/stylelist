@@ -34,7 +34,6 @@ export interface FilterButtonDropdownProps {
 }
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
-  type,
   text,
   menuType,
   active = false,
