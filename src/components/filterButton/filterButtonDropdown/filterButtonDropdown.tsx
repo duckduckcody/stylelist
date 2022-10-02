@@ -1,4 +1,4 @@
-import { flip, shift, useFloating } from '@floating-ui/react-dom';
+import { autoUpdate, flip, shift, useFloating } from '@floating-ui/react-dom';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import ChevronIcon from '../../../icons/chevron.svg';
@@ -37,6 +37,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   const { x, y, reference, floating, strategy } = useFloating({
     middleware: [flip(), shift()],
     placement: 'bottom-start',
+    whileElementsMounted: autoUpdate,
   });
 
   const valueString = useMemo(() => {
