@@ -12,6 +12,8 @@ const Container = styled.div`
   padding: 24px 64px 24px 18px;
   width: fit-content;
   gap: 18px;
+
+  background: white;
 `;
 
 const InputContainer = styled.label`

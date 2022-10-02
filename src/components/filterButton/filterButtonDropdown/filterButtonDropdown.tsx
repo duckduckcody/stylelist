@@ -1,19 +1,10 @@
+import { flip, shift, useFloating } from '@floating-ui/react-dom';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
 import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
-
-const Container = styled.div`
-  position: relative;
-`;
-
-const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)`
-  position: absolute;
-  top: 100%;
-  left: 0;
-`;
 
 const Chevron = styled(ChevronIcon)<{ active: boolean }>`
   width: 12px;
@@ -43,6 +34,11 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   onValueClear = () => undefined,
   onButtonClick = () => undefined,
 }) => {
+  const { x, y, reference, floating, strategy } = useFloating({
+    middleware: [flip(), shift()],
+    placement: 'bottom-start',
+  });
+
   const valueString = useMemo(() => {
     if (Array.isArray(selectedOptions)) {
       return selectedOptions.join(', ');
@@ -52,8 +48,9 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   }, [selectedOptions]);
 
   return (
-    <Container>
+    <>
       <FilterButtonContainer
+        ref={reference}
         active={active}
         hasValues={Boolean(valueString)}
         onClick={onButtonClick}
@@ -71,14 +68,23 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         )}
       </FilterButtonContainer>
       {active && (
-        <StyledFilterButtonDropdownMenu
-          type={menuType}
-          name={text}
-          options={options}
-          selectedOptions={selectedOptions}
-          onInputClick={onInputClick}
-        />
+        <div
+          ref={floating}
+          style={{
+            position: strategy,
+            top: y ?? 0,
+            left: x ?? 0,
+          }}
+        >
+          <FilterButtonDropdownMenu
+            type={menuType}
+            name={text}
+            options={options}
+            selectedOptions={selectedOptions}
+            onInputClick={onInputClick}
+          />
+        </div>
       )}
-    </Container>
+    </>
   );
 };

@@ -15,10 +15,9 @@ const Container = styled.div`
 const ButtonContainer = styled.div`
   padding: 24px;
 
-  overflow: auto;
-
   max-width: 1200px;
   width: 100%;
+  overflow-x: auto;
 
   display: flex;
   flex-flow: row nowrap;
