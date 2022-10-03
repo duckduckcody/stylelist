@@ -49,10 +49,6 @@ export interface FilterState {
   radios: Record<RadioFilterId, RadioFilterOption>;
   booleans: Record<BooleanFilterId, BooleanFilterOption>;
 
-  activeFilterId: string;
-  setActiveFilerId: (filterId: string) => void;
-
-  filterClick: (id: string) => void;
   clearFilters: VoidFunction;
 }
 
@@ -160,23 +156,8 @@ export const filterStore: StateCreator<
     },
   },
 
-  activeFilterId: '',
-  setActiveFilerId: (filterId: string) =>
-    set((state) => {
-      state.filters.activeFilterId = filterId;
-    }),
-
-  filterClick: (id: string) =>
-    set((state) => {
-      if (state.filters.activeFilterId === id) {
-        state.filters.activeFilterId = '';
-      } else {
-        state.filters.activeFilterId = id;
-      }
-    }),
   clearFilters: () =>
     set((state) => {
-      state.filters.activeFilterId = '';
       forEach(state.filters.checkboxes, (checkbox) => {
         checkbox.selected = [];
       });

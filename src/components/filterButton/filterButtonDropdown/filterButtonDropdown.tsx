@@ -2,14 +2,14 @@ import {
   autoUpdate,
   flip,
   shift,
+  useClick,
   useDismiss,
   useFloating,
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import ChevronIcon from '../../../icons/chevron.svg';
-import { useStore } from '../../../store/useStore';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
 import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
@@ -24,38 +24,32 @@ export interface FilterButtonDropdownProps {
   type: 'dropdown';
   text: string;
   menuType: 'checkbox' | 'radio';
-  active: boolean;
   options: string[];
   selectedOptions: string[] | string;
   onInputClick: (value: string) => void;
   onValueClear: VoidFunction;
-  onButtonClick: VoidFunction;
 }
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   text,
   menuType,
-  active = false,
   options,
   selectedOptions,
   onInputClick = () => undefined,
   onValueClear = () => undefined,
-  onButtonClick = () => undefined,
 }) => {
-  const setActiveFilterId = useStore((state) => state.filters.setActiveFilerId);
-
+  const [open, setOpen] = useState(false);
   const { x, y, reference, floating, strategy, context } = useFloating({
+    open,
+    onOpenChange: setOpen,
     middleware: [flip(), shift()],
     placement: 'bottom-start',
     whileElementsMounted: autoUpdate,
-    onOpenChange: () => {
-      console.log('testing');
-      setActiveFilterId('');
-    },
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
+    useClick(context),
   ]);
 
   const valueString = useMemo(() => {
@@ -71,13 +65,12 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       <FilterButtonContainer
         ref={reference}
         {...getReferenceProps()}
-        active={active}
+        active={open}
         hasValues={Boolean(valueString)}
-        onClick={onButtonClick}
       >
         {selectedOptions.length === 0 && (
           <>
-            {text} <Chevron active={active} />
+            {text} <Chevron active={open} />
           </>
         )}
         {selectedOptions.length !== 0 && (
@@ -87,7 +80,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
           </>
         )}
       </FilterButtonContainer>
-      {active && (
+      {open && (
         <div
           ref={floating}
           style={{

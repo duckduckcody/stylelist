@@ -34,18 +34,7 @@ export const FilterBar: FC<FilterBarProps> = () => {
   const checkboxes = useStore((state) => state.filters.checkboxes);
   const radios = useStore((state) => state.filters.radios);
   const booleans = useStore((state) => state.filters.booleans);
-
-  const activeFilterId = useStore((state) => state.filters.activeFilterId);
-  // const setActiveFilerId = useStore((state) => state.filters.setActiveFilerId);
-
-  const filterClick = useStore((state) => state.filters.filterClick);
   const clearFilters = useStore((state) => state.filters.clearFilters);
-
-  // const closeDropdownIfActive = (id: string) => {
-  //   if (id === activeFilterId) {
-  //     setActiveFilerId('');
-  //   }
-  // };
 
   return (
     <Container>
@@ -55,10 +44,8 @@ export const FilterBar: FC<FilterBarProps> = () => {
             type='dropdown'
             menuType='checkbox'
             text={data.text}
-            active={activeFilterId === data.id}
             options={data.options}
             selectedOptions={data.selected}
-            onButtonClick={() => filterClick(data.id)}
             onValueClear={data.clear}
             onInputClick={(val) => data.setSelected(val)}
           />
@@ -83,10 +70,8 @@ export const FilterBar: FC<FilterBarProps> = () => {
             type='dropdown'
             menuType='radio'
             text={radios.sort.text}
-            active={activeFilterId === radios.sort.id}
             options={radios.sort.options}
             selectedOptions={radios.sort.selected}
-            onButtonClick={() => filterClick(radios.sort.id)}
             onValueClear={() => radios.sort.setSelected('')}
             onInputClick={(val) => radios.sort.setSelected(val)}
           />
