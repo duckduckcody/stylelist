@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-
-const MOBILE_BREAKPOINT = 868;
+import { MOBILE_PX } from '../styles/global';
 
 export const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+      setIsMobile(window.innerWidth <= MOBILE_PX);
     }
 
     window.addEventListener('resize', handleResize);

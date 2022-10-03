@@ -11,15 +11,15 @@ export const FilterButtonContainer = styled.button<{
   align-items: center;
 
   background: ${(p) => (p.hasValues ? 'black' : 'white')};
-  padding: 12px 24px;
+  padding: 8px 24px;
   border: 1px solid black;
   width: fit-content;
   color: ${(p) => (p.hasValues ? 'white' : 'black')};
 
   font-family: 'Lato', sans-serif;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
   line-height: 22px;
   white-space: nowrap;
 
