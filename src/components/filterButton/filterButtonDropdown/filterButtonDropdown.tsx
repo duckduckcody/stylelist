@@ -7,12 +7,19 @@ import {
   useFloating,
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
-import { FC, useMemo, useState } from 'react';
+import { CSSProperties, FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
 import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
+
+const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)<{
+  isMobile?: boolean;
+}>`
+  width: ${(p) => (p.isMobile ? '100%' : 'fit-content')};
+`;
 
 const Chevron = styled(ChevronIcon)<{ active: boolean }>`
   width: 12px;
@@ -38,6 +45,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   onInputClick = () => undefined,
   onValueClear = () => undefined,
 }) => {
+  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
@@ -51,6 +59,23 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     useDismiss(context),
     useClick(context),
   ]);
+
+  const menuPosition = useMemo<CSSProperties>(() => {
+    if (isMobile) {
+      return {
+        position: strategy,
+        right: 0,
+        left: 0,
+        bottom: 0,
+      };
+    } else {
+      return {
+        position: strategy,
+        left: x ?? 0,
+        top: y ?? 0,
+      };
+    }
+  }, [isMobile, strategy, x, y]);
 
   const valueString = useMemo(() => {
     if (Array.isArray(selectedOptions)) {
@@ -81,16 +106,9 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         )}
       </FilterButtonContainer>
       {open && (
-        <div
-          ref={floating}
-          style={{
-            position: strategy,
-            top: y ?? 0,
-            left: x ?? 0,
-          }}
-          {...getFloatingProps()}
-        >
-          <FilterButtonDropdownMenu
+        <div ref={floating} {...getFloatingProps()} style={menuPosition}>
+          <StyledFilterButtonDropdownMenu
+            isMobile={isMobile}
             type={menuType}
             name={text}
             options={options}
