@@ -8,6 +8,12 @@ export const COLOURS = {
   clicked: '#BFBFBF',
 };
 
+export enum ZIndexes {
+  menu = 10,
+  modalBackground = 100,
+  modal = 110,
+}
+
 export const GlobalStyles = createGlobalStyle`
   html,
   body {

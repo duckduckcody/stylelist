@@ -5,8 +5,8 @@ import { COLOURS } from '../../styles/global';
 
 const CrossButton = styled.button`
   all: unset;
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
 
   &:focus-visible {
     outline: white solid 2px;
@@ -19,8 +19,8 @@ const CrossButton = styled.button`
 
 const Cross = styled(CrossIcon)`
   cursor: pointer;
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
 `;
 
 export interface FilterButtonCrossButtonProps {

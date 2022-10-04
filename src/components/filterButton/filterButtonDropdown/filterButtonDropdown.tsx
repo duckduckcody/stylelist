@@ -2,6 +2,7 @@ import {
   autoUpdate,
   flip,
   shift,
+  useClick,
   useDismiss,
   useFloating,
   useInteractions,
@@ -11,6 +12,7 @@ import { CSSProperties, FC, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import ChevronIcon from '../../../icons/chevron.svg';
+import { ZIndexes } from '../../../styles/global';
 import { FilterButtonContainer } from '../filterButton.shared';
 import { FilterButtonCrossButton } from '../filterButtonCrossButton';
 import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
@@ -34,6 +36,11 @@ const DarkenBackground = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: ${ZIndexes.modalBackground};
+`;
+
+const MenuContainer = styled(motion.div)`
+  z-index: ${ZIndexes.modal};
 `;
 
 export interface FilterButtonDropdownProps {
@@ -67,6 +74,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
+    useClick(context),
   ]);
 
   const menuPosition = useMemo<CSSProperties>(() => {
@@ -98,14 +106,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     <>
       <FilterButtonContainer
         ref={reference}
-        {...getReferenceProps({
-          onClick(event) {
-            // don't open if clicking clear button (child target)
-            if (event.target === event.currentTarget) {
-              setOpen(true);
-            }
-          },
-        })}
+        {...getReferenceProps()}
         active={open}
         hasValues={Boolean(valueString)}
       >
@@ -134,7 +135,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               exit={isMobile ? { opacity: 0 } : undefined}
             />
 
-            <motion.div
+            <MenuContainer
               initial={isMobile ? { transform: 'translateY(100%)' } : undefined}
               animate={isMobile ? { transform: 'translateY(0%)' } : undefined}
               exit={isMobile ? { transform: 'translateY(100%)' } : undefined}
@@ -150,7 +151,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
                 selectedOptions={selectedOptions}
                 onInputClick={onInputClick}
               />
-            </motion.div>
+            </MenuContainer>
           </>
         )}
       </AnimatePresence>

@@ -9,10 +9,10 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  background: white;
 `;
 
 const ButtonContainer = styled.div`
-  max-width: 1200px;
   width: 100%;
   overflow-x: auto;
 
@@ -20,7 +20,6 @@ const ButtonContainer = styled.div`
   flex-flow: row nowrap;
 
   gap: 24px;
-  padding: 24px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     gap: 16px;
@@ -32,16 +31,18 @@ const SortButtonContainer = styled.div`
   margin-left: auto;
 `;
 
-export interface FilterBarProps {}
+export interface FilterBarProps {
+  className?: string;
+}
 
-export const FilterBar: FC<FilterBarProps> = () => {
+export const FilterBar: FC<FilterBarProps> = ({ className }) => {
   const checkboxes = useStore((state) => state.filters.checkboxes);
   const radios = useStore((state) => state.filters.radios);
   const booleans = useStore((state) => state.filters.booleans);
   const clearFilters = useStore((state) => state.filters.clearFilters);
 
   return (
-    <Container>
+    <Container className={className}>
       <ButtonContainer>
         {map(checkboxes, (data) => (
           <FilterButton
