@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { MOBILE_BREAKPOINT } from '../../../../styles/global';
 
 const Container = styled.div`
   font-family: 'Lato', sans-serif;
@@ -14,6 +15,10 @@ const Container = styled.div`
   gap: 18px;
 
   background: white;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    gap: 32px;
+  }
 `;
 
 const InputContainer = styled.label`

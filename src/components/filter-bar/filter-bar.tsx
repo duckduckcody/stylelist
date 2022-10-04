@@ -2,6 +2,7 @@ import map from 'lodash.map';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
+import { MOBILE_BREAKPOINT } from '../../styles/global';
 import { FilterButton } from '../filterButton/filterButton';
 
 const Container = styled.div`
@@ -11,15 +12,20 @@ const Container = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  padding: 24px;
-
   max-width: 1200px;
   width: 100%;
   overflow-x: auto;
 
   display: flex;
   flex-flow: row nowrap;
+
   gap: 24px;
+  padding: 24px;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    gap: 16px;
+    padding: 16px;
+  }
 `;
 
 const SortButtonContainer = styled.div`

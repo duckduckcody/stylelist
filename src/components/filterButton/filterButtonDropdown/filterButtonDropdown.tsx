@@ -2,13 +2,12 @@ import {
   autoUpdate,
   flip,
   shift,
-  useClick,
   useDismiss,
   useFloating,
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CSSProperties, FC, useMemo, useState } from 'react';
+import { CSSProperties, FC, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import ChevronIcon from '../../../icons/chevron.svg';
@@ -56,6 +55,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   onValueClear = () => undefined,
 }) => {
   const isMobile = useIsMobile();
+  const clearButtonRef = useRef(null);
   const [open, setOpen] = useState(false);
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
@@ -67,7 +67,6 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
-    useClick(context),
   ]);
 
   const menuPosition = useMemo<CSSProperties>(() => {
@@ -99,7 +98,14 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     <>
       <FilterButtonContainer
         ref={reference}
-        {...getReferenceProps()}
+        {...getReferenceProps({
+          onClick(event) {
+            // don't open if clicking clear button (child target)
+            if (event.target === event.currentTarget) {
+              setOpen(true);
+            }
+          },
+        })}
         active={open}
         hasValues={Boolean(valueString)}
       >
@@ -111,10 +117,14 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         {selectedOptions.length !== 0 && (
           <>
             {valueString}
-            <FilterButtonCrossButton onValueClear={onValueClear} />
+            <FilterButtonCrossButton
+              onValueClear={onValueClear}
+              ref={clearButtonRef}
+            />
           </>
         )}
       </FilterButtonContainer>
+
       <AnimatePresence>
         {open && (
           <>

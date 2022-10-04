@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 import CrossIcon from '../../icons/cross.svg';
 import { COLOURS } from '../../styles/global';
@@ -27,10 +27,12 @@ export interface FilterButtonCrossButtonProps {
   onValueClear: VoidFunction;
 }
 
-export const FilterButtonCrossButton: FC<FilterButtonCrossButtonProps> = ({
-  onValueClear,
-}) => (
-  <CrossButton aria-label='clear value' onClick={onValueClear}>
-    <Cross />
-  </CrossButton>
-);
+export const FilterButtonCrossButton =
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLButtonElement, FilterButtonCrossButtonProps>(
+    ({ onValueClear }, ref) => (
+      <CrossButton aria-label='clear value' onClick={onValueClear}>
+        <Cross ref={ref} />
+      </CrossButton>
+    )
+  );
