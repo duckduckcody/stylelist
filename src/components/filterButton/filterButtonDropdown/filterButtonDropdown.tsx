@@ -131,13 +131,13 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
             <DarkenBackground
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={isMobile ? { opacity: 0 } : undefined}
             />
 
             <motion.div
-              initial={{ transform: 'translateY(100%)' }}
-              animate={{ transform: 'translateY(0%)' }}
-              exit={{ transform: 'translateY(100%)' }}
+              initial={isMobile ? { transform: 'translateY(100%)' } : undefined}
+              animate={isMobile ? { transform: 'translateY(0%)' } : undefined}
+              exit={isMobile ? { transform: 'translateY(100%)' } : undefined}
               ref={floating}
               {...getFloatingProps()}
               style={menuPosition}
