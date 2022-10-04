@@ -7,6 +7,7 @@ import {
   useFloating,
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
+import { AnimatePresence, motion } from 'framer-motion';
 import { CSSProperties, FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
@@ -25,6 +26,15 @@ const Chevron = styled(ChevronIcon)<{ active: boolean }>`
   width: 12px;
   height: 12px;
   transform: ${(p) => (p.active ? 'rotate(180deg)' : '')};
+`;
+
+const DarkenBackground = styled(motion.div)`
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 export interface FilterButtonDropdownProps {
@@ -105,18 +115,35 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
           </>
         )}
       </FilterButtonContainer>
-      {open && (
-        <div ref={floating} {...getFloatingProps()} style={menuPosition}>
-          <StyledFilterButtonDropdownMenu
-            isMobile={isMobile}
-            type={menuType}
-            name={text}
-            options={options}
-            selectedOptions={selectedOptions}
-            onInputClick={onInputClick}
-          />
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <>
+            <DarkenBackground
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+
+            <motion.div
+              initial={{ transform: 'translateY(100%)' }}
+              animate={{ transform: 'translateY(0%)' }}
+              exit={{ transform: 'translateY(100%)' }}
+              ref={floating}
+              {...getFloatingProps()}
+              style={menuPosition}
+            >
+              <StyledFilterButtonDropdownMenu
+                isMobile={isMobile}
+                type={menuType}
+                name={text}
+                options={options}
+                selectedOptions={selectedOptions}
+                onInputClick={onInputClick}
+              />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };

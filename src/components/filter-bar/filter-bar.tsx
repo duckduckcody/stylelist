@@ -8,8 +8,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-
-  box-sizing: border-box;
 `;
 
 const ButtonContainer = styled.div`
