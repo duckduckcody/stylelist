@@ -7,6 +7,7 @@ import { Card } from '../card/card';
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 400px);
+  justify-content: center;
   column-gap: 28px;
   row-gap: 18px;
 

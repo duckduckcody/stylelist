@@ -9,6 +9,8 @@ const PageContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   padding: 0 24px;
+  margin-left: auto;
+  margin-right: auto;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     padding: 0;
@@ -31,7 +33,7 @@ const StyledFilterBar = styled(FilterBar)`
   position: sticky;
   z-index: ${ZIndexes.menu};
   top: 0;
-  padding: 24px 0;
+  padding: 24px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     padding: 0;

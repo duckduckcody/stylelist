@@ -14,19 +14,34 @@ import { useIsMobile } from '../../../hooks/useIsMobile';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { ZIndexes } from '../../../styles/global';
 import { FilterButtonContainer } from '../filterButton.shared';
-import { FilterButtonCrossButton } from '../filterButtonCrossButton';
+import { FilterButtonClearButton } from '../filterButtonClearButton';
 import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
+
+const ControlsContainer = styled.div`
+  position: relative;
+`;
+
+const StyledFilterButtonContainer = styled(FilterButtonContainer)`
+  padding-right: ${(p) => (p.hasValues ? `${18 + 24}px` : '')};
+`;
 
 const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)<{
   isMobile?: boolean;
 }>`
   width: ${(p) => (p.isMobile ? '100%' : 'fit-content')};
+  border-bottom: ${(p) => (p.isMobile ? 'none' : '')};
 `;
 
-const Chevron = styled(ChevronIcon)<{ active: boolean }>`
+const Chevron = styled(ChevronIcon)<{ $active: boolean }>`
   width: 12px;
   height: 12px;
-  transform: ${(p) => (p.active ? 'rotate(180deg)' : '')};
+  transform: ${(p) => (p.$active ? 'rotate(180deg)' : '')};
+`;
+
+const StyledFilterButtonClearButton = styled(FilterButtonClearButton)`
+  position: absolute;
+  top: 0;
+  right: 8px;
 `;
 
 const DarkenBackground = styled(motion.div)`
@@ -105,27 +120,28 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
 
   return (
     <>
-      <FilterButtonContainer
-        ref={reference}
-        {...getReferenceProps()}
-        active={open}
-        hasValues={Boolean(valueString)}
-      >
-        {selectedOptions.length === 0 && (
-          <>
-            {text} <Chevron active={open.toString()} />
-          </>
-        )}
+      <ControlsContainer>
+        <StyledFilterButtonContainer
+          ref={reference}
+          {...getReferenceProps()}
+          active={open}
+          hasValues={Boolean(valueString)}
+        >
+          {selectedOptions.length === 0 && (
+            <>
+              {text} <Chevron $active={open} />
+            </>
+          )}
+          {selectedOptions.length !== 0 && <>{valueString}</>}
+        </StyledFilterButtonContainer>
+
         {selectedOptions.length !== 0 && (
-          <>
-            {valueString}
-            <FilterButtonCrossButton
-              onValueClear={onValueClear}
-              ref={clearButtonRef}
-            />
-          </>
+          <StyledFilterButtonClearButton
+            onValueClear={onValueClear}
+            ref={clearButtonRef}
+          />
         )}
-      </FilterButtonContainer>
+      </ControlsContainer>
 
       <AnimatePresence>
         {open && (

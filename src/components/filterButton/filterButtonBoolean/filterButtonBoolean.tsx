@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FilterButtonContainer } from '../filterButton.shared';
-import { FilterButtonCrossButton } from '../filterButtonCrossButton';
+import { FilterButtonClearButton } from '../filterButtonClearButton';
 
 export interface FilterButtonBooleanProps {
   type: 'boolean';
@@ -22,6 +22,6 @@ export const FilterButtonBoolean: FC<FilterButtonBooleanProps> = ({
     onClick={!active ? onButtonClick : undefined}
   >
     {text}
-    {active && <FilterButtonCrossButton onValueClear={onValueClear} />}
+    {active && <FilterButtonClearButton onValueClear={onValueClear} />}
   </FilterButtonContainer>
 );
