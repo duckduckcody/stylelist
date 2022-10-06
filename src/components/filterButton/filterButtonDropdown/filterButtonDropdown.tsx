@@ -67,6 +67,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
     onOpenChange: setOpen,
+    strategy: 'fixed',
     middleware: [flip(), shift()],
     placement: 'bottom-start',
     whileElementsMounted: autoUpdate,
