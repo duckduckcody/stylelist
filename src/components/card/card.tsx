@@ -49,10 +49,11 @@ export const Card: FC<CardProps> = ({
       <ImageContainer>
         <ImageLink
           href={clothe.link}
+          target='_blank'
           aria-label={`link to ${clothe.name} product page`}
         >
           <Image
-            src={clothe.image}
+            src={clothe.images[0]}
             width={400}
             height={600}
             alt={clothe.name}
