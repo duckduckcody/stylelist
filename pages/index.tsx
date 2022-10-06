@@ -49,21 +49,21 @@ const Home: NextPage = () => {
 
       <CardList
         clothes={[
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
-          mockClothe,
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
+          mockClothe(),
         ]}
       />
     </PageContainer>

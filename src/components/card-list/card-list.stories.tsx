@@ -18,5 +18,5 @@ export default {
 const Template: Story<CardListProps> = (args) => <CardList {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
-  clothes: [mockClothe, mockClothe, mockClothe, mockClothe],
+  clothes: [mockClothe(), mockClothe(), mockClothe(), mockClothe()],
 };

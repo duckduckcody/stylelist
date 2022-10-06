@@ -46,6 +46,7 @@ export const FilterBar: FC<FilterBarProps> = ({ className }) => {
       <ButtonContainer>
         {map(checkboxes, (data) => (
           <FilterButton
+            key={data.text}
             type='dropdown'
             menuType='checkbox'
             text={data.text}

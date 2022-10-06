@@ -113,7 +113,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       >
         {selectedOptions.length === 0 && (
           <>
-            {text} <Chevron active={open} />
+            {text} <Chevron active={open.toString()} />
           </>
         )}
         {selectedOptions.length !== 0 && (
