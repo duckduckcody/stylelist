@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Head from 'next/head';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { FilterBar } from '../src/components/filter-bar/filter-bar';
@@ -52,6 +53,10 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
   return (
     <PageContainer>
+      <Head>
+        <title>Stylelist</title>
+      </Head>
+
       <TitleBar>
         <Title>STYLELIST</Title>
       </TitleBar>
