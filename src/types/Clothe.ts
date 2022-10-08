@@ -1,7 +1,11 @@
-export interface Clothe {
-  name: string;
-  price: number;
-  oldPrice?: number;
-  images: string[];
-  link: string;
-}
+import { z } from 'zod';
+
+export const clotheSchema = z.object({
+  name: z.string(),
+  price: z.number(),
+  oldPrice: z.number().optional(),
+  images: z.array(z.string()),
+  link: z.string(),
+});
+
+export type Clothe = z.infer<typeof clotheSchema>;
