@@ -19,8 +19,11 @@ const PageContainer = styled.div`
 `;
 
 const TitleBar = styled.div`
-  text-align: center;
-  padding: 12px 0 0 0;
+  padding: 12px 24px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled.h1`
@@ -29,6 +32,8 @@ const Title = styled.h1`
   font-weight: bold;
   font-family: 'Lato', sans-serif;
 `;
+
+const SearchBox = styled.input``;
 
 const StyledFilterBar = styled(FilterBar)`
   position: sticky;
@@ -59,6 +64,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
       <TitleBar>
         <Title>STYLELIST</Title>
+        <SearchBox placeholder='search' />
       </TitleBar>
 
       <StyledFilterBar />
