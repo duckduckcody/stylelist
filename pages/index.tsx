@@ -41,7 +41,14 @@ const StyledFilterBar = styled(FilterBar)`
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
-  const { clothes, isLoading, isError } = useClothesData();
+  const {
+    clothes,
+    currentPageNumber,
+    nextPage,
+    totalNumberOfPages,
+    isLoading,
+    isError,
+  } = useClothesData();
 
   return (
     <PageContainer>
@@ -51,10 +58,16 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
       <StyledFilterBar />
 
-      {isLoading && <p>LOADING...</p>}
-      {isError && <p>!!ERROR!!</p>}
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>!!!ERROR!!!</p>}
 
       {clothes && clothes.length && <CardList clothes={clothes} />}
+
+      <p>
+        Page: {currentPageNumber} of {totalNumberOfPages}
+      </p>
+
+      <button onClick={nextPage}>LOAD MORE</button>
 
       {(!clothes || !clothes.length) && <p>NO RESULTS</p>}
     </PageContainer>
