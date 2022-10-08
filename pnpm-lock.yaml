@@ -12,6 +12,7 @@ specifiers:
   '@storybook/react': ^6.5.9
   '@storybook/testing-library': ^0.0.13
   '@svgr/webpack': ^6.3.1
+  '@types/lodash.flatten': ^4.4.7
   '@types/lodash.foreach': ^4.5.7
   '@types/lodash.map': ^4.6.13
   '@types/lodash.pull': ^4.1.7
@@ -26,6 +27,7 @@ specifiers:
   eslint-plugin-storybook: ^0.6.1
   framer-motion: ^7.5.1
   immer: ^9.0.15
+  lodash.flatten: ^4.4.0
   lodash.foreach: ^4.5.0
   lodash.map: ^4.6.0
   lodash.pull: ^4.1.0
@@ -43,8 +45,10 @@ specifiers:
 
 dependencies:
   '@floating-ui/react-dom-interactions': 0.10.1_bb2bxwco6ptpubzwpazr52qf6i
+  '@types/lodash.flatten': 4.4.7
   framer-motion: 7.5.1_biqbaboplfbrettd7655fr4n2y
   immer: 9.0.15
+  lodash.flatten: 4.4.0
   lodash.foreach: 4.5.0
   lodash.map: 4.6.0
   lodash.pull: 4.1.0
@@ -3848,6 +3852,12 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/lodash.flatten/4.4.7:
+    resolution: {integrity: sha512-6yyP/mHEKL2sa86V61F7TnEcUKlLML9+aWI7TCKvnS4SFt7RD4zTVwkdDgluOJqxVkwZ/2z7HvtRs/7j/Uru7g==}
+    dependencies:
+      '@types/lodash': 4.14.182
+    dev: false
+
   /@types/lodash.foreach/4.5.7:
     resolution: {integrity: sha512-YjBEB6/Bl19V+R70IpyB/MhMb2IvrSgD26maRNyqbGRNDTH9AnPrQoT+ECvhFJ/hwhQ+RgYWaZKvF+knCguMJw==}
     dependencies:
@@ -3868,7 +3878,6 @@ packages:
 
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
-    dev: true
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
@@ -8711,6 +8720,10 @@ packages:
   /lodash.debounce/4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: true
+
+  /lodash.flatten/4.4.0:
+    resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
+    dev: false
 
   /lodash.foreach/4.5.0:
     resolution: {integrity: sha512-aEXTF4d+m05rVOAUG3z4vZZ4xVexLKZGF0lIxuHZ1Hplpk/3B6Z1+/ICICYRLm7c41Z2xiejbkCkJoTlypoXhQ==}

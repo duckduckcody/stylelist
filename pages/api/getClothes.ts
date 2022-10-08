@@ -8,17 +8,20 @@ export default async function handler(
 ) {
   const { search, page } = req.query;
 
-  const typeSenseSearch = await typeSenseClient
-    .collections('products')
-    .documents()
-    .search(
-      {
-        q: `${search ?? ''}`,
-        query_by: 'name',
-        page: parseInt(page ? `${page}` : '1'),
-      },
-      {}
-    );
+  const typeSenseSearch = await getTypeSenseClothes(
+    search ? `${search}` : undefined,
+    parseInt(page ? `${page}` : '1')
+  );
 
   res.status(200).json({ ...typeSenseSearch });
 }
+
+export const getTypeSenseClothes = async (q: string = '', page: number = 1) =>
+  await typeSenseClient.collections('products').documents().search(
+    {
+      q,
+      query_by: 'name',
+      page,
+    },
+    {}
+  );

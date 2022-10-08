@@ -1,19 +1,23 @@
-import { useCallback, useMemo } from 'react';
+import flatten from 'lodash.flatten';
+import { useMemo } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { SearchResponse } from 'typesense/lib/Typesense/Documents';
-import { Clothe, clotheSchema } from '../types/Clothe';
+import { typeSenseResponseToClothe } from '../lib/typeSenseResponseToClothe';
+import { Clothe } from '../types/Clothe';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 const getKey = (pageIndex: number) => `/api/getClothes?page=${pageIndex + 1}`;
 
-export const useClothesData: () => {
+interface returnProps {
   clothes: Clothe[];
   currentPageNumber: number;
   nextPage: VoidFunction;
   totalNumberOfPages: number;
   isLoading: boolean;
   isError: boolean;
-} = () => {
+}
+
+export const useClothesData: () => returnProps = () => {
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
     getKey,
     fetcher,
@@ -22,35 +26,21 @@ export const useClothesData: () => {
     }
   );
 
-  const clothes: Clothe[] = [];
-  data?.forEach((data) => {
-    data?.hits?.forEach((clothe) => {
-      const clotheParse = clotheSchema.safeParse(clothe.document);
-      if (clotheParse.success) {
-        clothes.push(clotheParse.data);
-      } else {
-        console.error(
-          'Bad clothe data received in useClothesData',
-          clotheParse.error
-        );
-      }
-    });
-  });
+  const props = useMemo(() => {
+    const clothes = flatten(data?.map((d) => typeSenseResponseToClothe(d)));
+    const totalNumberOfPages = Math.ceil((data?.[0]?.found ?? 1) / 10);
+    const nextPage = () => setSize(size + 1);
 
-  const nextPage = useCallback(() => {
-    setSize(size + 1);
-  }, [size, setSize]);
-
-  const totalNumberOfPages = useMemo(
-    () => Math.ceil((data?.[0]?.found ?? 1) / 10),
-    [data]
-  );
+    return {
+      clothes,
+      totalNumberOfPages,
+      nextPage,
+    };
+  }, [data, setSize, size]);
 
   return {
-    clothes,
+    ...props,
     currentPageNumber: size,
-    nextPage,
-    totalNumberOfPages,
     isError: error,
     isLoading: !error && !data,
   };
