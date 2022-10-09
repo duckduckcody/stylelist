@@ -6,7 +6,8 @@ import { typeSenseResponseToClothe } from '../lib/typeSenseResponseToClothe';
 import { Clothe } from '../types/Clothe';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
-const getKey = (pageIndex: number) => `/api/getClothes?page=${pageIndex + 1}`;
+const getKey = (pageIndex: number, textSearch: string) =>
+  `/api/getClothes?page=${pageIndex + 1}&q=${textSearch}`;
 
 interface returnProps {
   clothes: Clothe[];
@@ -17,9 +18,11 @@ interface returnProps {
   isError: boolean;
 }
 
-export const useClothesData: () => returnProps = () => {
+export const useClothesData: (textSearch?: string) => returnProps = (
+  textSearch = ''
+) => {
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
-    getKey,
+    (pageIndex) => getKey(pageIndex, textSearch),
     fetcher,
     {
       initialSize: 1,

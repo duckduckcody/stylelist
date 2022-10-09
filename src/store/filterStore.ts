@@ -1,4 +1,5 @@
 import forEach from 'lodash.foreach';
+import { ChangeEvent } from 'react';
 import { StateCreator } from 'zustand';
 import { StoreState } from './useStore';
 
@@ -43,6 +44,11 @@ interface BooleanFilterOption {
 }
 
 export interface FilterState {
+  textSearch: string;
+  handleTextSearchChange: (
+    event: ChangeEvent<HTMLInputElement> | undefined
+  ) => void;
+
   toggleCheckbox: (id: CheckboxFilterId, value: string) => void;
 
   checkboxes: Record<CheckboxFilterId, CheckboxFilter>;
@@ -58,6 +64,12 @@ export const filterStore: StateCreator<
   [],
   FilterState
 > = (set, get) => ({
+  textSearch: '',
+  handleTextSearchChange: (event) => {
+    set((state) => {
+      state.filters.textSearch = event?.target.value ?? '';
+    });
+  },
   toggleCheckbox: (id, value) => {
     set((state) => {
       let selected = state.filters.checkboxes[id].selected;

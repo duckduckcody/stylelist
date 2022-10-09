@@ -3,7 +3,9 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { FilterBar } from '../src/components/filter-bar/filter-bar';
+import { FilterButton } from '../src/components/filterButton/filterButton';
 import { useClothesData } from '../src/hooks/useClotheData';
+import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 
 const PageContainer = styled.div`
@@ -18,8 +20,22 @@ const PageContainer = styled.div`
   } ;
 `;
 
+const HeaderContainer = styled.div`
+  position: sticky;
+  z-index: ${ZIndexes.menu};
+  top: 0;
+  background: white;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+  padding: 12px 0;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  } ;
+`;
+
 const TitleBar = styled.div`
-  padding: 12px 24px 0;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -33,20 +49,31 @@ const Title = styled.h1`
   font-family: 'Lato', sans-serif;
 `;
 
-const SearchBox = styled.input``;
+const SortContainer = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 32px;
+`;
 
-const StyledFilterBar = styled(FilterBar)`
-  position: sticky;
-  z-index: ${ZIndexes.menu};
-  top: 0;
-  padding: 24px;
+const SearchBox = styled.input`
+  all: unset;
+  border: 1px solid black;
+  font-family: 'Lato', sans-serif;
+  padding: 0 8px;
+`;
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    padding: 0;
-  } ;
+const StatusText = styled.p`
+  text-align: center;
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
+  const sort = useStore((state) => state.filters.radios.sort);
+  const textSearch = useStore((state) => state.filters.textSearch);
+
+  const handleTextSearchChange = useStore(
+    (state) => state.filters.handleTextSearchChange
+  );
+
   const {
     clothes,
     currentPageNumber,
@@ -54,7 +81,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
     totalNumberOfPages,
     isLoading,
     isError,
-  } = useClothesData();
+  } = useClothesData(textSearch);
 
   return (
     <PageContainer>
@@ -62,25 +89,46 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
         <title>Stylelist</title>
       </Head>
 
-      <TitleBar>
-        <Title>STYLELIST</Title>
-        <SearchBox placeholder='search' />
-      </TitleBar>
+      <HeaderContainer>
+        <TitleBar>
+          <Title>STYLELIST</Title>
 
-      <StyledFilterBar />
+          <SortContainer>
+            <SearchBox
+              placeholder='search'
+              type='text'
+              value={textSearch}
+              onChange={handleTextSearchChange}
+            />
+            <FilterButton
+              type='dropdown'
+              menuType='radio'
+              text={sort.text}
+              options={sort.options}
+              selectedOptions={sort.selected}
+              onValueClear={() => sort.setSelected('')}
+              onInputClick={(val) => sort.setSelected(val)}
+            />
+          </SortContainer>
+        </TitleBar>
+        <FilterBar />
+      </HeaderContainer>
 
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>!!!ERROR!!!</p>}
+      {isLoading && <StatusText>Loading...</StatusText>}
+      {isError && <StatusText>!!!ERROR!!!</StatusText>}
+      {(clothes.length === 0 || !clothes) && (
+        <StatusText>NO RESULTS</StatusText>
+      )}
 
-      {clothes && clothes.length && <CardList clothes={clothes} />}
-
-      <p>
-        Page: {currentPageNumber} of {totalNumberOfPages}
-      </p>
-
-      <button onClick={nextPage}>LOAD MORE</button>
-
-      {(!clothes || !clothes.length) && <p>NO RESULTS</p>}
+      {clothes.length > 0 && (
+        <>
+          <CardList clothes={clothes} />
+          <p>
+            Page: {currentPageNumber} of {totalNumberOfPages}
+          </p>
+          <button onClick={nextPage}>LOAD MORE</button>
+        </>
+      )}
     </PageContainer>
   );
 };

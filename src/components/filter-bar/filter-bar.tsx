@@ -27,7 +27,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const SortButtonContainer = styled.div`
+const ClearFiltersButtonContainer = styled.div`
   margin-left: auto;
 `;
 
@@ -37,7 +37,6 @@ export interface FilterBarProps {
 
 export const FilterBar: FC<FilterBarProps> = ({ className }) => {
   const checkboxes = useStore((state) => state.filters.checkboxes);
-  const radios = useStore((state) => state.filters.radios);
   const booleans = useStore((state) => state.filters.booleans);
   const clearFilters = useStore((state) => state.filters.clearFilters);
 
@@ -65,23 +64,13 @@ export const FilterBar: FC<FilterBarProps> = ({ className }) => {
           onValueClear={() => booleans.onSale.setSelected(false)}
         />
 
-        <FilterButton
-          type='action'
-          text='Clear Filters'
-          onButtonClick={clearFilters}
-        />
-
-        <SortButtonContainer>
+        <ClearFiltersButtonContainer>
           <FilterButton
-            type='dropdown'
-            menuType='radio'
-            text={radios.sort.text}
-            options={radios.sort.options}
-            selectedOptions={radios.sort.selected}
-            onValueClear={() => radios.sort.setSelected('')}
-            onInputClick={(val) => radios.sort.setSelected(val)}
+            type='action'
+            text='Clear Filters'
+            onButtonClick={clearFilters}
           />
-        </SortButtonContainer>
+        </ClearFiltersButtonContainer>
       </ButtonContainer>
     </Container>
   );

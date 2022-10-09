@@ -6,10 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<SearchResponse<{}>>
 ) {
-  const { search, page } = req.query;
+  const { q, page } = req.query;
 
   const typeSenseSearch = await getTypeSenseClothes(
-    search ? `${search}` : undefined,
+    q ? `${q}` : undefined,
     parseInt(page ? `${page}` : '1')
   );
 
