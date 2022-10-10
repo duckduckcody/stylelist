@@ -11,9 +11,7 @@ const getKey = (pageIndex: number, textSearch: string, sort: string) =>
 
 interface returnProps {
   clothes: Clothe[];
-  currentPageNumber: number;
   nextPage: VoidFunction;
-  totalNumberOfPages: number;
   isLoading: boolean;
   isError: boolean;
 }
@@ -30,12 +28,10 @@ export const useClothesData: (textSearch: string, sort: string) => returnProps =
 
     const props = useMemo(() => {
       const clothes = flatten(data?.map((d) => typeSenseResponseToClothe(d)));
-      const totalNumberOfPages = Math.ceil((data?.[0]?.found ?? 1) / 10);
       const nextPage = () => setSize(size + 1);
 
       return {
         clothes,
-        totalNumberOfPages,
         nextPage,
       };
     }, [data, setSize, size]);

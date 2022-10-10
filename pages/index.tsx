@@ -82,14 +82,10 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
     (state) => state.filters.handleTextSearchChange
   );
 
-  const {
-    clothes,
-    currentPageNumber,
-    nextPage,
-    totalNumberOfPages,
-    isLoading,
-    isError,
-  } = useClothesData(textSearch, sort.selected);
+  const { clothes, nextPage, isLoading, isError } = useClothesData(
+    textSearch,
+    sort.selected
+  );
 
   return (
     <PageContainer>
