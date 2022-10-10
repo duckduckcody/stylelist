@@ -23,7 +23,7 @@ export interface CardListProps {
 export const CardList: FC<CardListProps> = ({ clothes }) => (
   <Container>
     {clothes.map((clothe) => (
-      <Card clothe={clothe} key={clothe.name} />
+      <Card clothe={clothe} key={clothe.link} />
     ))}
   </Container>
 );
