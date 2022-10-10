@@ -69,7 +69,6 @@ const StatusText = styled.p`
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
-
   const handleTextSearchChange = useStore(
     (state) => state.filters.handleTextSearchChange
   );
@@ -81,7 +80,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
     totalNumberOfPages,
     isLoading,
     isError,
-  } = useClothesData(textSearch);
+  } = useClothesData(textSearch, sort.selected);
 
   return (
     <PageContainer>

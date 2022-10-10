@@ -1,6 +1,7 @@
 import forEach from 'lodash.foreach';
 import { ChangeEvent } from 'react';
 import { StateCreator } from 'zustand';
+import { SortEnum } from '../types/Sort';
 import { StoreState } from './useStore';
 
 enum CheckboxFilterId {
@@ -12,11 +13,6 @@ enum CheckboxFilterId {
 }
 
 enum RadioFilterId {}
-
-enum SortOption {
-  priceLowToHigh = 'Price Low To High',
-  priceHighToLow = 'Price High To Low',
-}
 
 enum BooleanFilterId {
   onSale = 'onSale',
@@ -169,7 +165,7 @@ export const filterStore: StateCreator<
 
   sort: {
     text: 'Sort',
-    options: [SortOption.priceHighToLow, SortOption.priceLowToHigh],
+    options: SortEnum.options,
     selected: '',
     setSelected: (value: string) =>
       set((state) => {
