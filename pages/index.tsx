@@ -67,7 +67,7 @@ const StatusText = styled.p`
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
-  const sort = useStore((state) => state.filters.radios.sort);
+  const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
 
   const handleTextSearchChange = useStore(

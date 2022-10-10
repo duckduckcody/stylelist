@@ -11,8 +11,11 @@ enum CheckboxFilterId {
   price = 'price',
 }
 
-enum RadioFilterId {
-  sort = 'sort',
+enum RadioFilterId {}
+
+enum SortOption {
+  priceLowToHigh = 'Price Low To High',
+  priceHighToLow = 'Price High To Low',
 }
 
 enum BooleanFilterId {
@@ -54,6 +57,13 @@ export interface FilterState {
   checkboxes: Record<CheckboxFilterId, CheckboxFilter>;
   radios: Record<RadioFilterId, RadioFilterOption>;
   booleans: Record<BooleanFilterId, BooleanFilterOption>;
+
+  sort: {
+    text: 'Sort';
+    options: string[];
+    selected: string;
+    setSelected: (value: string) => void;
+  };
 
   clearFilters: VoidFunction;
 }
@@ -144,18 +154,7 @@ export const filterStore: StateCreator<
         get().filters.toggleCheckbox(CheckboxFilterId.price, value),
     },
   },
-  radios: {
-    sort: {
-      id: RadioFilterId.sort,
-      text: 'Sort',
-      options: ['popular', 'newest', 'oldest'],
-      selected: '',
-      setSelected: (value) =>
-        set((state) => {
-          state.filters.radios.sort.selected = value;
-        }),
-    },
-  },
+  radios: {},
   booleans: {
     onSale: {
       id: BooleanFilterId.onSale,
@@ -166,6 +165,16 @@ export const filterStore: StateCreator<
           state.filters.booleans.onSale.selected = value;
         }),
     },
+  },
+
+  sort: {
+    text: 'Sort',
+    options: [SortOption.priceHighToLow, SortOption.priceLowToHigh],
+    selected: '',
+    setSelected: (value: string) =>
+      set((state) => {
+        state.filters.sort.selected = value;
+      }),
   },
 
   clearFilters: () =>
