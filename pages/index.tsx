@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { FilterBar } from '../src/components/filter-bar/filter-bar';
 import { FilterButton } from '../src/components/filterButton/filterButton';
+import { FilterButtonContainer } from '../src/components/filterButton/filterButton.shared';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
@@ -30,9 +31,6 @@ const HeaderContainer = styled.div`
   flex-flow: column nowrap;
   gap: 8px;
   padding: 12px 0;
-
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-  } ;
 `;
 
 const TitleBar = styled.div`
@@ -64,6 +62,17 @@ const SearchBox = styled.input`
 
 const StatusText = styled.p`
   text-align: center;
+`;
+
+const LoadMoreButton = styled(FilterButtonContainer)`
+  width: 333px;
+  display: block;
+
+  margin: 24px auto 64px;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    width: 100%;
+  } ;
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
@@ -115,17 +124,15 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
       {isLoading && <StatusText>Loading...</StatusText>}
       {isError && <StatusText>!!!ERROR!!!</StatusText>}
-      {(clothes.length === 0 || !clothes) && (
+
+      {(clothes.length === 0 || !clothes) && !isLoading && (
         <StatusText>NO RESULTS</StatusText>
       )}
 
       {clothes.length > 0 && (
         <>
           <CardList clothes={clothes} />
-          <p>
-            Page: {currentPageNumber} of {totalNumberOfPages}
-          </p>
-          <button onClick={nextPage}>LOAD MORE</button>
+          <LoadMoreButton onClick={nextPage}>LOAD MORE</LoadMoreButton>
         </>
       )}
     </PageContainer>
