@@ -6,6 +6,7 @@ import { FilterBar } from '../src/components/filter-bar/filter-bar';
 import { FilterButton } from '../src/components/filterButton/filterButton';
 import { FilterButtonContainer } from '../src/components/filterButton/filterButton.shared';
 import { useClothesData } from '../src/hooks/useClotheData';
+import { useFacets } from '../src/hooks/useFacets';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 
@@ -82,10 +83,19 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
     (state) => state.filters.handleTextSearchChange
   );
 
-  const { clothes, nextPage, isLoading, isError } = useClothesData(
-    textSearch,
-    sort.selected
+  const brandSelected = useStore(
+    (state) => state.filters.checkboxes.brand.selected
   );
+
+  const brandId = useStore((state) => state.filters.checkboxes.brand.id);
+
+  const { clothes, facets, nextPage, isLoading, isError } = useClothesData(
+    textSearch,
+    sort.selected,
+    [{ id: brandId, selected: brandSelected }]
+  );
+
+  useFacets(facets);
 
   return (
     <PageContainer>
