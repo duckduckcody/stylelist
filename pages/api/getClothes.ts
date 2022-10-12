@@ -27,6 +27,7 @@ export default async function handler(
   });
 
   if (queryParse.success) {
+    console.log('req.query.filter', req.query.filter);
     const typeSenseSearch = await getTypeSenseClothes(
       queryParse.data.q,
       queryParse.data.page,

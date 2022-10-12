@@ -11,11 +11,17 @@ const getKey = (
   pageIndex: number,
   textSearch: string,
   sort: string,
-  filters: { id: string; selected: string[] }[]
+  filters: { id: string; selected: string[] | boolean }[]
 ) => {
   const filterString = filters.reduce((prev, f) => {
-    if (f.selected && f.selected.length) {
-      return (prev += `${f.id}:[${f.selected.join(',')}]`);
+    if (f.selected && Array.isArray(f.selected) && f.selected.length) {
+      return prev + `${f.id}:[${f.selected.join(',')}]`;
+    } else if (
+      f.selected &&
+      typeof f.selected == 'boolean' &&
+      f.id === 'onSale'
+    ) {
+      return prev + `oldPrice:>0`;
     }
 
     return prev;
@@ -37,7 +43,7 @@ interface returnProps {
 export const useClothesData: (
   textSearch: string,
   sort: string,
-  filters: { id: string; selected: string[] }[]
+  filters: { id: string; selected: string[] | boolean }[]
 ) => returnProps = (textSearch = '', sort = '', filters = []) => {
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
     (pageIndex) => getKey(pageIndex, textSearch, sort, filters),
