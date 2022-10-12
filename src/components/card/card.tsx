@@ -21,13 +21,15 @@ import {
 export interface CardProps {
   clothe: Clothe;
   isFavourited?: boolean;
-  onFavouriteClick?: VoidFunction;
+  addFavourite: (clothe: Clothe) => void;
+  removeFavourite: (clothe: Clothe) => void;
 }
 
 export const Card: FC<CardProps> = ({
   clothe,
   isFavourited = false,
-  onFavouriteClick = () => undefined,
+  addFavourite = () => undefined,
+  removeFavourite = () => undefined,
 }) => {
   const percentageOff = useMemo(
     () =>
@@ -41,7 +43,12 @@ export const Card: FC<CardProps> = ({
   const [hasInteracted, setHasInteracted] = useState(false);
   const favouriteClick = () => {
     setHasInteracted(true);
-    onFavouriteClick();
+
+    if (isFavourited) {
+      removeFavourite(clothe);
+    } else {
+      addFavourite(clothe);
+    }
   };
 
   return (

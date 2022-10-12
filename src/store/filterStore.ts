@@ -2,6 +2,7 @@ import forEach from 'lodash.foreach';
 import { ChangeEvent } from 'react';
 import { StateCreator } from 'zustand';
 import { SortEnum } from '../types/Sort';
+import { YourPersistedState } from './favouriteStore';
 import { StoreState } from './useStore';
 
 export enum CheckboxFilterId {
@@ -65,7 +66,7 @@ export interface FilterState {
 
 export const filterStore: StateCreator<
   StoreState,
-  [['zustand/immer', never]],
+  [['zustand/persist', YourPersistedState], ['zustand/immer', never]],
   [],
   FilterState
 > = (set, get) => ({

@@ -87,6 +87,10 @@ const LoadMoreButton = styled(FilterButtonContainer)`
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
+  const favourites = useStore((state) => state.favourites.favourites);
+  const addFavourite = useStore((state) => state.favourites.addFavourite);
+  const removeFavourite = useStore((state) => state.favourites.removeFavourite);
+
   const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
   const handleTextSearchChange = useStore(
@@ -142,7 +146,12 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
       {clothes.length > 0 && (
         <>
-          <CardList clothes={clothes} />
+          <CardList
+            clothes={clothes}
+            favourites={favourites}
+            addFavourite={addFavourite}
+            removeFavourite={removeFavourite}
+          />
           <LoadMoreButton onClick={nextPage}>LOAD MORE</LoadMoreButton>
         </>
       )}

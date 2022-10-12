@@ -18,12 +18,26 @@ const Container = styled.div`
 
 export interface CardListProps {
   clothes: Clothe[];
+  favourites: Clothe[];
+  addFavourite: (clothe: Clothe) => void;
+  removeFavourite: (clothe: Clothe) => void;
 }
 
-export const CardList: FC<CardListProps> = ({ clothes }) => (
+export const CardList: FC<CardListProps> = ({
+  clothes,
+  favourites,
+  addFavourite,
+  removeFavourite,
+}) => (
   <Container>
     {clothes.map((clothe) => (
-      <Card clothe={clothe} key={clothe.link} />
+      <Card
+        clothe={clothe}
+        key={clothe.link}
+        isFavourited={favourites.some((fav) => fav.link === clothe.link)}
+        addFavourite={addFavourite}
+        removeFavourite={removeFavourite}
+      />
     ))}
   </Container>
 );
