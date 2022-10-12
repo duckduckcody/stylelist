@@ -39,7 +39,6 @@ export const useClothesData: (
   sort: string,
   filters: { id: string; selected: string[] }[]
 ) => returnProps = (textSearch = '', sort = '', filters = []) => {
-  console.log('filters', filters);
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
     (pageIndex) => getKey(pageIndex, textSearch, sort, filters),
     fetcher,

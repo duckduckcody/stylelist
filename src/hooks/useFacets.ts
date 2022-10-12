@@ -18,10 +18,6 @@ export const useFacets = (facets: Facets | undefined) => {
     ?.find((f) => f.field_name === 'brand')
     ?.counts.map((c) => c.value);
 
-  const priceOptions = facets
-    ?.find((f) => f.field_name === 'price')
-    ?.counts.map((c) => `$${c.value}`);
-
   useStore.setState((state) => {
     if (brandOptions && state.filters.checkboxes.brand.options.length === 0) {
       state.filters.checkboxes.brand.options = brandOptions;
@@ -40,10 +36,6 @@ export const useFacets = (facets: Facets | undefined) => {
       state.filters.checkboxes.category.options.length === 0
     ) {
       state.filters.checkboxes.category.options = categoryOptions;
-    }
-
-    if (priceOptions && state.filters.checkboxes.price.options.length === 0) {
-      state.filters.checkboxes.price.options = priceOptions;
     }
   });
 };

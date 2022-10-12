@@ -20,17 +20,13 @@ export const useSelectedFilters: () => { id: string; selected: string[] }[] =
       (state) => state.filters.checkboxes.brand.selected
     );
 
-    const priceSelected = useStore(
-      (state) => state.filters.checkboxes.price.selected
-    );
-
     return [
       {
         id: CheckboxFilterId.gender,
         selected: genderSelected,
       },
       {
-        id: CheckboxFilterId.size,
+        id: 'sizes',
         selected: sizeSelected,
       },
       {
@@ -40,10 +36,6 @@ export const useSelectedFilters: () => { id: string; selected: string[] }[] =
       {
         id: CheckboxFilterId.brand,
         selected: brandSelected,
-      },
-      {
-        id: CheckboxFilterId.price,
-        selected: priceSelected,
       },
     ];
   };

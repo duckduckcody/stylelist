@@ -9,7 +9,6 @@ export enum CheckboxFilterId {
   size = 'size',
   category = 'category',
   brand = 'brand',
-  price = 'price',
 }
 
 enum RadioFilterId {}
@@ -136,18 +135,6 @@ export const filterStore: StateCreator<
         }),
       setSelected: (value) =>
         get().filters.toggleCheckbox(CheckboxFilterId.brand, value),
-    },
-    price: {
-      id: CheckboxFilterId.price,
-      text: 'Price',
-      options: [],
-      selected: [],
-      clear: () =>
-        set((s) => {
-          s.filters.checkboxes.price.selected = [];
-        }),
-      setSelected: (value) =>
-        get().filters.toggleCheckbox(CheckboxFilterId.price, value),
     },
   },
   radios: {},
