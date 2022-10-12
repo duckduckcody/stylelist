@@ -13,23 +13,25 @@ const getKey = (
   sort: string,
   filters: { id: string; selected: string[] | boolean }[]
 ) => {
-  const filterString = filters.reduce((prev, f) => {
+  const filterString = filters.reduce<string[]>((prev, f) => {
     if (f.selected && Array.isArray(f.selected) && f.selected.length) {
-      return prev + `${f.id}:[${f.selected.join(',')}]`;
+      return prev.concat(`${f.id}:[${f.selected.join(',')}]`);
     } else if (
       f.selected &&
       typeof f.selected == 'boolean' &&
       f.id === 'onSale'
     ) {
-      return prev + `oldPrice:>0`;
+      return prev.concat(`oldPrice:>0`);
     }
 
     return prev;
-  }, '');
+  }, []);
 
   return `/api/getClothes?page=${
     pageIndex + 1
-  }&q=${textSearch}&sort=${sort}&filter=${encodeURIComponent(filterString)}`;
+  }&q=${textSearch}&sort=${sort}&filter=${encodeURIComponent(
+    filterString.join(' && ')
+  )}`;
 };
 
 interface returnProps {
