@@ -53,6 +53,7 @@ export const getTypeSenseClothes = async (
     page: parseInt(page),
     sort_by: sortToApiQuery(sort),
     facet_by: 'brand,sizes,price,gender,category,website',
+    per_page: 30,
   };
 
   if (filter) {
