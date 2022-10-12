@@ -23,6 +23,12 @@ const ControlsContainer = styled.div`
 
 const StyledFilterButtonContainer = styled(FilterButtonContainer)`
   padding-right: ${(p) => (p.hasValues ? `${18 + 24}px` : '')};
+  max-width: 300px;
+
+  display: ${(p) => (p.hasValues ? 'block' : 'flex')};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)<{

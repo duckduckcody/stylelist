@@ -13,7 +13,7 @@ export const FilterButtonContainer = styled.button<{
   background: ${(p) => (p.hasValues ? 'black' : 'white')};
   padding: 12px 24px;
   border: 1px solid black;
-  width: fit-content;
+  width: auto;
   color: ${(p) => (p.hasValues ? 'white' : 'black')};
 
   font-family: 'Lato', sans-serif;

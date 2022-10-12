@@ -52,7 +52,7 @@ const Title = styled.h1`
 const SortContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 32px;
+  gap: 24px;
 `;
 
 const SearchBox = styled.input`
@@ -85,7 +85,6 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   );
 
   const selectedFilters = useSelectedFilters();
-
   const { clothes, facets, nextPage, isLoading, isError } = useClothesData(
     textSearch,
     sort.selected,
