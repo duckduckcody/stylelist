@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "typesense": "cd ../clothesline && pnpm start-typesense-server"
   },
   "dependencies": {
     "@floating-ui/react-dom-interactions": "^0.10.1",

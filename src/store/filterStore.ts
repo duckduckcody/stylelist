@@ -4,7 +4,7 @@ import { StateCreator } from 'zustand';
 import { SortEnum } from '../types/Sort';
 import { StoreState } from './useStore';
 
-enum CheckboxFilterId {
+export enum CheckboxFilterId {
   gender = 'gender',
   size = 'size',
   category = 'category',
@@ -92,7 +92,7 @@ export const filterStore: StateCreator<
     gender: {
       id: CheckboxFilterId.gender,
       text: 'Gender',
-      options: ['mens', 'womens', 'unisex'],
+      options: [],
       selected: [],
       clear: () =>
         set((s) => {
@@ -104,7 +104,7 @@ export const filterStore: StateCreator<
     size: {
       id: CheckboxFilterId.size,
       text: 'Size',
-      options: ['12', '13', '14'],
+      options: [],
       selected: [],
       clear: () =>
         set((s) => {
@@ -116,7 +116,7 @@ export const filterStore: StateCreator<
     category: {
       id: CheckboxFilterId.category,
       text: 'Category',
-      options: ['hoodies', 'jeans', 'shorts'],
+      options: [],
       selected: [],
       clear: () =>
         set((s) => {
@@ -128,7 +128,7 @@ export const filterStore: StateCreator<
     brand: {
       id: CheckboxFilterId.brand,
       text: 'Brand',
-      options: ['nike', 'gucci', 'adidas'],
+      options: [],
       selected: [],
       clear: () =>
         set((s) => {
@@ -140,7 +140,7 @@ export const filterStore: StateCreator<
     price: {
       id: CheckboxFilterId.price,
       text: 'Price',
-      options: ['$10 max', '$20 max', '$30 max'],
+      options: [],
       selected: [],
       clear: () =>
         set((s) => {

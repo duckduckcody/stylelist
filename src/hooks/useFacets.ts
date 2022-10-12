@@ -23,23 +23,26 @@ export const useFacets = (facets: Facets | undefined) => {
     ?.counts.map((c) => `$${c.value}`);
 
   useStore.setState((state) => {
-    if (brandOptions) {
+    if (brandOptions && state.filters.checkboxes.brand.options.length === 0) {
       state.filters.checkboxes.brand.options = brandOptions;
     }
 
-    if (genderOptions) {
+    if (genderOptions && state.filters.checkboxes.gender.options.length === 0) {
       state.filters.checkboxes.gender.options = genderOptions;
     }
 
-    if (sizeOptions) {
+    if (sizeOptions && state.filters.checkboxes.size.options.length === 0) {
       state.filters.checkboxes.size.options = sizeOptions;
     }
 
-    if (categoryOptions) {
+    if (
+      categoryOptions &&
+      state.filters.checkboxes.category.options.length === 0
+    ) {
       state.filters.checkboxes.category.options = categoryOptions;
     }
 
-    if (priceOptions) {
+    if (priceOptions && state.filters.checkboxes.price.options.length === 0) {
       state.filters.checkboxes.price.options = priceOptions;
     }
   });

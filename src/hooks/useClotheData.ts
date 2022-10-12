@@ -13,15 +13,17 @@ const getKey = (
   sort: string,
   filters: { id: string; selected: string[] }[]
 ) => {
-  const filterString = filters.map((f) => {
-    if (f.selected.length) {
-      return `${f.id}:[${f.selected.join(',')}]`;
+  const filterString = filters.reduce((prev, f) => {
+    if (f.selected && f.selected.length) {
+      return (prev += `${f.id}:[${f.selected.join(',')}]`);
     }
-  });
+
+    return prev;
+  }, '');
 
   return `/api/getClothes?page=${
     pageIndex + 1
-  }&q=${textSearch}&sort=${sort}&filter=${filterString.join(',')}`;
+  }&q=${textSearch}&sort=${sort}&filter=${encodeURIComponent(filterString)}`;
 };
 
 interface returnProps {
@@ -37,6 +39,7 @@ export const useClothesData: (
   sort: string,
   filters: { id: string; selected: string[] }[]
 ) => returnProps = (textSearch = '', sort = '', filters = []) => {
+  console.log('filters', filters);
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
     (pageIndex) => getKey(pageIndex, textSearch, sort, filters),
     fetcher,

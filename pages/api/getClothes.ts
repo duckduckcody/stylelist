@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { SearchResponse } from 'typesense/lib/Typesense/Documents';
+import {
+  SearchOptions,
+  SearchParams,
+  SearchResponse,
+} from 'typesense/lib/Typesense/Documents';
 import { z } from 'zod';
 import { typeSenseClient } from '../../src/lib/typeSenseClient';
 import { Sort, SortEnum, sortToApiQuery } from '../../src/types/Sort';
@@ -23,8 +27,6 @@ export default async function handler(
   });
 
   if (queryParse.success) {
-    console.log('queryParse.data.filter', queryParse.data.filter);
-
     const typeSenseSearch = await getTypeSenseClothes(
       queryParse.data.q,
       queryParse.data.page,
@@ -44,8 +46,8 @@ export const getTypeSenseClothes = async (
   sort: Sort | undefined = undefined,
   filter: string | undefined = undefined
 ) => {
-  const searchOptions = {};
-  const searchParams = {
+  const searchOptions: SearchOptions = {};
+  const searchParams: SearchParams = {
     q,
     query_by: 'name',
     page: parseInt(page),
@@ -54,11 +56,8 @@ export const getTypeSenseClothes = async (
   };
 
   if (filter) {
-    // @ts-ignore
     searchParams.filter_by = filter;
   }
-
-  console.log('searchParams', searchParams);
 
   return await typeSenseClient
     .collections('products')
