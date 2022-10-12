@@ -11,10 +11,19 @@ import { useSelectedFilters } from '../src/hooks/useSelectedFilters';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 
+const TempTitle = styled.h1`
+  position: fixed;
+  top: 0;
+  font-size: 3rem;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 0.5rem;
+  color: #d23534;
+`;
+
 const PageContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  padding: 0 24px;
+  padding: 128px 24px 0 24px;
   margin-left: auto;
   margin-right: auto;
 
@@ -98,6 +107,8 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
       <Head>
         <title>Stylelist</title>
       </Head>
+
+      <TempTitle>STYLELIST</TempTitle>
 
       <HeaderContainer>
         <TitleBar>
