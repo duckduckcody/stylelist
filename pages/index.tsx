@@ -23,7 +23,7 @@ const TempTitle = styled.h1`
 const PageContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  padding: 128px 24px 0 24px;
+  padding: 0 24px 0 24px;
   margin-left: auto;
   margin-right: auto;
 
@@ -107,8 +107,6 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
       <Head>
         <title>Stylelist</title>
       </Head>
-
-      <TempTitle>STYLELIST</TempTitle>
 
       <HeaderContainer>
         <TitleBar>
