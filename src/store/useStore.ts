@@ -18,7 +18,7 @@ export const useStore = create<StoreState>()(
         favourites: favouriteStore(...storeProps),
       }),
       {
-        name: 'stylelist',
+        name: 'store',
         partialize: (state) => ({
           favourites: state.favourites.favourites,
         }),
