@@ -19,6 +19,7 @@ export const useStore = create<StoreState>()(
       }),
       {
         name: 'store',
+        getStorage: () => localStorage,
         partialize: (state) => ({
           favourites: state.favourites.favourites,
         }),
