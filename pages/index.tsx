@@ -91,6 +91,10 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const addFavourite = useStore((state) => state.favourites.addFavourite);
   const removeFavourite = useStore((state) => state.favourites.removeFavourite);
 
+  const test = useStore((state) => state.favourites);
+
+  console.log('test', test);
+
   const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
   const handleTextSearchChange = useStore(

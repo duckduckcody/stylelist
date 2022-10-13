@@ -8,18 +8,15 @@ export interface FavouriteState {
   removeFavourite: (clothe: Clothe) => void;
 }
 
-export interface YourPersistedState {
-  favourites: Clothe[];
-}
-
 export const favouriteStore: StateCreator<
   StoreState,
-  [['zustand/persist', YourPersistedState], ['zustand/immer', never]],
+  [['zustand/immer', never], ['zustand/persist', unknown]],
   [],
   FavouriteState
 > = (set) => ({
   favourites: [],
   addFavourite: (clothe) => {
+    console.log('addFavourite');
     set((state) => {
       state.favourites.favourites.push(clothe);
     });
