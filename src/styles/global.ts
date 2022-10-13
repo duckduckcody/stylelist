@@ -17,19 +17,18 @@ export enum ZIndexes {
 export const GlobalStyles = createGlobalStyle`
   html,
   body {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      font-size: 16px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
   }
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
-  html, body {
-    font-size: 18px;
+    html, body {
+      font-size: 18px;
+    }
   }
-}
-
-
+  
   *, *:before, *:after {
     box-sizing: inherit;
   }

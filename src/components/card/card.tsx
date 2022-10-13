@@ -23,6 +23,7 @@ export interface CardProps {
   isFavourited?: boolean;
   addFavourite?: (clothe: Clothe) => void;
   removeFavourite?: (clothe: Clothe) => void;
+  onCardClick?: (clothe: Clothe) => void;
 }
 
 export const Card: FC<CardProps> = ({
@@ -30,6 +31,7 @@ export const Card: FC<CardProps> = ({
   isFavourited = false,
   addFavourite = () => undefined,
   removeFavourite = () => undefined,
+  onCardClick = () => undefined,
 }) => {
   const percentageOff = useMemo(
     () =>
@@ -55,8 +57,13 @@ export const Card: FC<CardProps> = ({
     <Container>
       <ImageContainer>
         <ImageLink
+          onClick={(e) => {
+            e.preventDefault();
+            onCardClick(clothe);
+          }}
           href={clothe.link}
           target='_blank'
+          rel='noreferrer'
           aria-label={`link to ${clothe.name} product page`}
         >
           <Image

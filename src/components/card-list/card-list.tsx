@@ -21,6 +21,7 @@ export interface CardListProps {
   favourites: Clothe[];
   addFavourite?: (clothe: Clothe) => void;
   removeFavourite?: (clothe: Clothe) => void;
+  onCardClick?: (clothe: Clothe) => void;
 }
 
 export const CardList: FC<CardListProps> = ({
@@ -28,6 +29,7 @@ export const CardList: FC<CardListProps> = ({
   favourites,
   addFavourite,
   removeFavourite,
+  onCardClick,
 }) => (
   <Container>
     {clothes.map((clothe) => (
@@ -37,6 +39,7 @@ export const CardList: FC<CardListProps> = ({
         isFavourited={favourites.some((fav) => fav.link === clothe.link)}
         addFavourite={addFavourite}
         removeFavourite={removeFavourite}
+        onCardClick={onCardClick}
       />
     ))}
   </Container>

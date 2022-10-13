@@ -6,6 +6,7 @@ export const clotheSchema = z.object({
   oldPrice: z.number().optional(),
   images: z.array(z.string()),
   link: z.string(),
+  details: z.string(),
 });
 
 export type Clothe = z.infer<typeof clotheSchema>;
