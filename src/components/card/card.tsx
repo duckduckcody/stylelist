@@ -21,8 +21,8 @@ import {
 export interface CardProps {
   clothe: Clothe;
   isFavourited?: boolean;
-  addFavourite: (clothe: Clothe) => void;
-  removeFavourite: (clothe: Clothe) => void;
+  addFavourite?: (clothe: Clothe) => void;
+  removeFavourite?: (clothe: Clothe) => void;
 }
 
 export const Card: FC<CardProps> = ({
