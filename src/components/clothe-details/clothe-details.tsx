@@ -12,7 +12,8 @@ const Container = styled.div`
   margin: 0;
 
   display: grid;
-  grid-template-columns: 150px minmax(200px, 1000px) minmax(200px, 400px);
+  grid-template-columns: 150px 1fr 400px;
+  grid-template-rows: 100%;
   grid-template-areas: 'thumbnails image info';
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
@@ -59,7 +60,8 @@ export const ThumbnailImage = styled.img<{
 
 const ImageContainer = styled.div<{ imageSrc?: string }>`
   grid-area: image;
-  background: top / contain no-repeat url(${(p) => p.imageSrc});
+  background: top / contain no-repeat url(${(p) => p.imageSrc}),
+    top / 200px no-repeat url('/spinner.svg'); ;
 `;
 
 const TextContainer = styled.div`
