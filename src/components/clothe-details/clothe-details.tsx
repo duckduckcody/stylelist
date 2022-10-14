@@ -35,6 +35,10 @@ const ImagesContainer = styled.div`
   flex-flow: row nowrap;
 `;
 
+// cant use a background image
+// need a next image as it determines it own width
+// a background image cant determine its own width and relies on its parent
+
 const ThumbnailContainer = styled.div`
   grid-area: thumbnails;
   direction: rtl;
