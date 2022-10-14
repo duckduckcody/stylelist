@@ -22,7 +22,7 @@ import { Clothe } from '../src/types/Clothe';
 import { titleBarHeight } from './_app';
 
 const FilterBarContainer = styled.div`
-  /* position: sticky; */
+  position: sticky;
   z-index: ${ZIndexes.menu};
   top: ${titleBarHeight};
 
