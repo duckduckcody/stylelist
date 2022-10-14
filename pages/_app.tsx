@@ -22,11 +22,13 @@ const PageContainer = styled.div`
   } ;
 `;
 
+export const titleBarHeight = '50px';
+
 const TitleBar = styled.div`
   position: sticky;
   z-index: ${ZIndexes.menu};
   top: 0;
-  height: 42px;
+  height: ${titleBarHeight};
 
   display: flex;
   flex-flow: row nowrap;
@@ -52,13 +54,15 @@ const Title = styled.a`
   cursor: pointer;
 `;
 
-const TitleLink = styled.a`
+const TitleLink = styled.a<{ active?: boolean }>`
   all: unset;
   font-size: 1rem;
   font-weight: normal;
   font-family: 'Lato', sans-serif;
 
   cursor: pointer;
+
+  text-decoration: ${(p) => (p.active ? 'underline' : '')};
   &:hover {
     text-decoration: underline;
   }
@@ -96,7 +100,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Title>STYLELIST</Title>
           </Link>
           <Link href='/favourites'>
-            <TitleLink>Favourites</TitleLink>
+            <TitleLink active={router.pathname === '/favourites'}>
+              Favourites
+            </TitleLink>
           </Link>
         </TitleTextContainer>
 

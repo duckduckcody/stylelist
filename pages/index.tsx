@@ -18,11 +18,12 @@ import { useSelectedFilters } from '../src/hooks/useSelectedFilters';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 import { Clothe } from '../src/types/Clothe';
+import { titleBarHeight } from './_app';
 
 const FilterBarContainer = styled.div`
   position: sticky;
   z-index: ${ZIndexes.menu};
-  top: 42px;
+  top: ${titleBarHeight};
 
   display: flex;
   flex-flow: column nowrap;
