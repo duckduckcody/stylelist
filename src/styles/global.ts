@@ -9,9 +9,9 @@ export const COLOURS = {
 };
 
 export enum ZIndexes {
-  menu = 10,
-  modalBackground = 100,
-  modal = 110,
+  menu = 1,
+  modalBackground = 2,
+  modal = 3,
 }
 
 export const GlobalStyles = createGlobalStyle`

@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CSSProperties, FC, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
+import { useLockBodyScroll } from '../../../hooks/useLockBodyScroll';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { ZIndexes } from '../../../styles/global';
 import { FilterButtonContainer } from '../filterButton.shared';
@@ -98,6 +99,8 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     useDismiss(context),
     useClick(context),
   ]);
+
+  useLockBodyScroll(open);
 
   const menuPosition = useMemo<CSSProperties>(() => {
     if (isMobile) {

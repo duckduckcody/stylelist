@@ -1,87 +1,125 @@
-import NextImage from 'next/image';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import CrossIcon from '../../icons/cross.svg';
+import { MOBILE_BREAKPOINT } from '../../styles/global';
 import { Clothe } from '../../types/Clothe';
 
 const Container = styled.div`
   position: relative;
-  display: grid;
-  grid-template-columns: 400px 1fr;
   height: 100%;
-  gap: 32px;
-  position: relative;
+  width: 100%;
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: 150px minmax(200px, 1000px) minmax(200px, 400px);
+  grid-template-areas: 'thumbnails image info';
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 40% 60%;
+    grid-template-areas: 'thumbnails' 'info';
+  }
 `;
 
-const ImagesContainer = styled.div`
-  overflow-y: scroll;
+const CloseIcon = styled(CrossIcon)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+`;
 
+const ThumbnailContainer = styled.div`
+  grid-area: thumbnails;
+  direction: rtl;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-flow: column nowrap;
-  direction: rtl;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
 `;
 
-const ImageContainer = styled.div`
+export const ThumbnailImage = styled.img<{
+  selected?: boolean;
+}>`
+  border-right: ${(p) => p.selected && `8px solid black`};
   width: 100%;
+  cursor: pointer;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    width: unset;
+    height: 100%;
+  }
+`;
+
+const ImageContainer = styled.div<{ imageSrc?: string }>`
+  grid-area: image;
+  background: top / contain no-repeat url(${(p) => p.imageSrc});
 `;
 
 const TextContainer = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 8px;
+  grid-area: info;
+  overflow-y: auto;
+  display: grid;
+  padding: 0 0 0 12px;
+  grid-template-columns: 1fr 36px;
+  grid-template-rows: repeat(4, min-content);
+  grid-template-areas:
+    'name name'
+    'price price'
+    'buttonContainer buttonContainer'
+    'description description';
 
-  height: 100%;
-  justify-content: center;
-
-  font-size: 1rem;
-  font-weight: normal;
-  font-family: 'Lato', sans-serif;
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    padding: 0;
+  }
 `;
 
-const Header = styled.h3`
-  all: unset;
-  font-size: 1.75rem;
+const Price = styled.div`
+  grid-area: price;
+  font-size: 1.5rem;
+  line-height: 2rem;
   font-weight: bold;
 `;
 
-const Description = styled.p`
-  all: unset;
+const Name = styled.div`
+  grid-area: name;
+  font-size: 1.5rem;
 `;
 
-const PriceContainer = styled.div`
+const Description = styled.div`
+  grid-area: description;
+  font-size: 1rem;
+  line-height: 1.5rem;
+`;
+
+const ButtonContainer = styled.div`
+  grid-area: buttonContainer;
+  position: sticky;
   display: flex;
   flex-flow: row nowrap;
-  gap: 8px;
+  justify-items: center;
+  width: 100%;
+  margin: 10px 0;
+  top: 0;
 `;
 
-const Price = styled.p`
-  all: unset;
-  font-size: 1.25rem;
-`;
-
-const OldPrice = styled(Price)`
-  text-decoration: line-through;
-`;
-
-const Link = styled.a`
-  all: unset;
-
-  margin-top: 8px;
-
+const ViewButton = styled.a`
   cursor: pointer;
-  text-decoration: underline;
-`;
+  flex: 1 1 auto;
+  padding: 5px 0;
+  background-color: white;
+  border: none;
 
-const CrossButton = styled.button`
-  all: unset;
-
-  position: absolute;
-  right: 0;
-  cursor: pointer;
-`;
-
-const Cross = styled(CrossIcon)`
-  color: black;
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    padding: 8px 0;
+    font-size: 1.1rem;
+  }
 `;
 
 export interface ClotheDetailsProps {
@@ -93,33 +131,39 @@ export const ClotheDetails: FC<ClotheDetailsProps> = ({
   clothe,
   onCloseClick = () => undefined,
 }) => {
+  const isMobile = useIsMobile();
+  const [selectedImage, setSelectedImage] = useState(clothe.images[0]);
+
   return (
     <Container>
-      <CrossButton onClick={onCloseClick}>
-        <Cross />
-      </CrossButton>
+      <CloseIcon onClick={onCloseClick} />
 
-      {/* get images to go big */}
-      <ImagesContainer>
-        {clothe.images.map((image) => (
-          <ImageContainer key={image}>
-            <NextImage src={image} alt={clothe.name} height={600} width={400} />
-          </ImageContainer>
+      <ThumbnailContainer>
+        {clothe.images.map((img, index) => (
+          <ThumbnailImage
+            key={`${img}${index}`}
+            src={img}
+            selected={selectedImage === img}
+            alt={clothe.name}
+            onClick={() => setSelectedImage(img)}
+          />
         ))}
-      </ImagesContainer>
+      </ThumbnailContainer>
+
+      {!isMobile && <ImageContainer imageSrc={selectedImage} />}
 
       <TextContainer>
-        <Header>{clothe.name}</Header>
+        {/* <WebsitesLogo src={clotheInfo.websitesLogo} /> */}
+        {/* <WebsiteName>{clotheInfo.websiteName}</WebsiteName> */}
+        <Name>{clothe.name}</Name>
+        <Price>${clothe.price}</Price>
         <Description>{clothe.details}</Description>
 
-        <PriceContainer>
-          {clothe.oldPrice && <OldPrice>${clothe.price}</OldPrice>}
-          <Price>${clothe.price}</Price>
-        </PriceContainer>
-
-        <Link href={clothe.link} target='_blank' rel='noreferrer'>
-          Link to product
-        </Link>
+        <ButtonContainer>
+          <ViewButton href={clothe.link} target='_blank'>
+            View product
+          </ViewButton>
+        </ButtonContainer>
       </TextContainer>
     </Container>
   );

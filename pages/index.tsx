@@ -14,6 +14,7 @@ import { FilterBar } from '../src/components/filter-bar/filter-bar';
 import { FilterButtonContainer } from '../src/components/filterButton/filterButton.shared';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useFacets } from '../src/hooks/useFacets';
+import { useLockBodyScroll } from '../src/hooks/useLockBodyScroll';
 import { useSelectedFilters } from '../src/hooks/useSelectedFilters';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
@@ -21,7 +22,7 @@ import { Clothe } from '../src/types/Clothe';
 import { titleBarHeight } from './_app';
 
 const FilterBarContainer = styled.div`
-  position: sticky;
+  /* position: sticky; */
   z-index: ${ZIndexes.menu};
   top: ${titleBarHeight};
 
@@ -86,6 +87,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   useFacets(facets);
 
   const [selectedClothe, setSelectedClothe] = useState<Clothe | undefined>();
+  useLockBodyScroll(Boolean(selectedClothe));
 
   const onCardClick = (clothe: Clothe) => {
     setSelectedClothe(clothe);
