@@ -47,7 +47,8 @@ const DrawerBackground = styled.div`
 const Drawer = styled(motion.div)`
   background: white;
   margin: 100px 0 0 0;
-  padding: 20px 20px 0 20px;
+  overflow: hidden;
+  /* padding: 20px 20px 0 20px; */
   border-radius: 20px 20px 0 0;
   position: fixed;
   bottom: 0;

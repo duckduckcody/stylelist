@@ -14,12 +14,11 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 150px 1fr 400px;
   grid-template-rows: 100%;
-  grid-template-areas: 'thumbnails image info';
+  grid-template-areas: 'images info';
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     grid-template-columns: 1fr;
     grid-template-rows: 40% 60%;
-    grid-template-areas: 'thumbnails' 'info';
   }
 `;
 
@@ -28,6 +27,12 @@ const CloseIcon = styled(CrossIcon)`
   right: 0;
   top: 0;
   cursor: pointer;
+`;
+
+const ImagesContainer = styled.div`
+  grid-area: images;
+  display: flex;
+  flex-flow: row nowrap;
 `;
 
 const ThumbnailContainer = styled.div`
@@ -140,19 +145,21 @@ export const ClotheDetails: FC<ClotheDetailsProps> = ({
     <Container>
       <CloseIcon onClick={onCloseClick} />
 
-      <ThumbnailContainer>
-        {clothe.images.map((img, index) => (
-          <ThumbnailImage
-            key={`${img}${index}`}
-            src={img}
-            selected={selectedImage === img}
-            alt={clothe.name}
-            onClick={() => setSelectedImage(img)}
-          />
-        ))}
-      </ThumbnailContainer>
+      <ImagesContainer>
+        <ThumbnailContainer>
+          {clothe.images.map((img, index) => (
+            <ThumbnailImage
+              key={`${img}${index}`}
+              src={img}
+              selected={selectedImage === img}
+              alt={clothe.name}
+              onClick={() => setSelectedImage(img)}
+            />
+          ))}
+        </ThumbnailContainer>
 
-      {!isMobile && <ImageContainer imageSrc={selectedImage} />}
+        {!isMobile && <ImageContainer imageSrc={selectedImage} />}
+      </ImagesContainer>
 
       <TextContainer>
         {/* <WebsitesLogo src={clotheInfo.websitesLogo} /> */}
