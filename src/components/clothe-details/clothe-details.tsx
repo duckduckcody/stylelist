@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { useIsMobile } from '../../hooks/useIsMobile';
 import CrossIcon from '../../icons/cross.svg';
 import { MOBILE_BREAKPOINT } from '../../styles/global';
 import { Clothe } from '../../types/Clothe';
@@ -9,12 +8,13 @@ const Container = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
-  margin: 0;
 
   display: grid;
-  grid-template-columns: 150px 1fr 400px;
+  grid-template-columns: auto 400px;
   grid-template-rows: 100%;
   grid-template-areas: 'images info';
+  justify-content: center;
+  gap: 24px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     grid-template-columns: 1fr;
@@ -25,21 +25,19 @@ const Container = styled.div`
 const CloseIcon = styled(CrossIcon)`
   position: absolute;
   right: 0;
-  top: 0;
+  top: 20px;
   cursor: pointer;
 `;
 
 const ImagesContainer = styled.div`
   grid-area: images;
-  display: flex;
-  flex-flow: row nowrap;
+
+  display: grid;
+  grid-template-columns: 150px minmax(auto, 1000px);
+  grid-template-areas: 'thumbnails image';
 `;
 
-// cant use a background image
-// need a next image as it determines it own width
-// a background image cant determine its own width and relies on its parent
-
-const ThumbnailContainer = styled.div`
+const ThumbnailsContainer = styled.div`
   grid-area: thumbnails;
   direction: rtl;
   overflow-y: auto;
@@ -54,30 +52,35 @@ const ThumbnailContainer = styled.div`
   }
 `;
 
-export const ThumbnailImage = styled.img<{
+const ThumbnailImageContainer = styled.button<{
   selected?: boolean;
 }>`
-  border-right: ${(p) => p.selected && `8px solid black`};
-  width: 100%;
-  cursor: pointer;
+  all: unset;
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    width: unset;
-    height: 100%;
-  }
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  border: ${(p) => p.selected && `3px solid black`};
 `;
 
-const ImageContainer = styled.div<{ imageSrc?: string }>`
-  grid-area: image;
-  background: top / contain no-repeat url(${(p) => p.imageSrc}),
-    top / 200px no-repeat url('/spinner.svg'); ;
+const ThumbnailImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+`;
+
+const Image = styled.img`
+  object-fit: contain;
+  object-position: left center;
+  width: 100%;
+  height: 100%;
 `;
 
 const TextContainer = styled.div`
   grid-area: info;
   overflow-y: auto;
   display: grid;
-  padding: 0 0 0 12px;
+  align-content: center;
   grid-template-columns: 1fr 36px;
   grid-template-rows: repeat(4, min-content);
   grid-template-areas:
@@ -86,9 +89,8 @@ const TextContainer = styled.div`
     'buttonContainer buttonContainer'
     'description description';
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    padding: 0;
-  }
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
 `;
 
 const Price = styled.div`
@@ -138,11 +140,12 @@ export interface ClotheDetailsProps {
   onCloseClick?: VoidFunction;
 }
 
+const toBase64 = (str: string) => window.btoa(str);
+
 export const ClotheDetails: FC<ClotheDetailsProps> = ({
   clothe,
   onCloseClick = () => undefined,
 }) => {
-  const isMobile = useIsMobile();
   const [selectedImage, setSelectedImage] = useState(clothe.images[0]);
 
   return (
@@ -150,19 +153,19 @@ export const ClotheDetails: FC<ClotheDetailsProps> = ({
       <CloseIcon onClick={onCloseClick} />
 
       <ImagesContainer>
-        <ThumbnailContainer>
-          {clothe.images.map((img, index) => (
-            <ThumbnailImage
-              key={`${img}${index}`}
-              src={img}
+        <ThumbnailsContainer>
+          {clothe.images.map((img) => (
+            <ThumbnailImageContainer
+              key={img}
               selected={selectedImage === img}
-              alt={clothe.name}
               onClick={() => setSelectedImage(img)}
-            />
+            >
+              <ThumbnailImage src={img} alt={clothe.name} />
+            </ThumbnailImageContainer>
           ))}
-        </ThumbnailContainer>
+        </ThumbnailsContainer>
 
-        {!isMobile && <ImageContainer imageSrc={selectedImage} />}
+        <Image src={selectedImage} alt={clothe.name} />
       </ImagesContainer>
 
       <TextContainer>
