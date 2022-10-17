@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
@@ -86,6 +87,25 @@ const SortContainer = styled.div`
   gap: 16px;
 `;
 
+export const TitleHeaderBar: FC<{
+  className?: string;
+}> = ({ className }) => {
+  const router = useRouter();
+
+  return (
+    <TitleTextContainer className={className}>
+      <Link href='/'>
+        <Title>STYLELIST</Title>
+      </Link>
+      <Link href='/favourites'>
+        <TitleLink active={router.pathname === '/favourites'}>
+          Favourites
+        </TitleLink>
+      </Link>
+    </TitleTextContainer>
+  );
+};
+
 export interface HeaderBarProps {}
 
 export const HeaderBar: FC<HeaderBarProps> = () => {
@@ -102,14 +122,7 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
   return (
     <Container>
       <TitleBar>
-        <TitleTextContainer>
-          <Link href='/'>
-            <Title>STYLELIST</Title>
-          </Link>
-          <Link href='/favourites'>
-            <TitleLink>Favourites</TitleLink>
-          </Link>
-        </TitleTextContainer>
+        <TitleHeaderBar />
 
         <SortContainer>
           <SearchBox
