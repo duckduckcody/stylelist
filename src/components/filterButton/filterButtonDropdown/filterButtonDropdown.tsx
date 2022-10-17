@@ -165,6 +165,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               initial={isMobile ? { transform: 'translateY(100%)' } : undefined}
               animate={isMobile ? { transform: 'translateY(0%)' } : undefined}
               exit={isMobile ? { transform: 'translateY(100%)' } : undefined}
+              transition={{ ease: 'easeOut', duration: 0.3 }}
               ref={floating}
               {...getFloatingProps()}
               style={menuPosition}
