@@ -104,14 +104,12 @@ const TextContainer = styled.div`
     'price'
     'link'
     'description';
-  gap: 8px;
 
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     align-content: start;
-    gap: 4px;
     overflow: scroll;
     padding: 0 8px 8px 8px;
   }
@@ -121,6 +119,7 @@ const Price = styled.div`
   grid-area: price;
   font-size: 1.5rem;
   font-weight: bold;
+  margin: 8px 0 0 0;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     font-size: 1.3rem;
@@ -130,6 +129,7 @@ const Price = styled.div`
 const Brand = styled.div`
   grid-area: brand;
   font-size: 0.9rem;
+  text-transform: capitalize;
 `;
 
 const Name = styled.div`
@@ -144,11 +144,13 @@ const Name = styled.div`
 const Description = styled.div`
   grid-area: description;
   line-height: 1.5rem;
+  margin: 8px 0 0 0;
 `;
 
 const WebsiteLink = styled.a`
   grid-area: link;
   color: black;
+  margin: 8px 0 0 0;
 `;
 
 export interface ClotheDetailsProps {
@@ -194,7 +196,7 @@ export const ClotheDetails: FC<ClotheDetailsProps> = ({
       )}
 
       <TextContainer>
-        <Brand>{clothe.brand}</Brand>
+        <Brand>{clothe.brand.toLocaleLowerCase()}</Brand>
         <Name>{clothe.name}</Name>
         <Price>${clothe.price}</Price>
         <Description>{clothe.details}</Description>

@@ -54,10 +54,9 @@ export const TextContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   grid-template-areas:
+    'brand brand'
     'name name'
-    'price price'
-    'brand brand';
-  gap: 4px;
+    'price price';
 
   font-family: 'Lato', sans-serif;
   font-weight: normal;
@@ -65,9 +64,6 @@ export const TextContainer = styled.div`
   line-height: 1.1875rem;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
-    font-size: 0.875rem;
-    line-height: 1.1875rem;
-    gap: 4px;
     margin: 6px 0;
   } ;
 `;
@@ -76,15 +72,14 @@ export const Brand = styled.p`
   grid-area: brand;
   margin: 0;
   font-size: 0.9rem;
+  text-transform: capitalize;
 `;
 
 export const Name = styled.h3`
+  all: unset;
+
   grid-area: name;
   margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  font-weight: inherit;
 `;
 
 export const PriceContainer = styled.div`
@@ -92,6 +87,8 @@ export const PriceContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: 12px;
+  margin: 4px 0 0;
+  font-size: 0.9rem;
 `;
 
 export const PercentageOffContainer = styled.div`
@@ -108,7 +105,7 @@ export const PercentageOffContainer = styled.div`
 
 export const PercentageOff = styled.div`
   font-family: 'Lato', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.1875rem;
 `;
 

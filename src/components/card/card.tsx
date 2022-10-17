@@ -92,7 +92,7 @@ export const Card: FC<CardProps> = ({
         {isFavourited && hasInteracted && <HeartStamp />}
       </ImageContainer>
       <TextContainer>
-        <Brand>{clothe.brand}</Brand>
+        <Brand>{clothe.brand.toLocaleLowerCase()}</Brand>
         <Name>{clothe.name}</Name>
         <PriceContainer>
           <Price>${clothe.price}</Price>
