@@ -1,6 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 import { Clothe } from '../../types/Clothe';
 import {
+  Brand,
   Container,
   HeartContainer,
   HeartIcon,
@@ -91,6 +92,7 @@ export const Card: FC<CardProps> = ({
         {isFavourited && hasInteracted && <HeartStamp />}
       </ImageContainer>
       <TextContainer>
+        <Brand>{clothe.brand}</Brand>
         <Name>{clothe.name}</Name>
         <PriceContainer>
           <Price>${clothe.price}</Price>

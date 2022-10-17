@@ -50,10 +50,14 @@ export const HeartContainer = styled.button`
 `;
 
 export const TextContainer = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 8px;
-  margin: 12px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    'name name'
+    'price price'
+    'brand brand';
+  gap: 4px;
 
   font-family: 'Lato', sans-serif;
   font-weight: normal;
@@ -68,7 +72,14 @@ export const TextContainer = styled.div`
   } ;
 `;
 
+export const Brand = styled.p`
+  grid-area: brand;
+  margin: 0;
+  font-size: 0.9rem;
+`;
+
 export const Name = styled.h3`
+  grid-area: name;
   margin: 0;
   font-family: inherit;
   font-size: inherit;
@@ -77,6 +88,7 @@ export const Name = styled.h3`
 `;
 
 export const PriceContainer = styled.div`
+  grid-area: price;
   display: flex;
   flex-flow: row nowrap;
   gap: 12px;
@@ -100,7 +112,9 @@ export const PercentageOff = styled.div`
   line-height: 1.1875rem;
 `;
 
-export const Price = styled.span``;
+export const Price = styled.span`
+  font-weight: bold;
+`;
 
 export const OldPrice = styled.span`
   text-decoration: line-through;
