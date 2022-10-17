@@ -48,6 +48,10 @@ const Drawer = styled(motion.div)`
   bottom: 0;
   height: 90vh;
   width: 100%;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    padding: 0;
+  } ;
 `;
 
 const StatusText = styled.p`

@@ -18,13 +18,14 @@ const Container = styled.div`
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     grid-template-columns: 1fr;
-    grid-template-rows: 40% 60%;
+    grid-template-rows: 1fr max-content;
+    grid-template-areas: 'images' 'info';
   }
 `;
 
 const CloseIcon = styled(CrossIcon)`
   position: absolute;
-  right: 0;
+  right: 20px;
   top: 20px;
   cursor: pointer;
 `;
@@ -39,17 +40,12 @@ const ImagesContainer = styled.div`
 
 const ThumbnailsContainer = styled.div`
   grid-area: thumbnails;
-  direction: rtl;
-  overflow-y: auto;
-  overflow-x: hidden;
+
   display: flex;
   flex-flow: column nowrap;
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    flex-flow: row nowrap;
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
+  direction: rtl;
+  overflow-y: auto;
 `;
 
 const ThumbnailImageContainer = styled.button<{
@@ -74,6 +70,10 @@ const Image = styled.img`
   object-position: left center;
   width: 100%;
   height: 100%;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    display: none;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -92,6 +92,10 @@ const TextContainer = styled.div`
 
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    align-content: start;
+  }
 `;
 
 const Price = styled.div`
@@ -123,8 +127,6 @@ export interface ClotheDetailsProps {
   clothe: Clothe;
   onCloseClick?: VoidFunction;
 }
-
-const toBase64 = (str: string) => window.btoa(str);
 
 export const ClotheDetails: FC<ClotheDetailsProps> = ({
   clothe,
