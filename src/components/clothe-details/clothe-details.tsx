@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import CrossIcon from '../../icons/cross.svg';
 import { MOBILE_BREAKPOINT } from '../../styles/global';
 import { Clothe } from '../../types/Clothe';
@@ -10,7 +11,7 @@ const Container = styled.div`
   width: 100%;
 
   display: grid;
-  grid-template-columns: auto 400px;
+  grid-template-columns: auto 350px;
   grid-template-rows: 100%;
   grid-template-areas: 'images info';
   justify-content: center;
@@ -18,8 +19,9 @@ const Container = styled.div`
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr max-content;
+    grid-template-rows: minmax(300px, 1fr) auto;
     grid-template-areas: 'images' 'info';
+    gap: 12px;
   }
 `;
 
@@ -28,6 +30,11 @@ const CloseIcon = styled(CrossIcon)`
   right: 20px;
   top: 20px;
   cursor: pointer;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    right: 10px;
+    top: 10px;
+  }
 `;
 
 const ImagesContainer = styled.div`
@@ -70,10 +77,19 @@ const Image = styled.img`
   object-position: left center;
   width: 100%;
   height: 100%;
+`;
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    display: none;
-  }
+const MobileImages = styled.div`
+  display: flex;
+  grid-area: images;
+  width: 100%;
+  flex-flow: row nowrap;
+  overflow-x: scroll;
+`;
+
+const MobileImage = styled.img`
+  width: auto;
+  height: 100%;
 `;
 
 const TextContainer = styled.div`
@@ -95,6 +111,9 @@ const TextContainer = styled.div`
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     align-content: start;
+    gap: 4px;
+    overflow: scroll;
+    padding: 0 8px 8px 8px;
   }
 `;
 
@@ -102,15 +121,24 @@ const Price = styled.div`
   grid-area: price;
   font-size: 1.5rem;
   font-weight: bold;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Brand = styled.div`
   grid-area: brand;
+  font-size: 0.9rem;
 `;
 
 const Name = styled.div`
   grid-area: name;
   font-size: 1.5rem;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Description = styled.div`
@@ -132,27 +160,38 @@ export const ClotheDetails: FC<ClotheDetailsProps> = ({
   clothe,
   onCloseClick = () => undefined,
 }) => {
+  const isMobile = useIsMobile();
   const [selectedImage, setSelectedImage] = useState(clothe.images[0]);
 
   return (
     <Container>
       <CloseIcon onClick={onCloseClick} />
 
-      <ImagesContainer>
-        <ThumbnailsContainer>
-          {clothe.images.map((img) => (
-            <ThumbnailImageContainer
-              key={img}
-              selected={selectedImage === img}
-              onClick={() => setSelectedImage(img)}
-            >
-              <ThumbnailImage src={img} alt={clothe.name} />
-            </ThumbnailImageContainer>
-          ))}
-        </ThumbnailsContainer>
+      {!isMobile && (
+        <ImagesContainer>
+          <ThumbnailsContainer>
+            {clothe.images.map((img) => (
+              <ThumbnailImageContainer
+                key={img}
+                selected={selectedImage === img}
+                onClick={() => setSelectedImage(img)}
+              >
+                <ThumbnailImage src={img} alt={clothe.name} />
+              </ThumbnailImageContainer>
+            ))}
+          </ThumbnailsContainer>
 
-        <Image src={selectedImage} alt={clothe.name} />
-      </ImagesContainer>
+          <Image src={selectedImage} alt={clothe.name} />
+        </ImagesContainer>
+      )}
+
+      {isMobile && (
+        <MobileImages>
+          {clothe.images.map((img) => (
+            <MobileImage src={img} alt={clothe.name} key={img} />
+          ))}
+        </MobileImages>
+      )}
 
       <TextContainer>
         <Brand>{clothe.brand}</Brand>
