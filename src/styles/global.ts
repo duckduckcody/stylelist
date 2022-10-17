@@ -22,12 +22,6 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     font-size: 16px;
   }
-
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    html, body {
-      font-size: 18px;
-    }
-  }
   
   *, *:before, *:after {
     box-sizing: inherit;

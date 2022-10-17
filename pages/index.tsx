@@ -10,8 +10,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { ClotheDetails } from '../src/components/clothe-details/clothe-details';
-import { FilterBar } from '../src/components/filter-bar/filter-bar';
 import { FilterButtonContainer } from '../src/components/filterButton/filterButton.shared';
+import { HeaderBar } from '../src/components/header-bar/header-bar';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useFacets } from '../src/hooks/useFacets';
 import { useLockBodyScroll } from '../src/hooks/useLockBodyScroll';
@@ -19,19 +19,13 @@ import { useSelectedFilters } from '../src/hooks/useSelectedFilters';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 import { Clothe } from '../src/types/Clothe';
-import { titleBarHeight } from './_app';
 
-const FilterBarContainer = styled.div`
-  position: sticky;
-  z-index: ${ZIndexes.menu};
-  top: ${titleBarHeight};
+const PageContainer = styled.div`
+  padding: 0 24px;
 
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 8px;
-  padding: 12px 0;
-
-  background: white;
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    padding: 0 8px;
+  } ;
 `;
 
 const DrawerBackground = styled.div`
@@ -109,29 +103,29 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
         <title>Stylelist</title>
       </Head>
 
-      <FilterBarContainer>
-        <FilterBar />
-      </FilterBarContainer>
+      <HeaderBar />
 
-      {isLoading && <StatusText>Loading...</StatusText>}
-      {isError && <StatusText>!!!ERROR!!!</StatusText>}
+      <PageContainer>
+        {isLoading && <StatusText>Loading...</StatusText>}
+        {isError && <StatusText>!!!ERROR!!!</StatusText>}
 
-      {(clothes.length === 0 || !clothes) && !isLoading && (
-        <StatusText>NO RESULTS</StatusText>
-      )}
+        {(clothes.length === 0 || !clothes) && !isLoading && (
+          <StatusText>NO RESULTS</StatusText>
+        )}
 
-      {clothes.length > 0 && (
-        <>
-          <CardList
-            clothes={clothes}
-            favourites={favourites}
-            addFavourite={addFavourite}
-            removeFavourite={removeFavourite}
-            onCardClick={onCardClick}
-          />
-          <LoadMoreButton onClick={nextPage}>LOAD MORE</LoadMoreButton>
-        </>
-      )}
+        {clothes.length > 0 && (
+          <>
+            <CardList
+              clothes={clothes}
+              favourites={favourites}
+              addFavourite={addFavourite}
+              removeFavourite={removeFavourite}
+              onCardClick={onCardClick}
+            />
+            <LoadMoreButton onClick={nextPage}>LOAD MORE</LoadMoreButton>
+          </>
+        )}
+      </PageContainer>
 
       {selectedClothe && (
         <DrawerBackground>

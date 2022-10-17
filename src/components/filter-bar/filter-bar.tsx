@@ -19,12 +19,11 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
 
-  gap: 24px;
+  gap: 16px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
-    gap: 16px;
-    padding: 16px;
-  }
+    padding: 0 8px 0 8px;
+  } ;
 `;
 
 const ClearFiltersButtonContainer = styled.div`
