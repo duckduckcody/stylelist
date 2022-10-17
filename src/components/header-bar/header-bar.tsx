@@ -21,30 +21,35 @@ const Container = styled.div`
   padding: 8px 24px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
-    padding: 0;
+    padding: 0 0 8px 0;
   } ;
 `;
 
 const TitleBar = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'title sort';
   justify-content: space-between;
   align-items: center;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     padding: 8px 8px 0 8px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100% 100%;
+    grid-template-areas:
+      'title'
+      'sort';
+    gap: 8px;
   } ;
 `;
 
 const TitleTextContainer = styled.div`
+  grid-area: title;
   display: flex;
   flex-flow: row;
   align-items: center;
   gap: 24px;
-
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    display: none;
-  } ;
 `;
 
 const Title = styled.a`
@@ -54,11 +59,15 @@ const Title = styled.a`
   font-family: 'Lato', sans-serif;
 
   cursor: pointer;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    font-size: 1.3rem;
+  } ;
 `;
 
 const TitleLink = styled.a<{ active?: boolean }>`
   all: unset;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: normal;
   font-family: 'Lato', sans-serif;
   text-decoration: ${(p) => (p.active ? 'underline' : '')};
@@ -71,6 +80,7 @@ const TitleLink = styled.a<{ active?: boolean }>`
 `;
 
 const SortContainer = styled.div`
+  grid-area: sort;
   display: flex;
   flex-flow: row nowrap;
   gap: 16px;
