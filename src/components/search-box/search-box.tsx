@@ -21,6 +21,8 @@ const Input = styled.input`
 const CrossButton = styled.button`
   all: unset;
 
+  cursor: pointer;
+
   position: absolute;
   right: 4px;
   top: calc(50% - 11px);
@@ -56,8 +58,8 @@ export const SearchBox: FC<SearchBoxProps> = ({
     />
 
     {value && (
-      <CrossButton>
-        <Cross onClick={onClearClick} />
+      <CrossButton onClick={onClearClick}>
+        <Cross />
       </CrossButton>
     )}
   </InputContainer>
