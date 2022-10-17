@@ -1,5 +1,4 @@
 import forEach from 'lodash.foreach';
-import { ChangeEvent } from 'react';
 import { StateCreator } from 'zustand';
 import { SortEnum } from '../types/Sort';
 import { StoreState } from './useStore';
@@ -11,9 +10,9 @@ export enum CheckboxFilterId {
   brand = 'brand',
 }
 
-enum RadioFilterId {}
+export enum RadioFilterId {}
 
-enum BooleanFilterId {
+export enum BooleanFilterId {
   onSale = 'onSale',
 }
 
@@ -26,7 +25,7 @@ export interface CheckboxFilter {
   clear: VoidFunction;
 }
 
-interface RadioFilterOption {
+export interface RadioFilterOption {
   id: RadioFilterId;
   text: string;
   options: string[];
@@ -34,18 +33,23 @@ interface RadioFilterOption {
   setSelected: (value: string) => void;
 }
 
-interface BooleanFilterOption {
+export interface BooleanFilterOption {
   id: BooleanFilterId;
   text: string;
   selected: boolean;
   setSelected: (value: boolean) => void;
 }
 
+export interface SortFilter {
+  text: 'Sort';
+  options: string[];
+  selected: string;
+  setSelected: (value: string) => void;
+}
+
 export interface FilterState {
   textSearch: string;
-  handleTextSearchChange: (
-    event: ChangeEvent<HTMLInputElement> | undefined
-  ) => void;
+  handleTextSearchChange: (value: string) => void;
 
   toggleCheckbox: (id: CheckboxFilterId, value: string) => void;
 
@@ -53,12 +57,7 @@ export interface FilterState {
   radios: Record<RadioFilterId, RadioFilterOption>;
   booleans: Record<BooleanFilterId, BooleanFilterOption>;
 
-  sort: {
-    text: 'Sort';
-    options: string[];
-    selected: string;
-    setSelected: (value: string) => void;
-  };
+  sort: SortFilter;
 
   clearFilters: VoidFunction;
 }
@@ -70,9 +69,9 @@ export const filterStore: StateCreator<
   FilterState
 > = (set, get) => ({
   textSearch: '',
-  handleTextSearchChange: (event) => {
+  handleTextSearchChange: (value) => {
     set((state) => {
-      state.filters.textSearch = event?.target.value ?? '';
+      state.filters.textSearch = value;
     });
   },
   toggleCheckbox: (id, value) => {

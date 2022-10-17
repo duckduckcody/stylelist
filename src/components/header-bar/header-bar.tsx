@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../../styles/global';
 import { FilterBar } from '../filter-bar/filter-bar';
 import { FilterButton } from '../filterButton/filterButton';
+import { SearchBox } from '../search-box/search-box';
 
 const Container = styled.div`
   top: 0;
@@ -36,7 +36,7 @@ const TitleBar = styled.div`
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     padding: 8px 8px 0 8px;
     grid-template-columns: 1fr;
-    grid-template-rows: 100% 100%;
+    grid-template-rows: 100% 42px;
     grid-template-areas:
       'title'
       'sort';
@@ -81,40 +81,23 @@ const TitleLink = styled.a<{ active?: boolean }>`
 
 const SortContainer = styled.div`
   grid-area: sort;
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 16px;
-
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    width: 100%;
-  } ;
 `;
-
-const SearchBox = styled.input`
-  all: unset;
-  border: 1px solid black;
-  font-family: 'Lato', sans-serif;
-  padding: 0 8px;
-
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
-    width: 100%;
-  } ;
-`;
-
-const FilterBarContainer = styled.div``;
-
-const StyledFilterBar = styled(FilterBar)``;
 
 export interface HeaderBarProps {}
 
 export const HeaderBar: FC<HeaderBarProps> = () => {
-  const router = useRouter();
-
   const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
   const handleTextSearchChange = useStore(
     (state) => state.filters.handleTextSearchChange
   );
+
+  const checkboxes = useStore((state) => state.filters.checkboxes);
+  const booleans = useStore((state) => state.filters.booleans);
+  const clearFilters = useStore((state) => state.filters.clearFilters);
 
   return (
     <Container>
@@ -124,36 +107,35 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
             <Title>STYLELIST</Title>
           </Link>
           <Link href='/favourites'>
-            <TitleLink active={router.pathname === '/favourites'}>
-              Favourites
-            </TitleLink>
+            <TitleLink>Favourites</TitleLink>
           </Link>
         </TitleTextContainer>
 
-        {router.pathname === '/' && (
-          <SortContainer>
-            <SearchBox
-              placeholder='search'
-              type='text'
-              value={textSearch}
-              onChange={handleTextSearchChange}
-            />
-            <FilterButton
-              type='dropdown'
-              menuType='radio'
-              text={sort.text}
-              options={sort.options}
-              selectedOptions={sort.selected}
-              onValueClear={() => sort.setSelected('')}
-              onInputClick={(val) => sort.setSelected(val)}
-            />
-          </SortContainer>
-        )}
+        <SortContainer>
+          <SearchBox
+            placeholder='search'
+            value={textSearch}
+            onChange={handleTextSearchChange}
+            onClearClick={() => handleTextSearchChange('')}
+          />
+
+          <FilterButton
+            type='dropdown'
+            menuType='radio'
+            text={sort.text}
+            options={sort.options}
+            selectedOptions={sort.selected}
+            onValueClear={() => sort.setSelected('')}
+            onInputClick={(val) => sort.setSelected(val)}
+          />
+        </SortContainer>
       </TitleBar>
 
-      <FilterBarContainer>
-        <StyledFilterBar />
-      </FilterBarContainer>
+      <FilterBar
+        checkboxes={checkboxes}
+        booleans={booleans}
+        clearFilters={clearFilters}
+      />
     </Container>
   );
 };
