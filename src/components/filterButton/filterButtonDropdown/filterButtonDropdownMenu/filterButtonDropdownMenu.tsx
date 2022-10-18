@@ -26,6 +26,8 @@ const InputContainer = styled.label`
   flex-flow: row nowrap;
   gap: 14px;
   cursor: pointer;
+
+  text-transform: capitalize;
 `;
 
 const Input = styled.input`
