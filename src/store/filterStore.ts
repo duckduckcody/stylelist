@@ -3,39 +3,12 @@ import { StateCreator } from 'zustand';
 import { SortEnum } from '../types/Sort';
 import { StoreState } from './useStore';
 
-export enum CheckboxFilterId {
-  gender = 'gender',
-  size = 'size',
-  category = 'category',
-  brand = 'brand',
-}
-
-export enum RadioFilterId {}
-
 export enum BooleanFilterId {
   onSale = 'onSale',
 }
 
-export interface CheckboxFilter {
-  id: CheckboxFilterId;
-  text: string;
-  options: string[];
-  selected: string[];
-  setSelected: (value: string) => void;
-  clear: VoidFunction;
-}
-
-export interface RadioFilterOption {
-  id: RadioFilterId;
-  text: string;
-  options: string[];
-  selected: string;
-  setSelected: (value: string) => void;
-}
-
-export interface BooleanFilterOption {
-  id: BooleanFilterId;
-  text: string;
+export interface OnSaleFilter {
+  text: 'On Sale';
   selected: boolean;
   setSelected: (value: boolean) => void;
 }
@@ -47,16 +20,23 @@ export interface SortFilter {
   setSelected: (value: string) => void;
 }
 
+export interface FacetOption {
+  id: string;
+  text: string;
+  options: string[];
+  selected: string[];
+  setSelected: (value: string) => void;
+  clear: VoidFunction;
+}
+
 export interface FilterState {
+  facetOptions: FacetOption[];
+  addFacetOption: (name: string, options: string[]) => void;
+
   textSearch: string;
   handleTextSearchChange: (value: string) => void;
 
-  toggleCheckbox: (id: CheckboxFilterId, value: string) => void;
-
-  checkboxes: Record<CheckboxFilterId, CheckboxFilter>;
-  radios: Record<RadioFilterId, RadioFilterOption>;
-  booleans: Record<BooleanFilterId, BooleanFilterOption>;
-
+  onSale: OnSaleFilter;
   sort: SortFilter;
 
   clearFilters: VoidFunction;
@@ -67,86 +47,62 @@ export const filterStore: StateCreator<
   [['zustand/immer', never], ['zustand/persist', unknown]],
   [],
   FilterState
-> = (set, get) => ({
+> = (set) => ({
+  facetOptions: [],
+  addFacetOption: (name, options) => {
+    set((state) => {
+      const alreadySet = state.filters.facetOptions.find(
+        (facet) => facet.id === name
+      );
+      if (!alreadySet) {
+        state.filters.facetOptions.push({
+          id: name,
+          text: name.toLocaleLowerCase(),
+          options: options,
+          selected: [],
+          clear: () =>
+            set((state) => {
+              const option = state.filters.facetOptions.find(
+                (o) => o.id === name
+              );
+              if (option) {
+                option.selected = [];
+              }
+            }),
+          setSelected: (value) => {
+            set((state) => {
+              const option = state.filters.facetOptions.find(
+                (o) => o.id === name
+              );
+              if (option) {
+                const indexOf = option.selected.indexOf(value);
+                if (indexOf !== -1) {
+                  option.selected.splice(indexOf, 1);
+                } else {
+                  option.selected.push(value);
+                }
+              }
+            });
+          },
+        });
+      }
+    });
+  },
+
   textSearch: '',
   handleTextSearchChange: (value) => {
     set((state) => {
       state.filters.textSearch = value;
     });
   },
-  toggleCheckbox: (id, value) => {
-    set((state) => {
-      let selected = state.filters.checkboxes[id].selected;
-      const indexOf = selected.indexOf(value);
-      if (indexOf !== -1) {
-        selected.splice(indexOf, 1);
-      } else {
-        selected.push(value);
-      }
-    });
-  },
 
-  checkboxes: {
-    gender: {
-      id: CheckboxFilterId.gender,
-      text: 'Gender',
-      options: [],
-      selected: [],
-      clear: () =>
-        set((s) => {
-          s.filters.checkboxes.gender.selected = [];
-        }),
-      setSelected: (value) =>
-        get().filters.toggleCheckbox(CheckboxFilterId.gender, value),
-    },
-    size: {
-      id: CheckboxFilterId.size,
-      text: 'Size',
-      options: [],
-      selected: [],
-      clear: () =>
-        set((s) => {
-          s.filters.checkboxes.size.selected = [];
-        }),
-      setSelected: (value) =>
-        get().filters.toggleCheckbox(CheckboxFilterId.size, value),
-    },
-    category: {
-      id: CheckboxFilterId.category,
-      text: 'Category',
-      options: [],
-      selected: [],
-      clear: () =>
-        set((s) => {
-          s.filters.checkboxes.category.selected = [];
-        }),
-      setSelected: (value) =>
-        get().filters.toggleCheckbox(CheckboxFilterId.category, value),
-    },
-    brand: {
-      id: CheckboxFilterId.brand,
-      text: 'Brand',
-      options: [],
-      selected: [],
-      clear: () =>
-        set((s) => {
-          s.filters.checkboxes.brand.selected = [];
-        }),
-      setSelected: (value) =>
-        get().filters.toggleCheckbox(CheckboxFilterId.brand, value),
-    },
-  },
-  radios: {},
-  booleans: {
-    onSale: {
-      id: BooleanFilterId.onSale,
-      text: 'On sale',
-      selected: false,
-      setSelected: (value) =>
-        set((state) => {
-          state.filters.booleans.onSale.selected = value;
-        }),
-    },
+  onSale: {
+    text: 'On Sale',
+    selected: false,
+    setSelected: (value) =>
+      set((state) => {
+        state.filters.onSale.selected = value;
+      }),
   },
 
   sort: {
@@ -161,16 +117,10 @@ export const filterStore: StateCreator<
 
   clearFilters: () =>
     set((state) => {
-      forEach(state.filters.checkboxes, (checkbox) => {
-        checkbox.selected = [];
+      forEach(state.filters.facetOptions, (facet) => {
+        facet.selected = [];
       });
 
-      forEach(state.filters.radios, (radio) => {
-        radio.selected = '';
-      });
-
-      forEach(state.filters.booleans, (boolean) => {
-        boolean.selected = false;
-      });
+      state.filters.onSale.selected = false;
     }),
 });

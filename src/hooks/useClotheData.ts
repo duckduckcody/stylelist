@@ -11,27 +11,12 @@ const getKey = (
   pageIndex: number,
   textSearch: string,
   sort: string,
-  filters: { id: string; selected: string[] | boolean }[]
+  selectedFiltersQueryString: string
 ) => {
-  const filterString = filters.reduce<string[]>((prev, f) => {
-    if (f.selected && Array.isArray(f.selected) && f.selected.length) {
-      return prev.concat(`${f.id}:[${f.selected.join(',')}]`);
-    } else if (
-      f.selected &&
-      typeof f.selected == 'boolean' &&
-      f.id === 'onSale'
-    ) {
-      return prev.concat(`oldPrice:>0`);
-    }
-
-    return prev;
-  }, []);
-
+  console.log('selectedFiltersQueryString', selectedFiltersQueryString);
   return `/api/getClothes?page=${
     pageIndex + 1
-  }&q=${textSearch}&sort=${sort}&filter=${encodeURIComponent(
-    filterString.join(' && ')
-  )}`;
+  }&q=${textSearch}&sort=${sort}&filter=${selectedFiltersQueryString}`;
 };
 
 interface returnProps {
@@ -45,10 +30,11 @@ interface returnProps {
 export const useClothesData: (
   textSearch: string,
   sort: string,
-  filters: { id: string; selected: string[] | boolean }[]
-) => returnProps = (textSearch = '', sort = '', filters = []) => {
+  selectedFiltersQueryString: string
+) => returnProps = (textSearch, sort, selectedFiltersQueryString) => {
   const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
-    (pageIndex) => getKey(pageIndex, textSearch, sort, filters),
+    (pageIndex) =>
+      getKey(pageIndex, textSearch, sort, selectedFiltersQueryString),
     fetcher,
     {
       initialSize: 1,

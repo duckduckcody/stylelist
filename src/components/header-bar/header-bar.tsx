@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../../styles/global';
 import { FilterBar } from '../filter-bar/filter-bar';
-import { FilterButton } from '../filterButton/filterButton';
+import { FilterButtonDropdown } from '../filterButton/filterButtonDropdown/filterButtonDropdown';
 import { SearchBox } from '../search-box/search-box';
 
 const Container = styled.div`
@@ -115,10 +115,6 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
     (state) => state.filters.handleTextSearchChange
   );
 
-  const checkboxes = useStore((state) => state.filters.checkboxes);
-  const booleans = useStore((state) => state.filters.booleans);
-  const clearFilters = useStore((state) => state.filters.clearFilters);
-
   return (
     <Container>
       <TitleBar>
@@ -132,7 +128,7 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
             onClearClick={() => handleTextSearchChange('')}
           />
 
-          <FilterButton
+          <FilterButtonDropdown
             type='dropdown'
             menuType='radio'
             text={sort.text}
@@ -145,11 +141,7 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
         </SortContainer>
       </TitleBar>
 
-      <FilterBar
-        checkboxes={checkboxes}
-        booleans={booleans}
-        clearFilters={clearFilters}
-      />
+      <FilterBar />
     </Container>
   );
 };

@@ -16,7 +16,6 @@ export const favouriteStore: StateCreator<
 > = (set) => ({
   favourites: [],
   addFavourite: (clothe) => {
-    console.log('addFavourite');
     set((state) => {
       state.favourites.favourites.push(clothe);
     });

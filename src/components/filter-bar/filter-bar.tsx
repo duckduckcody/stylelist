@@ -1,14 +1,10 @@
-import map from 'lodash.map';
 import { FC } from 'react';
 import styled from 'styled-components';
-import {
-  BooleanFilterId,
-  BooleanFilterOption,
-  CheckboxFilter,
-  CheckboxFilterId,
-} from '../../store/filterStore';
+import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT } from '../../styles/global';
-import { FilterButton } from '../filterButton/filterButton';
+import { FacetFilterButton } from '../filterButton/facet-filter-button';
+import { FilterButtonAction } from '../filterButton/filterButtonAction/filterButtonAction';
+import { FilterButtonBoolean } from '../filterButton/filterButtonBoolean/filterButtonBoolean';
 
 const Container = styled.div`
   width: 100%;
@@ -36,48 +32,46 @@ const ClearFiltersButtonContainer = styled.div`
 `;
 
 export interface FilterBarProps {
-  checkboxes: Record<CheckboxFilterId, CheckboxFilter>;
-  booleans: Record<BooleanFilterId, BooleanFilterOption>;
-  clearFilters: VoidFunction;
   className?: string;
 }
 
-export const FilterBar: FC<FilterBarProps> = ({
-  checkboxes,
-  booleans,
-  clearFilters,
-  className,
-}) => (
-  <Container className={className}>
-    <ButtonContainer>
-      {map(checkboxes, (data) => (
-        <FilterButton
-          key={data.text}
-          type='dropdown'
-          menuType='checkbox'
-          text={data.text}
-          options={data.options}
-          selectedOptions={data.selected}
-          onValueClear={data.clear}
-          onInputClick={(val) => data.setSelected(val)}
-        />
-      ))}
+export const FilterBar: FC<FilterBarProps> = ({ className }) => {
+  const facetOptions = useStore((state) => state.filters.facetOptions);
+  const onSale = useStore((state) => state.filters.onSale);
+  const clearFilters = useStore((state) => state.filters.clearFilters);
 
-      <FilterButton
-        type='boolean'
-        active={booleans.onSale.selected}
-        text={booleans.onSale.text}
-        onButtonClick={() => booleans.onSale.setSelected(true)}
-        onValueClear={() => booleans.onSale.setSelected(false)}
-      />
+  return (
+    <Container className={className}>
+      <ButtonContainer>
+        {facetOptions.map((facet) => (
+          <FacetFilterButton
+            key={facet.text}
+            type='dropdown'
+            menuType='checkbox'
+            text={facet.text}
+            options={facet.options}
+            selectedOptions={facet.selected}
+            onValueClear={facet.clear}
+            onInputClick={(val) => facet.setSelected(val)}
+          />
+        ))}
 
-      <ClearFiltersButtonContainer>
-        <FilterButton
-          type='action'
-          text='Clear Filters'
-          onButtonClick={clearFilters}
+        <FilterButtonBoolean
+          type='boolean'
+          active={onSale.selected}
+          text={onSale.text}
+          onButtonClick={() => onSale.setSelected(true)}
+          onValueClear={() => onSale.setSelected(false)}
         />
-      </ClearFiltersButtonContainer>
-    </ButtonContainer>
-  </Container>
-);
+
+        <ClearFiltersButtonContainer>
+          <FilterButtonAction
+            type='action'
+            text='Clear Filters'
+            onButtonClick={clearFilters}
+          />
+        </ClearFiltersButtonContainer>
+      </ButtonContainer>
+    </Container>
+  );
+};

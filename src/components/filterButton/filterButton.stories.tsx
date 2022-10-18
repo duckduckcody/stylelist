@@ -1,20 +1,20 @@
 import { Meta, Story } from '@storybook/react';
 import { useState } from 'react';
-import { FilterButton } from './filterButton';
+import { FacetFilterButton } from './facet-filter-button';
 import { FilterButtonActionProps } from './filterButtonAction/filterButtonAction';
 import { FilterButtonBooleanProps } from './filterButtonBoolean/filterButtonBoolean';
 import { FilterButtonDropdownProps } from './filterButtonDropdown/filterButtonDropdown';
 
 export default {
   title: 'molecules/FilterButton',
-  component: FilterButton,
+  component: FacetFilterButton,
 } as Meta;
 
 const BooleanTemplate: Story<FilterButtonBooleanProps> = (args) => {
   const [active, setActive] = useState(false);
 
   return (
-    <FilterButton
+    <FacetFilterButton
       text='ON SALE'
       type='boolean'
       active={active}
@@ -26,7 +26,7 @@ const BooleanTemplate: Story<FilterButtonBooleanProps> = (args) => {
 export const Boolean = BooleanTemplate.bind({});
 
 const ActionTemplate: Story<FilterButtonActionProps> = (args) => (
-  <FilterButton
+  <FacetFilterButton
     text='CLEAR FILTERS'
     type='action'
     onButtonClick={() => console.log('action button clicked')}
@@ -47,7 +47,7 @@ const DropdownTemplate: Story<FilterButtonDropdownProps> = (args) => {
   };
 
   return (
-    <FilterButton
+    <FacetFilterButton
       type='dropdown'
       text='gender'
       menuType='checkbox'

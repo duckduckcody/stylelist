@@ -15,7 +15,7 @@ import { HeaderBar } from '../src/components/header-bar/header-bar';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useFacets } from '../src/hooks/useFacets';
 import { useLockBodyScroll } from '../src/hooks/useLockBodyScroll';
-import { useSelectedFilters } from '../src/hooks/useSelectedFilters';
+import { useSelectedFiltersQueryString } from '../src/hooks/useSelectedFiltersQueryString';
 import { useStore } from '../src/store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../src/styles/global';
 import { Clothe } from '../src/types/Clothe';
@@ -70,23 +70,24 @@ const LoadMoreButton = styled(FilterButtonContainer)`
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
+  const [selectedClothe, setSelectedClothe] = useState<Clothe | undefined>();
+
   const favourites = useStore((state) => state.favourites.favourites);
   const addFavourite = useStore((state) => state.favourites.addFavourite);
   const removeFavourite = useStore((state) => state.favourites.removeFavourite);
 
-  const sort = useStore((state) => state.filters.sort);
   const textSearch = useStore((state) => state.filters.textSearch);
+  const selectedSort = useStore((state) => state.filters.sort.selected);
+  const selectedFiltersQueryString = useSelectedFiltersQueryString();
 
-  const selectedFilters = useSelectedFilters();
   const { clothes, facets, nextPage, isLoading, isError } = useClothesData(
     textSearch,
-    sort.selected,
-    selectedFilters
+    selectedSort,
+    selectedFiltersQueryString
   );
 
   useFacets(facets);
 
-  const [selectedClothe, setSelectedClothe] = useState<Clothe | undefined>();
   useLockBodyScroll(Boolean(selectedClothe));
 
   const onCardClick = (clothe: Clothe) => {

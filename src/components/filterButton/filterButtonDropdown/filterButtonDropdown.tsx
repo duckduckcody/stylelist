@@ -30,6 +30,8 @@ const StyledFilterButtonContainer = styled(FilterButtonContainer)`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  text-transform: capitalize;
 `;
 
 const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)<{
