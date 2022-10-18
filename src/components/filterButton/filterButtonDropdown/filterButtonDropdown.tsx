@@ -8,6 +8,7 @@ import {
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
 import { AnimatePresence, motion } from 'framer-motion';
+import { singular } from 'pluralize';
 import { CSSProperties, FC, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
@@ -150,7 +151,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         >
           {selectedOptions.length === 0 && (
             <>
-              {text} <Chevron $active={open} />
+              {singular(text)} <Chevron $active={open} />
             </>
           )}
           {selectedOptions.length !== 0 && <>{valueString}</>}
