@@ -140,6 +140,7 @@ export const HeaderBar: FC<HeaderBarProps> = () => {
             selectedOptions={sort.selected}
             onValueClear={() => sort.setSelected('')}
             onInputClick={(val) => sort.setSelected(val)}
+            closeOnOptionClick={true}
           />
         </SortContainer>
       </TitleBar>

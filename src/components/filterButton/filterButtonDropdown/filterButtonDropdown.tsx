@@ -73,6 +73,7 @@ export interface FilterButtonDropdownProps {
   selectedOptions: string[] | string;
   onInputClick: (value: string) => void;
   onValueClear: VoidFunction;
+  closeOnOptionClick?: boolean;
 }
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
@@ -80,8 +81,9 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   menuType,
   options,
   selectedOptions,
-  onInputClick = () => undefined,
+  onInputClick: onInputClickProp = () => undefined,
   onValueClear = () => undefined,
+  closeOnOptionClick = false,
 }) => {
   const isMobile = useIsMobile();
   const clearButtonRef = useRef(null);
@@ -126,6 +128,14 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
       return selectedOptions;
     }
   }, [selectedOptions]);
+
+  const onInputClick = (val: string) => {
+    if (closeOnOptionClick) {
+      setOpen(false);
+    }
+
+    onInputClickProp(val);
+  };
 
   return (
     <>
