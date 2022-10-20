@@ -27,11 +27,16 @@ export interface FacetOption {
   selected: string[];
   setSelected: (value: string) => void;
   clear: VoidFunction;
+  type: 'checkbox' | 'range';
 }
 
 export interface FilterState {
   facetOptions: FacetOption[];
-  addFacetOption: (name: string, options: string[]) => void;
+  addFacetOption: (
+    name: string,
+    options: string[],
+    type: 'checkbox' | 'range'
+  ) => void;
 
   textSearch: string;
   handleTextSearchChange: (value: string) => void;
@@ -49,7 +54,7 @@ export const filterStore: StateCreator<
   FilterState
 > = (set) => ({
   facetOptions: [],
-  addFacetOption: (name, options) => {
+  addFacetOption: (name, options, type) => {
     set((state) => {
       const alreadySet = state.filters.facetOptions.find(
         (facet) => facet.id === name
@@ -57,6 +62,7 @@ export const filterStore: StateCreator<
       if (!alreadySet) {
         state.filters.facetOptions.push({
           id: name,
+          type,
           text: name.toLocaleLowerCase(),
           options: options,
           selected: [],

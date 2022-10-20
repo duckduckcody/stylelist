@@ -71,7 +71,7 @@ const MenuContainer = styled(motion.div)`
 export interface FilterButtonDropdownProps {
   type: 'dropdown';
   text: string;
-  menuType: 'checkbox' | 'radio';
+  menuType: 'checkbox' | 'radio' | 'range';
   options: string[];
   selectedOptions: string[] | string;
   onInputClick: (value: string) => void;

@@ -34,6 +34,7 @@ specifiers:
   lodash.pull: ^4.1.0
   next: 12.2.3
   pluralize: ^8.0.0
+  rc-slider: ^10.0.1
   react: 18.2.0
   react-dom: 18.2.0
   storybook-addon-designs: ^6.3.1
@@ -56,6 +57,7 @@ dependencies:
   lodash.pull: 4.1.0
   next: 12.2.3_qugu52izettqdqqm5qcjcltcia
   pluralize: 8.0.0
+  rc-slider: 10.0.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   styled-components: 5.3.5_pumtretovylab5lwhztzjp2kuy
@@ -5471,6 +5473,10 @@ packages:
       static-extend: 0.1.2
     dev: true
 
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
+
   /clean-css/4.2.4:
     resolution: {integrity: sha512-EJUDT7nDVFDvaQgAo2G/PJvxmp1o/c6iXLbswsBbUFXi1Nr+AjA2cKmfbKDMjMvzEe75g3P6JkaDDAKk96A85A==}
     engines: {node: '>= 4.0'}
@@ -10364,6 +10370,34 @@ packages:
       schema-utils: 3.1.1
       webpack: 4.46.0
     dev: true
+
+  /rc-slider/10.0.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-igTKF3zBet7oS/3yNiIlmU8KnZ45npmrmHlUUio8PNbIhzMcsh+oE/r2UD42Y6YD2D/s+kzCQkzQrPD6RY435Q==}
+    engines: {node: '>=8.x'}
+    peerDependencies:
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@babel/runtime': 7.19.0
+      classnames: 2.3.2
+      rc-util: 5.24.4_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      shallowequal: 1.1.0
+    dev: false
+
+  /rc-util/5.24.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-2a4RQnycV9eV7lVZPEJ7QwJRPlZNc06J7CwcwZo4vIHr3PfUqtYgl1EkUV9ETAc6VRRi8XZOMFhYG63whlIC9Q==}
+    peerDependencies:
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@babel/runtime': 7.19.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 16.13.1
+      shallowequal: 1.1.0
+    dev: false
 
   /react-docgen-typescript/2.2.2_typescript@4.7.4:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}

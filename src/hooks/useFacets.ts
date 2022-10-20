@@ -10,7 +10,12 @@ export const useFacets = (facets: Facets | undefined) => {
     if (facetParse.success) {
       facetParse.data.forEach((facet) => {
         const options = facet.counts.map((count) => count.value);
-        addFacetOption(facet.field_name, options);
+
+        if (facet.field_name === 'price') {
+          addFacetOption(facet.field_name, options, 'range');
+        } else {
+          addFacetOption(facet.field_name, options, 'checkbox');
+        }
       });
     } else {
       console.log('bad facet data', facetParse.error);

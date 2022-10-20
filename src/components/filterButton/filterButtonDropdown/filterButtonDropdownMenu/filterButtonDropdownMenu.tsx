@@ -1,3 +1,5 @@
+import RCSlider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { MOBILE_BREAKPOINT } from '../../../../styles/global';
@@ -37,11 +39,15 @@ const Input = styled.input`
   cursor: pointer;
 `;
 
+const Slider = styled(RCSlider)`
+  width: 300px;
+`;
+
 export interface FilterButtonDropdownMenuProps {
   options: string[];
   selectedOptions?: string[] | string;
   onInputClick?: (value: string) => void;
-  type: 'checkbox' | 'radio';
+  type: 'checkbox' | 'radio' | 'range';
   name: string;
   className?: string;
 }
@@ -55,17 +61,19 @@ export const FilterButtonDropdownMenu: FC<FilterButtonDropdownMenuProps> = ({
   className,
 }) => (
   <Container className={className}>
-    {options.map((option) => (
-      <InputContainer key={option}>
-        <Input
-          name={name}
-          type={type}
-          value={option}
-          checked={selectedOptions?.includes(option)}
-          onChange={() => onInputClick(option)}
-        />
-        {option}
-      </InputContainer>
-    ))}
+    {type === 'range' && <Slider range value={[0, 55]} min={0} max={100} />}
+    {type === 'checkbox' &&
+      options.map((option) => (
+        <InputContainer key={option}>
+          <Input
+            name={name}
+            type={type}
+            value={option}
+            checked={selectedOptions?.includes(option)}
+            onChange={() => onInputClick(option)}
+          />
+          {option}
+        </InputContainer>
+      ))}
   </Container>
 );

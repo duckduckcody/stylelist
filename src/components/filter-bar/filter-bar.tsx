@@ -47,7 +47,7 @@ export const FilterBar: FC<FilterBarProps> = ({ className }) => {
           <FacetFilterButton
             key={facet.text}
             type='dropdown'
-            menuType='checkbox'
+            menuType={facet.type}
             text={facet.text}
             options={facet.options}
             selectedOptions={facet.selected}
