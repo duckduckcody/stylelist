@@ -14,10 +14,10 @@ import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import { useLockBodyScroll } from '../../../hooks/useLockBodyScroll';
 import ChevronIcon from '../../../icons/chevron.svg';
-import { ZIndexes } from '../../../styles/global';
+import { MOBILE_BREAKPOINT, ZIndexes } from '../../../styles/global';
 import { FilterButton, FilterButtonClearButton } from '../filter-button';
-import { FilterButtonRangeInput } from './filter-button-range-input/filter-button-range-input';
-import { FilterButtonCheckboxMenu } from './filterButtonCheckboxMenu/filterButtonCheckboxMenu';
+import { FilterButtonCheckboxMenu } from './filter-button-checkbox-menu/filter-button-checkbox-menu';
+import { FilterButtonRangeMenu } from './filter-button-range-menu/filter-button-range-menu';
 
 const ControlsContainer = styled.div`
   position: relative;
@@ -35,11 +35,24 @@ const StyledFilterButton = styled(FilterButton)`
   text-transform: capitalize;
 `;
 
-const CheckboxMenu = styled(FilterButtonCheckboxMenu)<{
-  isMobile?: boolean;
-}>`
-  width: ${(p) => (p.isMobile ? '100%' : 'fit-content')};
-  border-bottom: ${(p) => (p.isMobile ? 'none' : '')};
+const Dropdown = styled(motion.div)`
+  z-index: ${ZIndexes.modal};
+  font-family: 'Lato', sans-serif;
+  font-weight: normal;
+  font-size: 1rem;
+
+  border: 1px solid black;
+  padding: 24px 64px 24px 18px;
+  width: fit-content;
+
+  background: white;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    gap: 32px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid black;
+  }
 `;
 
 const Chevron = styled(ChevronIcon)<{ $active: boolean }>`
@@ -64,17 +77,13 @@ const DarkenBackground = styled(motion.div)`
   z-index: ${ZIndexes.modalBackground};
 `;
 
-const MenuContainer = styled(motion.div)`
-  z-index: ${ZIndexes.modal};
-`;
-
 export interface FilterButtonDropdownProps {
   type: 'dropdown';
   text: string;
   menuType: 'checkbox' | 'range';
   options: string[];
   selectedOptions: string[];
-  onInputClick: (value: string) => void;
+  onInputClick: (value: unknown) => void;
   onValueClear: VoidFunction;
   closeOnOptionClick?: boolean;
 }
@@ -132,7 +141,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     }
   }, [selectedOptions]);
 
-  const handleInputChange = (val: string) => {
+  const handleInputChange = (val: string | string[]) => {
     if (closeOnOptionClick) {
       setOpen(false);
     }
@@ -171,7 +180,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               exit={isMobile ? { opacity: 0 } : undefined}
             />
 
-            <MenuContainer
+            <Dropdown
               initial={isMobile ? { transform: 'translateY(100%)' } : undefined}
               animate={isMobile ? { transform: 'translateY(0%)' } : undefined}
               exit={isMobile ? { transform: 'translateY(100%)' } : undefined}
@@ -181,8 +190,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               style={menuPosition}
             >
               {menuType === 'checkbox' && (
-                <CheckboxMenu
-                  isMobile={isMobile}
+                <FilterButtonCheckboxMenu
                   name={text}
                   options={options}
                   selectedOptions={selectedOptions}
@@ -190,12 +198,13 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
                 />
               )}
               {menuType === 'range' && (
-                <FilterButtonRangeInput
+                <FilterButtonRangeMenu
+                  options={options}
                   selectedOptions={selectedOptions}
                   onInputChange={handleInputChange}
                 />
               )}
-            </MenuContainer>
+            </Dropdown>
           </>
         )}
       </AnimatePresence>

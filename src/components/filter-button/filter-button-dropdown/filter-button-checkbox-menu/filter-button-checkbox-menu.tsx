@@ -3,18 +3,9 @@ import styled from 'styled-components';
 import { MOBILE_BREAKPOINT } from '../../../../styles/global';
 
 const Container = styled.div`
-  font-family: 'Lato', sans-serif;
-  font-weight: normal;
-  font-size: 1rem;
-
   display: flex;
   flex-flow: column nowrap;
-  border: 1px solid black;
-  padding: 24px 64px 24px 18px;
-  width: fit-content;
   gap: 18px;
-
-  background: white;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     gap: 32px;

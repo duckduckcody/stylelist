@@ -7,8 +7,22 @@ export const useSelectedFiltersQueryString: () => string = () => {
 
   return useMemo(() => {
     let facetOptionsString = facetOptions.reduce<string[]>((prev, facet) => {
-      if (facet.selected && facet.selected.length > 0) {
+      if (
+        facet.selected &&
+        facet.selected.length > 0 &&
+        facet.type === 'checkbox'
+      ) {
         return prev.concat(`${facet.id}:[${facet.selected.join(',')}]`);
+      }
+
+      if (
+        facet.selected &&
+        facet.selected.length > 0 &&
+        facet.type === 'range'
+      ) {
+        return prev.concat(
+          `${facet.id}:[${facet.selected[0]}..${facet.selected[1]}]`
+        );
       }
 
       return prev;
@@ -17,8 +31,6 @@ export const useSelectedFiltersQueryString: () => string = () => {
     if (onSale) {
       facetOptionsString = facetOptionsString.concat('oldPrice:>0');
     }
-
-    console.log('facetOptionsString.join', facetOptionsString.join(' && '));
 
     return encodeURIComponent(facetOptionsString.join(' && '));
   }, [facetOptions, onSale]);

@@ -1,13 +1,13 @@
 import { Meta, Story } from '@storybook/react';
 import { withDesign } from 'storybook-addon-designs';
 import {
-  FilterButtonRangeInput,
-  FilterButtonRangeInputProps,
-} from './filter-button-range-input';
+  FilterButtonRangeMenu,
+  FilterButtonRangeMenuProps,
+} from './filter-button-range-menu';
 
 export default {
-  title: 'atoms/Filter Button Range Input',
-  component: FilterButtonRangeInput,
+  title: 'atoms/Filter Button Range Menu',
+  component: FilterButtonRangeMenu,
   decorators: [withDesign],
   parameters: {
     design: {
@@ -17,8 +17,8 @@ export default {
   },
 } as Meta;
 
-const Template: Story<FilterButtonRangeInputProps> = (args) => (
-  <FilterButtonRangeInput {...args} />
+const Template: Story<FilterButtonRangeMenuProps> = (args) => (
+  <FilterButtonRangeMenu {...args} />
 );
 export const Primary = Template.bind({});
 Primary.args = {};

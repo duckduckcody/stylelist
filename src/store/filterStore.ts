@@ -25,13 +25,23 @@ export interface FacetOption {
   text: string;
   options: string[];
   selected: string[];
-  setSelected: (value: string) => void;
+  setSelected: (value: unknown) => void;
   clear: VoidFunction;
-  type: 'checkbox' | 'range';
+  type: 'checkbox';
+}
+
+export interface RangeFacetOption {
+  id: string;
+  text: string;
+  options: string[];
+  selected: string[];
+  setSelected: (value: unknown) => void;
+  clear: VoidFunction;
+  type: 'range';
 }
 
 export interface FilterState {
-  facetOptions: FacetOption[];
+  facetOptions: (FacetOption | RangeFacetOption)[];
   addFacetOption: (
     name: string,
     options: string[],
@@ -75,17 +85,33 @@ export const filterStore: StateCreator<
                 option.selected = [];
               }
             }),
-          setSelected: (value) => {
+          setSelected: (value: unknown) => {
             set((state) => {
               const option = state.filters.facetOptions.find(
                 (o) => o.id === name
               );
-              if (option) {
+
+              if (
+                option &&
+                option.type === 'checkbox' &&
+                typeof value === 'string'
+              ) {
                 const indexOf = option.selected.indexOf(value);
                 if (indexOf !== -1) {
                   option.selected.splice(indexOf, 1);
                 } else {
                   option.selected.push(value);
+                }
+              } else if (
+                option &&
+                option.type === 'range' &&
+                Array.isArray(value)
+              ) {
+                console.log('value', value);
+                if (value[0] === undefined) {
+                  option.selected = ['0', value[1]];
+                } else {
+                  option.selected = value;
                 }
               }
             });

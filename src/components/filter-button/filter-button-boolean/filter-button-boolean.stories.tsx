@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import {
   FilterButtonBoolean,
   FilterButtonBooleanProps,
-} from './filterButtonBoolean';
+} from './filter-button-boolean';
 
 export default {
   title: 'atoms/Filter Button Boolean',

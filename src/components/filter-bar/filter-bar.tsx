@@ -2,9 +2,9 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT } from '../../styles/global';
-import { FilterButtonAction } from '../filter-button/filterButtonAction/filterButtonAction';
-import { FilterButtonBoolean } from '../filter-button/filterButtonBoolean/filterButtonBoolean';
-import { FilterButtonDropdown } from '../filter-button/filterButtonDropdown/filterButtonDropdown';
+import { FilterButtonAction } from '../filter-button/filter-button-action/filter-button-action';
+import { FilterButtonBoolean } from '../filter-button/filter-button-boolean/filter-button-boolean';
+import { FilterButtonDropdown } from '../filter-button/filter-button-dropdown/filter-button-dropdown';
 
 const Container = styled.div`
   width: 100%;

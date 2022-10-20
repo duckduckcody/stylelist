@@ -12,12 +12,10 @@ const getKey = (
   textSearch: string,
   sort: string,
   selectedFiltersQueryString: string
-) => {
-  console.log('selectedFiltersQueryString', selectedFiltersQueryString);
-  return `/api/getClothes?page=${
+) =>
+  `/api/getClothes?page=${
     pageIndex + 1
   }&q=${textSearch}&sort=${sort}&filter=${selectedFiltersQueryString}`;
-};
 
 interface returnProps {
   clothes: Clothe[];

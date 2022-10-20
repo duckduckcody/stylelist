@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT, ZIndexes } from '../../styles/global';
 import { FilterBar } from '../filter-bar/filter-bar';
-import { FilterButtonDropdown } from '../filter-button/filterButtonDropdown/filterButtonDropdown';
+import { FilterButtonDropdown } from '../filter-button/filter-button-dropdown/filter-button-dropdown';
 import { SearchBox } from '../search-box/search-box';
 
 const Container = styled.div`

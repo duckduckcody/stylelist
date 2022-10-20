@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import {
   FilterButtonDropdown,
   FilterButtonDropdownProps,
-} from './filterButtonDropdown';
+} from './filter-button-dropdown';
 
 export default {
   title: 'atoms/Filter Button Dropdown',
@@ -24,26 +24,4 @@ const Template: Story<FilterButtonDropdownProps> = (args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   text: 'Gender',
-  type: 'checkbox',
-};
-
-export const Active = Template.bind({});
-Active.args = {
-  text: 'Gender',
-  active: true,
-  type: 'checkbox',
-};
-
-export const ActiveRadio = Template.bind({});
-ActiveRadio.args = {
-  text: 'Gender',
-  active: true,
-  type: 'radio',
-};
-
-export const HasValues = Template.bind({});
-HasValues.args = {
-  text: 'Gender',
-  values: ['Men', 'Womens'],
-  type: 'checkbox',
 };

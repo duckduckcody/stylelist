@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import {
   FilterButtonAction,
   FilterButtonActionProps,
-} from './filterButtonAction';
+} from './filter-button-action';
 
 export default {
   title: 'atoms/Filter Button Action',

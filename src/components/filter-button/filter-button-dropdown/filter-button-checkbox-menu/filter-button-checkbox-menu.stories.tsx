@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import {
   FilterButtonCheckboxMenu,
   FilterButtonCheckboxMenuProps,
-} from './filterButtonCheckboxMenu';
+} from './filter-button-checkbox-menu';
 
 export default {
   title: 'atoms/Filter Button Checkbox Menu',
@@ -25,12 +25,4 @@ export const CheckBox = Template.bind({});
 CheckBox.args = {
   options: ['Mens', 'Womens'],
   selectedOptions: ['Womens'],
-  type: 'checkbox',
-};
-
-export const Radio = Template.bind({});
-Radio.args = {
-  options: ['Mens', 'Womens'],
-  selectedOptions: ['Womens'],
-  type: 'radio',
 };
