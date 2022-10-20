@@ -1,9 +1,11 @@
 import type { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { TitleHeaderBar } from '../src/components/header-bar/header-bar';
 import { useStore } from '../src/store/useStore';
 import { ZIndexes } from '../src/styles/global';
+import { Clothe } from '../src/types/Clothe';
 
 const PageContainer = styled.div`
   padding: 0 24px 8px 24px;
@@ -19,12 +21,19 @@ const StyledTitleHeaderBar = styled(TitleHeaderBar)`
 `;
 
 const Favourites: NextPage = () => {
-  const favourites = useStore((state) => state.favourites.favourites);
+  const [favourites, setFavourites] = useState<Clothe[] | undefined>(undefined);
+  const favouriteStore = useStore((state) => state.favourites.favourites);
   const removeFavourite = useStore((state) => state.favourites.removeFavourite);
+
+  // avoid hydration error by reading local storage after first mount
+  useEffect(() => {
+    setFavourites(favouriteStore);
+  }, [favouriteStore]);
 
   return (
     <PageContainer>
       <StyledTitleHeaderBar />
+
       {favourites && favourites.length > 0 && (
         <CardList
           clothes={favourites}
@@ -32,6 +41,7 @@ const Favourites: NextPage = () => {
           removeFavourite={removeFavourite}
         />
       )}
+
       {(!favourites || favourites.length === 0) && (
         <p>You have no favourites</p>
       )}
