@@ -187,13 +187,22 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
             />
 
             <Dropdown
-              initial={isMobile ? { transform: 'translateY(100%)' } : undefined}
-              animate={isMobile ? { transform: 'translateY(0%)' } : undefined}
-              exit={isMobile ? { transform: 'translateY(100%)' } : undefined}
+              initial={isMobile ? { y: '100%' } : undefined}
+              animate={isMobile ? { y: '0%' } : undefined}
+              exit={isMobile ? { y: '100%' } : undefined}
               transition={{ ease: 'easeOut', duration: 0.3 }}
               ref={floating}
               {...getFloatingProps()}
               style={menuPosition}
+              drag={isMobile ? 'y' : false}
+              dragSnapToOrigin={true}
+              dragConstraints={{ top: 0 }}
+              dragElastic={{ top: 0 }}
+              onDragEnd={(event, info) => {
+                if (info.offset.y > 30) {
+                  setOpen(false);
+                }
+              }}
             >
               {menuType === 'checkbox' && (
                 <FilterButtonCheckboxMenu
