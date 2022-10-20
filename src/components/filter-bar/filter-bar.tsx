@@ -2,9 +2,9 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/useStore';
 import { MOBILE_BREAKPOINT } from '../../styles/global';
-import { FacetFilterButton } from '../filterButton/facet-filter-button';
-import { FilterButtonAction } from '../filterButton/filterButtonAction/filterButtonAction';
-import { FilterButtonBoolean } from '../filterButton/filterButtonBoolean/filterButtonBoolean';
+import { FilterButtonAction } from '../filter-button/filterButtonAction/filterButtonAction';
+import { FilterButtonBoolean } from '../filter-button/filterButtonBoolean/filterButtonBoolean';
+import { FilterButtonDropdown } from '../filter-button/filterButtonDropdown/filterButtonDropdown';
 
 const Container = styled.div`
   width: 100%;
@@ -44,7 +44,7 @@ export const FilterBar: FC<FilterBarProps> = ({ className }) => {
     <Container className={className}>
       <ButtonContainer>
         {facetOptions.map((facet) => (
-          <FacetFilterButton
+          <FilterButtonDropdown
             key={facet.text}
             type='dropdown'
             menuType={facet.type}

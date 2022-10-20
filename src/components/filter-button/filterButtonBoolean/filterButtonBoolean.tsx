@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { FilterButtonContainer } from '../filterButton.shared';
-import { FilterButtonClearButton } from '../filterButtonClearButton';
+import { FilterButton, FilterButtonClearButton } from '../filter-button';
 
 export interface FilterButtonBooleanProps {
   type: 'boolean';
@@ -16,12 +15,12 @@ export const FilterButtonBoolean: FC<FilterButtonBooleanProps> = ({
   onValueClear,
   onButtonClick,
 }) => (
-  <FilterButtonContainer
+  <FilterButton
     hasValues={active}
     as={active ? 'div' : 'button'}
     onClick={!active ? onButtonClick : undefined}
   >
     {text}
     {active && <FilterButtonClearButton onValueClear={onValueClear} />}
-  </FilterButtonContainer>
+  </FilterButton>
 );

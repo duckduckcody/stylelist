@@ -10,7 +10,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { ClotheDetails } from '../src/components/clothe-details/clothe-details';
-import { FilterButtonContainer } from '../src/components/filterButton/filterButton.shared';
+import { FilterButton } from '../src/components/filter-button/filter-button';
 import { HeaderBar } from '../src/components/header-bar/header-bar';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useFacets } from '../src/hooks/useFacets';
@@ -58,7 +58,7 @@ const StatusText = styled.p`
   text-align: center;
 `;
 
-const LoadMoreButton = styled(FilterButtonContainer)`
+const LoadMoreButton = styled(FilterButton)`
   width: 333px;
   display: block;
 

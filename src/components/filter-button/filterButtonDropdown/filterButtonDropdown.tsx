@@ -9,21 +9,21 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { AnimatePresence, motion } from 'framer-motion';
 import { singular } from 'pluralize';
-import { CSSProperties, FC, useMemo, useRef, useState } from 'react';
+import { CSSProperties, FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import { useLockBodyScroll } from '../../../hooks/useLockBodyScroll';
 import ChevronIcon from '../../../icons/chevron.svg';
 import { ZIndexes } from '../../../styles/global';
-import { FilterButtonContainer } from '../filterButton.shared';
-import { FilterButtonClearButton } from '../filterButtonClearButton';
-import { FilterButtonDropdownMenu } from './filterButtonDropdownMenu/filterButtonDropdownMenu';
+import { FilterButton, FilterButtonClearButton } from '../filter-button';
+import { FilterButtonRangeInput } from './filter-button-range-input/filter-button-range-input';
+import { FilterButtonCheckboxMenu } from './filterButtonCheckboxMenu/filterButtonCheckboxMenu';
 
 const ControlsContainer = styled.div`
   position: relative;
 `;
 
-const StyledFilterButtonContainer = styled(FilterButtonContainer)`
+const StyledFilterButton = styled(FilterButton)`
   padding-right: ${(p) => (p.hasValues ? `${18 + 24}px` : '')};
   max-width: 300px;
 
@@ -35,7 +35,7 @@ const StyledFilterButtonContainer = styled(FilterButtonContainer)`
   text-transform: capitalize;
 `;
 
-const StyledFilterButtonDropdownMenu = styled(FilterButtonDropdownMenu)<{
+const CheckboxMenu = styled(FilterButtonCheckboxMenu)<{
   isMobile?: boolean;
 }>`
   width: ${(p) => (p.isMobile ? '100%' : 'fit-content')};
@@ -71,9 +71,9 @@ const MenuContainer = styled(motion.div)`
 export interface FilterButtonDropdownProps {
   type: 'dropdown';
   text: string;
-  menuType: 'checkbox' | 'radio' | 'range';
+  menuType: 'checkbox' | 'range';
   options: string[];
-  selectedOptions: string[] | string;
+  selectedOptions: string[];
   onInputClick: (value: string) => void;
   onValueClear: VoidFunction;
   closeOnOptionClick?: boolean;
@@ -89,7 +89,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   closeOnOptionClick = false,
 }) => {
   const isMobile = useIsMobile();
-  const clearButtonRef = useRef(null);
+
   const [open, setOpen] = useState(false);
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
@@ -132,7 +132,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
     }
   }, [selectedOptions]);
 
-  const onInputClick = (val: string) => {
+  const handleInputChange = (val: string) => {
     if (closeOnOptionClick) {
       setOpen(false);
     }
@@ -143,7 +143,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   return (
     <>
       <ControlsContainer>
-        <StyledFilterButtonContainer
+        <StyledFilterButton
           ref={reference}
           {...getReferenceProps()}
           active={open}
@@ -155,13 +155,10 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
             </>
           )}
           {selectedOptions.length !== 0 && <>{valueString}</>}
-        </StyledFilterButtonContainer>
+        </StyledFilterButton>
 
         {selectedOptions.length !== 0 && (
-          <StyledFilterButtonClearButton
-            onValueClear={onValueClear}
-            ref={clearButtonRef}
-          />
+          <StyledFilterButtonClearButton onValueClear={onValueClear} />
         )}
       </ControlsContainer>
 
@@ -183,14 +180,21 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               {...getFloatingProps()}
               style={menuPosition}
             >
-              <StyledFilterButtonDropdownMenu
-                isMobile={isMobile}
-                type={menuType}
-                name={text}
-                options={options}
-                selectedOptions={selectedOptions}
-                onInputClick={onInputClick}
-              />
+              {menuType === 'checkbox' && (
+                <CheckboxMenu
+                  isMobile={isMobile}
+                  name={text}
+                  options={options}
+                  selectedOptions={selectedOptions}
+                  onInputClick={handleInputChange}
+                />
+              )}
+              {menuType === 'range' && (
+                <FilterButtonRangeInput
+                  selectedOptions={selectedOptions}
+                  onInputChange={handleInputChange}
+                />
+              )}
             </MenuContainer>
           </>
         )}

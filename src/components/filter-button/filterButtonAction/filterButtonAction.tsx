@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FilterButtonContainer } from '../filterButton.shared';
+import { FilterButton } from '../filter-button';
 
 export interface FilterButtonActionProps {
   type: 'action';
@@ -10,6 +10,4 @@ export interface FilterButtonActionProps {
 export const FilterButtonAction: FC<FilterButtonActionProps> = ({
   text,
   onButtonClick,
-}) => (
-  <FilterButtonContainer onClick={onButtonClick}>{text}</FilterButtonContainer>
-);
+}) => <FilterButton onClick={onButtonClick}>{text}</FilterButton>;
