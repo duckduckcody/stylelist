@@ -20,32 +20,35 @@ export interface SortFilter {
   setSelected: (value: string) => void;
 }
 
-export interface FacetOption {
+export interface CheckboxFacetOption {
+  type: 'checkbox';
   id: string;
   text: string;
   options: string[];
   selected: string[];
   setSelected: (value: unknown) => void;
   clear: VoidFunction;
-  type: 'checkbox';
+  createValueText: (options: string[]) => string;
 }
 
 export interface RangeFacetOption {
+  type: 'range';
   id: string;
   text: string;
   options: string[];
   selected: string[];
   setSelected: (value: unknown) => void;
   clear: VoidFunction;
-  type: 'range';
+  createValueText: (options: string[]) => string;
 }
 
 export interface FilterState {
-  facetOptions: (FacetOption | RangeFacetOption)[];
+  facetOptions: (CheckboxFacetOption | RangeFacetOption)[];
   addFacetOption: (
     name: string,
     options: string[],
-    type: 'checkbox' | 'range'
+    type: 'checkbox' | 'range',
+    createValueText?: (options: string[]) => string
   ) => void;
 
   textSearch: string;
@@ -64,18 +67,22 @@ export const filterStore: StateCreator<
   FilterState
 > = (set) => ({
   facetOptions: [],
-  addFacetOption: (name, options, type) => {
+  addFacetOption: (name, options, type, createValueText) => {
     set((state) => {
       const alreadySet = state.filters.facetOptions.find(
         (facet) => facet.id === name
       );
       if (!alreadySet) {
+        const defaultCreateValueText = (options: string[]) =>
+          options.join(', ');
+
         state.filters.facetOptions.push({
           id: name,
           type,
           text: name.toLocaleLowerCase(),
           options: options,
           selected: [],
+          createValueText: createValueText ?? defaultCreateValueText,
           clear: () =>
             set((state) => {
               const option = state.filters.facetOptions.find(
@@ -107,7 +114,6 @@ export const filterStore: StateCreator<
                 option.type === 'range' &&
                 Array.isArray(value)
               ) {
-                console.log('value', value);
                 if (value[0] === undefined) {
                   option.selected = ['0', value[1]];
                 } else {

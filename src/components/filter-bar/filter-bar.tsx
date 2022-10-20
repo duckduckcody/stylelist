@@ -53,6 +53,7 @@ export const FilterBar: FC<FilterBarProps> = ({ className }) => {
             selectedOptions={facet.selected}
             onValueClear={facet.clear}
             onInputClick={(val) => facet.setSelected(val)}
+            createValueText={facet.createValueText}
           />
         ))}
 

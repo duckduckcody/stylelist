@@ -86,6 +86,7 @@ export interface FilterButtonDropdownProps {
   onInputClick: (value: unknown) => void;
   onValueClear: VoidFunction;
   closeOnOptionClick?: boolean;
+  createValueText?: (options: string[]) => string;
 }
 
 export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
@@ -96,6 +97,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
   onInputClick: onInputClickProp = () => undefined,
   onValueClear = () => undefined,
   closeOnOptionClick = false,
+  createValueText,
 }) => {
   const isMobile = useIsMobile();
 
@@ -135,11 +137,15 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
 
   const valueString = useMemo(() => {
     if (Array.isArray(selectedOptions)) {
-      return selectedOptions.join(', ');
+      if (createValueText) {
+        return createValueText(selectedOptions);
+      } else {
+        return selectedOptions.join(', ');
+      }
     } else {
       return selectedOptions;
     }
-  }, [selectedOptions]);
+  }, [createValueText, selectedOptions]);
 
   const handleInputChange = (val: string | string[]) => {
     if (closeOnOptionClick) {

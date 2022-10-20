@@ -12,7 +12,9 @@ export const useFacets = (facets: Facets | undefined) => {
         const options = facet.counts.map((count) => count.value);
 
         if (facet.field_name === 'price') {
-          addFacetOption(facet.field_name, options, 'range');
+          const createText = (options: string[]) =>
+            `$${options[0]} to $${options[1]}`;
+          addFacetOption(facet.field_name, options, 'range', createText);
         } else {
           addFacetOption(facet.field_name, options, 'checkbox');
         }
