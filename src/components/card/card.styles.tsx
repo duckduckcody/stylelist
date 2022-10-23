@@ -62,6 +62,7 @@ export const TextContainer = styled.div`
   font-weight: normal;
   font-size: 1rem;
   line-height: 1.1875rem;
+  gap: 2px;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     margin: 6px 0;
@@ -72,23 +73,17 @@ export const Brand = styled.p`
   grid-area: brand;
   margin: 0;
   font-size: 0.9rem;
+  line-height: 0.9rem;
   text-transform: capitalize;
+  color: #4e4e4e;
 `;
 
 export const Name = styled.h3`
   all: unset;
 
+  font-size: 1rem;
   grid-area: name;
   margin: 0;
-`;
-
-export const PriceContainer = styled.div`
-  grid-area: price;
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 12px;
-  margin: 4px 0 0;
-  font-size: 0.9rem;
 `;
 
 export const PercentageOffContainer = styled.div`
@@ -97,6 +92,7 @@ export const PercentageOffContainer = styled.div`
   bottom: 20px;
 
   background: white;
+  color: #4e4e4e;
   padding: 6px 18px;
   display: flex;
   align-items: center;
@@ -109,9 +105,16 @@ export const PercentageOff = styled.div`
   line-height: 1.1875rem;
 `;
 
-export const Price = styled.span`
-  font-weight: bold;
+export const PriceContainer = styled.div`
+  grid-area: price;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
+
+  font-size: 0.9rem;
 `;
+
+export const Price = styled.span``;
 
 export const OldPrice = styled.span`
   text-decoration: line-through;
