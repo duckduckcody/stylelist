@@ -15,6 +15,8 @@ const querySchema = z.object({
   filter: z.string().optional(),
 });
 
+export const PerPageSize = 30;
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<SearchResponse<{}> | { error: object }>
@@ -49,11 +51,13 @@ export const getTypeSenseClothes = async (
   const searchOptions: SearchOptions = {};
   const searchParams: SearchParams = {
     q,
-    query_by: 'name',
+    query_by: 'name,brand,categories',
     page: parseInt(page),
     sort_by: sortToApiQuery(sort),
     facet_by: 'genders,website,categories,brand,sizes,price',
-    per_page: 30,
+    per_page: PerPageSize,
+    search_cutoff_ms: 5,
+    max_facet_values: 33,
   };
 
   if (filter) {

@@ -54,10 +54,6 @@ const Drawer = styled(motion.div)`
   } ;
 `;
 
-const StatusText = styled.p`
-  text-align: center;
-`;
-
 const LoadMoreButton = styled(FilterButton)`
   width: 333px;
   display: block;
@@ -73,10 +69,27 @@ const LoadMoreButton = styled(FilterButton)`
   }
 `;
 
-const ProductsFound = styled.p`
+const InfoText = styled.p`
   font-size: 0.9rem;
   text-align: center;
   font-family: 'Lato', sans-serif;
+`;
+
+const BottomTextContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 0 24px;
+`;
+
+const ScrollToTopButton = styled.button`
+  all: unset;
+
+  font-size: 0.9rem;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  text-decoration: underline;
+
+  cursor: pointer;
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
@@ -90,16 +103,19 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const selectedSort = useStore((state) => state.filters.sort.selected);
   const selectedFiltersQueryString = useSelectedFiltersQueryString();
 
-  const { clothes, facets, nextPage, isLoadingMore, isError, numberOfClothes } =
-    useClothesData(textSearch, selectedSort, selectedFiltersQueryString);
+  const {
+    clothes,
+    facets,
+    nextPage,
+    isLoadingMore,
+    isError,
+    numberOfClothes,
+    isLastPage,
+  } = useClothesData(textSearch, selectedSort, selectedFiltersQueryString);
 
   useFacets(facets);
 
   useLockBodyScroll(Boolean(selectedClothe));
-
-  const onCardClick = (clothe: Clothe) => {
-    setSelectedClothe(clothe);
-  };
 
   const { context } = useFloating({
     open: Boolean(selectedClothe),
@@ -108,6 +124,17 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   });
 
   const { getFloatingProps } = useInteractions([useDismiss(context)]);
+
+  const onCardClick = (clothe: Clothe) => {
+    setSelectedClothe(clothe);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <>
@@ -118,16 +145,16 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
       <HeaderBar />
 
       <PageContainer>
-        {isLoadingMore && <StatusText>Loading...</StatusText>}
-        {isError && <StatusText>!!!ERROR!!!</StatusText>}
+        {isLoadingMore && <InfoText>Loading...</InfoText>}
+        {isError && <InfoText>!!!ERROR!!!</InfoText>}
 
         {(clothes.length === 0 || !clothes) && !isLoadingMore && (
-          <StatusText>NO RESULTS</StatusText>
+          <InfoText>NO RESULTS</InfoText>
         )}
 
         {clothes.length > 0 && (
           <>
-            <ProductsFound>{numberOfClothes} products found</ProductsFound>
+            <InfoText>{numberOfClothes} products found</InfoText>
             <CardList
               clothes={clothes}
               favourites={favourites}
@@ -135,10 +162,20 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
               removeFavourite={removeFavourite}
               onCardClick={onCardClick}
             />
-            <LoadMoreButton onClick={nextPage} disabled={isLoadingMore}>
-              {!isLoadingMore && 'Load More'}
-              {isLoadingMore && 'Loading more...'}
-            </LoadMoreButton>
+            {!isLastPage && (
+              <LoadMoreButton onClick={nextPage} disabled={isLoadingMore}>
+                {!isLoadingMore && 'Load More'}
+                {isLoadingMore && 'Loading more...'}
+              </LoadMoreButton>
+            )}
+            {isLastPage && (
+              <BottomTextContainer>
+                <InfoText>End of list</InfoText>
+                <ScrollToTopButton onClick={scrollToTop}>
+                  Scroll to top
+                </ScrollToTopButton>
+              </BottomTextContainer>
+            )}
           </>
         )}
       </PageContainer>
