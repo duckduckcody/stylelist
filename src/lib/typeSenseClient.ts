@@ -3,10 +3,9 @@ export const typeSenseClient = new TypesenseSearchClient({
   nodes: [
     process.env.NODE_ENV === 'production'
       ? {
-          // @ts-ignore
           host: process.env.typesense_node_url,
           port: 443,
-          protocol: 'http', // For Typesense Cloud use https
+          protocol: 'https',
         }
       : {
           host: 'localhost',
