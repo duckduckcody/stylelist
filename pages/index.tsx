@@ -90,7 +90,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const selectedSort = useStore((state) => state.filters.sort.selected);
   const selectedFiltersQueryString = useSelectedFiltersQueryString();
 
-  const { clothes, facets, nextPage, isLoading, isError, numberOfClothes } =
+  const { clothes, facets, nextPage, isLoadingMore, isError, numberOfClothes } =
     useClothesData(textSearch, selectedSort, selectedFiltersQueryString);
 
   useFacets(facets);
@@ -118,10 +118,10 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
       <HeaderBar />
 
       <PageContainer>
-        {isLoading && <StatusText>Loading...</StatusText>}
+        {isLoadingMore && <StatusText>Loading...</StatusText>}
         {isError && <StatusText>!!!ERROR!!!</StatusText>}
 
-        {(clothes.length === 0 || !clothes) && !isLoading && (
+        {(clothes.length === 0 || !clothes) && !isLoadingMore && (
           <StatusText>NO RESULTS</StatusText>
         )}
 
@@ -135,9 +135,9 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
               removeFavourite={removeFavourite}
               onCardClick={onCardClick}
             />
-            <LoadMoreButton onClick={nextPage} disabled={isLoading}>
-              {!isLoading && 'Load More'}
-              {isLoading && 'Loading more...'}
+            <LoadMoreButton onClick={nextPage} disabled={isLoadingMore}>
+              {!isLoadingMore && 'Load More'}
+              {isLoadingMore && 'Loading more...'}
             </LoadMoreButton>
           </>
         )}

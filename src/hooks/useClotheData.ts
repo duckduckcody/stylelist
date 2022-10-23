@@ -22,7 +22,8 @@ interface returnProps {
   facets: Facet[] | undefined;
   nextPage: VoidFunction;
   numberOfClothes: number | undefined;
-  isLoading: boolean;
+  isLoadingMore: boolean | undefined;
+  currentPageNumber: number;
   isError: boolean;
 }
 
@@ -49,18 +50,24 @@ export const useClothesData: (
     const facets = facetsSchema.safeParse(data?.[0].facet_counts);
     const nextPage = () => setSize(size + 1);
 
+    const isLoadingInitialData = !data && !error;
+    const isLoadingMore =
+      isLoadingInitialData ||
+      (size > 0 && data && typeof data[size - 1] === 'undefined');
+
     return {
       clothes,
+      isLoadingMore,
       facets: facets.success ? facets.data : undefined,
       numberOfClothes: data?.[0]?.found,
       nextPage,
     };
-  }, [data, setSize, size]);
+  }, [data, error, setSize, size]);
 
   return {
     ...props,
     currentPageNumber: size,
     isError: error,
-    isLoading: isValidating,
+    isValidating: isValidating,
   };
 };
