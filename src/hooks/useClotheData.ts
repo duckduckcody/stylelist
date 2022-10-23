@@ -47,7 +47,6 @@ export const useClothesData: (
   );
 
   const props = useMemo(() => {
-    console.log('data', data);
     const clothes = flatten(data?.map((d) => typeSenseResponseToClothe(d)));
     const facets = facetsSchema.safeParse(data?.[0].facet_counts);
     const nextPage = () => setSize(size + 1);
