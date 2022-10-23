@@ -38,6 +38,7 @@ export const useClothesData: (
     fetcher,
     {
       initialSize: 1,
+      revalidateOnFocus: false,
     }
   );
 
