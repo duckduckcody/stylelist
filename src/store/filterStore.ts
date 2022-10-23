@@ -17,7 +17,7 @@ export interface SortFilter {
   text: 'Sort';
   options: string[];
   selected: string;
-  setSelected: (value: string) => void;
+  setSelected: (value: unknown) => void;
 }
 
 export interface CheckboxFacetOption {
@@ -147,9 +147,11 @@ export const filterStore: StateCreator<
     text: 'Sort',
     options: SortEnum.options,
     selected: '',
-    setSelected: (value: string) =>
+    setSelected: (value: unknown) =>
       set((state) => {
-        state.filters.sort.selected = value;
+        if (typeof value === 'string') {
+          state.filters.sort.selected = value;
+        }
       }),
   },
 

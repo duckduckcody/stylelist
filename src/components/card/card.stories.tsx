@@ -1,6 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 import { useState } from 'react';
 import { withDesign } from 'storybook-addon-designs';
+import { mockClothe } from '../../mocks/mockClothe';
 import { Card, CardProps } from './card';
 
 export default {
@@ -19,72 +20,39 @@ const Template: Story<CardProps> = (args) => <Card {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  clothe: {
-    name: 'Snoh White Knit Tank',
-    price: 100,
-    link: 'https://google.com',
-    image:
-      'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
-  },
+  clothe: mockClothe(),
 };
 
 export const SquarePicture = Template.bind({});
 SquarePicture.args = {
-  clothe: {
-    name: 'Snoh White Knit Tank',
-    price: 100,
-    link: 'https://google.com',
-    image:
-      'https://phlearn.com/wp-content/uploads/2019/03/dhruv-deshmukh-266273-unsplash-square.jpg',
-  },
+  clothe: mockClothe(),
 };
 
 export const Discounted = Template.bind({});
 Discounted.args = {
-  clothe: {
-    name: 'Snoh White Knit Tank',
-    price: 100,
-    oldPrice: 120,
-    link: 'https://google.com',
-    image:
-      'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
-  },
+  clothe: mockClothe(),
 };
 
 export const IsFavourited = Template.bind({});
 IsFavourited.args = {
-  clothe: {
-    name: 'Snoh White Knit Tank',
-    price: 100,
-    oldPrice: 120,
-    link: 'https://google.com',
-    image:
-      'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
-  },
+  clothe: mockClothe(),
   isFavourited: true,
 };
 
 const FavouriteInteractionTemplate: Story<CardProps> = (args) => {
   const [isFavourited, setIsFavourited] = useState(false);
-  const onFavouriteClick = () => setIsFavourited((prev) => !prev);
 
   return (
     <Card
       {...args}
       isFavourited={isFavourited}
-      onFavouriteClick={onFavouriteClick}
+      addFavourite={() => setIsFavourited(true)}
+      removeFavourite={() => setIsFavourited(false)}
     />
   );
 };
 
 export const FavouriteInteraction = FavouriteInteractionTemplate.bind({});
 FavouriteInteraction.args = {
-  clothe: {
-    name: 'Snoh White Knit Tank',
-    price: 100,
-    oldPrice: 120,
-    link: 'https://google.com',
-    image:
-      'https://cdn.shopify.com/s/files/1/0217/9066/products/SnohWhiteKnitTank--1_1500x.progressive.jpg?v=1655759593',
-  },
+  clothe: mockClothe(),
 };

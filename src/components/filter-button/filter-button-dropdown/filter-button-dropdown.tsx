@@ -80,9 +80,9 @@ const DarkenBackground = styled(motion.div)`
 export interface FilterButtonDropdownProps {
   type: 'dropdown';
   text: string;
-  menuType: 'checkbox' | 'range';
+  menuType: 'checkbox' | 'range' | 'radio';
   options: string[];
-  selectedOptions: string[];
+  selectedOptions: string[] | string;
   onInputClick: (value: unknown) => void;
   onValueClear: VoidFunction;
   closeOnOptionClick?: boolean;
@@ -206,13 +206,23 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
             >
               {menuType === 'checkbox' && (
                 <FilterButtonCheckboxMenu
+                  menuType={menuType}
                   name={text}
                   options={options}
                   selectedOptions={selectedOptions}
                   onInputClick={handleInputChange}
                 />
               )}
-              {menuType === 'range' && (
+              {menuType === 'radio' && (
+                <FilterButtonCheckboxMenu
+                  menuType={menuType}
+                  name={text}
+                  options={options}
+                  selectedOptions={selectedOptions}
+                  onInputClick={handleInputChange}
+                />
+              )}
+              {menuType === 'range' && Array.isArray(selectedOptions) && (
                 <FilterButtonRangeMenu
                   options={options}
                   selectedOptions={selectedOptions}

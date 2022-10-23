@@ -33,6 +33,7 @@ export interface FilterButtonCheckboxMenuProps {
   selectedOptions?: string[] | string;
   onInputClick?: (value: string) => void;
   name: string;
+  menuType: 'range' | 'checkbox' | 'radio';
   className?: string;
 }
 
@@ -41,6 +42,7 @@ export const FilterButtonCheckboxMenu: FC<FilterButtonCheckboxMenuProps> = ({
   selectedOptions,
   onInputClick = () => undefined,
   name,
+  menuType,
   className,
 }) => (
   <Container className={className}>
@@ -48,7 +50,7 @@ export const FilterButtonCheckboxMenu: FC<FilterButtonCheckboxMenuProps> = ({
       <InputContainer key={option}>
         <Input
           name={name}
-          type='checkbox'
+          type={menuType}
           value={option}
           checked={selectedOptions?.includes(option)}
           onChange={() => onInputClick(option)}

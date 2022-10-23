@@ -5,6 +5,8 @@ export const mockClothe: () => Clothe = () => ({
   price: 100,
   oldPrice: 120,
   link: 'https://google.com',
+  brand: 'duck clothes',
+  website: 'duckduckcody.com',
   images: [
     'https://cdn.shopify.com/s/files/1/1023/3455/products/02039079-YB012_womens_0010.jpg?v=1649374922',
     'https://cdn.shopify.com/s/files/1/1023/3455/products/02039079-YB012_womens_0020.jpg?v=1649374923',
