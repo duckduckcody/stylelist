@@ -1,4 +1,5 @@
 import { SearchClient as TypesenseSearchClient } from 'typesense';
+
 export const typeSenseClient = new TypesenseSearchClient({
   nodes: [
     process.env.NODE_ENV === 'production'
