@@ -3,8 +3,9 @@ export const typeSenseClient = new TypesenseSearchClient({
   nodes: [
     process.env.NODE_ENV === 'production'
       ? {
-          host: '',
-          port: 8108, // For Typesense Cloud use 443
+          // @ts-ignore
+          host: process.env.typesense_node_url,
+          port: 443,
           protocol: 'http', // For Typesense Cloud use https
         }
       : {
@@ -13,6 +14,9 @@ export const typeSenseClient = new TypesenseSearchClient({
           protocol: 'http',
         },
   ],
-  apiKey: process.env.NODE_ENV === 'production' ? '' : 'xyz',
+  apiKey:
+    process.env.NODE_ENV === 'production'
+      ? process.env.typesense_search_api_key
+      : 'xyz',
   connectionTimeoutSeconds: 2,
 });
