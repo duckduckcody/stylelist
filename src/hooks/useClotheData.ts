@@ -21,6 +21,7 @@ interface returnProps {
   clothes: Clothe[];
   facets: Facet[] | undefined;
   nextPage: VoidFunction;
+  numberOfClothes: number | undefined;
   isLoading: boolean;
   isError: boolean;
 }
@@ -43,6 +44,7 @@ export const useClothesData: (
   );
 
   const props = useMemo(() => {
+    console.log('data', data);
     const clothes = flatten(data?.map((d) => typeSenseResponseToClothe(d)));
     const facets = facetsSchema.safeParse(data?.[0].facet_counts);
     const nextPage = () => setSize(size + 1);
@@ -50,6 +52,7 @@ export const useClothesData: (
     return {
       clothes,
       facets: facets.success ? facets.data : undefined,
+      numberOfClothes: data?.[0]?.found,
       nextPage,
     };
   }, [data, setSize, size]);

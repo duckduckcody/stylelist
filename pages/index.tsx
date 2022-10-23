@@ -73,6 +73,12 @@ const LoadMoreButton = styled(FilterButton)`
   }
 `;
 
+const ProductsFound = styled.p`
+  font-size: 0.9rem;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+`;
+
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const [selectedClothe, setSelectedClothe] = useState<Clothe | undefined>();
 
@@ -84,11 +90,8 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
   const selectedSort = useStore((state) => state.filters.sort.selected);
   const selectedFiltersQueryString = useSelectedFiltersQueryString();
 
-  const { clothes, facets, nextPage, isLoading, isError } = useClothesData(
-    textSearch,
-    selectedSort,
-    selectedFiltersQueryString
-  );
+  const { clothes, facets, nextPage, isLoading, isError, numberOfClothes } =
+    useClothesData(textSearch, selectedSort, selectedFiltersQueryString);
 
   useFacets(facets);
 
@@ -124,6 +127,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
         {clothes.length > 0 && (
           <>
+            <ProductsFound>{numberOfClothes} products found</ProductsFound>
             <CardList
               clothes={clothes}
               favourites={favourites}
