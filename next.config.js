@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['cdn.shopify.com'],
+    domains: ['cdn.shopify.com', 'www.universalstore.com'],
   },
   reactStrictMode: true,
   swcMinify: true,
