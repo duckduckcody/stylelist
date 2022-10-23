@@ -53,11 +53,16 @@ const TitleTextContainer = styled.div`
   gap: 24px;
 `;
 
+const TitleContainer = styled.div`
+  position: relative;
+
+  font-family: 'Lato', sans-serif;
+`;
+
 const Title = styled.a`
   all: unset;
   font-size: 1.75rem;
   font-weight: bold;
-  font-family: 'Lato', sans-serif;
 
   cursor: pointer;
 
@@ -87,6 +92,17 @@ const SortContainer = styled.div`
   gap: 16px;
 `;
 
+const Beta = styled.span`
+  font-size: 0.75rem;
+  position: absolute;
+  left: 0;
+  bottom: -0.5rem;
+
+  @media (max-width: ${MOBILE_BREAKPOINT}) {
+    font-size: 0.6rem;
+  } ;
+`;
+
 export const TitleHeaderBar: FC<{
   className?: string;
 }> = ({ className }) => {
@@ -94,9 +110,12 @@ export const TitleHeaderBar: FC<{
 
   return (
     <TitleTextContainer className={className}>
-      <Link href='/'>
-        <Title>STYLELIST</Title>
-      </Link>
+      <TitleContainer>
+        <Link href='/'>
+          <Title>STYLELIST</Title>
+        </Link>
+        <Beta>Beta</Beta>
+      </TitleContainer>
       <Link href='/favourites'>
         <TitleLink active={router.pathname === '/favourites'}>
           Favourites
