@@ -2,6 +2,7 @@ import flatten from 'lodash.flatten';
 import { useMemo } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { SearchResponse } from 'typesense/lib/Typesense/Documents';
+import { PER_PAGE_PRODUCT_LIMIT } from '../constants';
 import { typeSenseResponseToClothe } from '../lib/typeSenseResponseToClothe';
 import { Clothe } from '../types/Clothe';
 import { Facet, facetsSchema } from '../types/Facet';
@@ -54,7 +55,8 @@ export const useClothesData: (
     const isLoadingMore =
       isLoadingInitialData ||
       (size > 0 && data && typeof data[size - 1] === 'undefined');
-    const isLastPage = (data?.[data.length - 1]?.found ?? 0) < 30;
+    const isLastPage =
+      (data?.[data.length - 1]?.found ?? 0) < PER_PAGE_PRODUCT_LIMIT;
 
     return {
       clothes,

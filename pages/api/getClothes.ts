@@ -5,6 +5,7 @@ import {
   SearchResponse,
 } from 'typesense/lib/Typesense/Documents';
 import { z } from 'zod';
+import { PER_PAGE_PRODUCT_LIMIT } from '../../src/constants';
 import { typeSenseClient } from '../../src/lib/typeSenseClient';
 import { Sort, SortEnum, sortToApiQuery } from '../../src/types/Sort';
 
@@ -55,7 +56,7 @@ export const getTypeSenseClothes = async (
     page: parseInt(page),
     sort_by: sortToApiQuery(sort),
     facet_by: 'genders,website,categories,brand,sizes,price',
-    per_page: PerPageSize,
+    per_page: PER_PAGE_PRODUCT_LIMIT,
     search_cutoff_ms: 5,
     max_facet_values: 33,
   };
