@@ -30,7 +30,9 @@ export const useClothesData: (
   sort: string,
   selectedFiltersQueryString: string
 ) => returnProps = (textSearch, sort, selectedFiltersQueryString) => {
-  const { data, error, size, setSize } = useSWRInfinite<SearchResponse<{}>>(
+  const { data, error, size, setSize, isValidating } = useSWRInfinite<
+    SearchResponse<{}>
+  >(
     (pageIndex) =>
       getKey(pageIndex, textSearch, sort, selectedFiltersQueryString),
     fetcher,
@@ -55,6 +57,6 @@ export const useClothesData: (
     ...props,
     currentPageNumber: size,
     isError: error,
-    isLoading: !error && !data,
+    isLoading: isValidating,
   };
 };

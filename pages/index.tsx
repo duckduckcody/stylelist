@@ -66,7 +66,11 @@ const LoadMoreButton = styled(FilterButton)`
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     width: 100%;
-  } ;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
@@ -127,7 +131,10 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
               removeFavourite={removeFavourite}
               onCardClick={onCardClick}
             />
-            <LoadMoreButton onClick={nextPage}>LOAD MORE</LoadMoreButton>
+            <LoadMoreButton onClick={nextPage} disabled={isLoading}>
+              {!isLoading && 'Load More'}
+              {isLoading && 'Loading more...'}
+            </LoadMoreButton>
           </>
         )}
       </PageContainer>
