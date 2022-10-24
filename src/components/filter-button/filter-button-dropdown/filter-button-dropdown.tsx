@@ -64,11 +64,12 @@ const Dropdown = styled(motion.div)`
 const DropdownCloseButton = styled(FilterButtonClearButton).attrs({
   black: true,
 })`
-  z-index: 9999;
+  z-index: ${ZIndexes.modalHigh};
   position: fixed;
-  bottom: 8px;
-  right: 8px;
+  bottom: 0;
+  right: 0;
   height: auto;
+  padding: 24px;
 `;
 
 const Chevron = styled(ChevronIcon)<{ $active: boolean }>`

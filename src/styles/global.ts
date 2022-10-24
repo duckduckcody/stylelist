@@ -12,6 +12,7 @@ export enum ZIndexes {
   menu = 1,
   modalBackground = 2,
   modal = 3,
+  modalHigh = 4,
 }
 
 export const GlobalStyles = createGlobalStyle`
