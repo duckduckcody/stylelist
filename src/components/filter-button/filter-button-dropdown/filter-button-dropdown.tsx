@@ -44,12 +44,17 @@ const Dropdown = styled(motion.div)`
   border: 1px solid black;
   padding: 24px 64px 24px 18px;
   width: fit-content;
+  max-height: 66vh;
+  overflow-y: auto;
 
   background: white;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     gap: 32px;
+
     width: 100%;
+    max-height: 75vh;
+
     border: none;
     border-top: 1px solid black;
   }
