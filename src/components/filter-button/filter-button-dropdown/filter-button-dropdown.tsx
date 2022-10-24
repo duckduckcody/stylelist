@@ -36,6 +36,8 @@ const StyledFilterButton = styled(FilterButton)`
 `;
 
 const Dropdown = styled(motion.div)`
+  position: relative;
+
   z-index: ${ZIndexes.modal};
   font-family: 'Lato', sans-serif;
   font-weight: normal;
@@ -50,8 +52,6 @@ const Dropdown = styled(motion.div)`
   background: white;
 
   @media (max-width: ${MOBILE_BREAKPOINT}) {
-    gap: 32px;
-
     width: 100%;
     max-height: 75vh;
     overflow-y: scroll;
@@ -59,6 +59,16 @@ const Dropdown = styled(motion.div)`
     border: none;
     border-top: 1px solid black;
   }
+`;
+
+const DropdownCloseButton = styled(FilterButtonClearButton).attrs({
+  black: true,
+})`
+  z-index: 9999;
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  height: auto;
 `;
 
 const Chevron = styled(ChevronIcon)<{ $active: boolean }>`
@@ -182,6 +192,10 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
           <StyledFilterButtonClearButton onValueClear={onValueClear} />
         )}
       </ControlsContainer>
+
+      {open && isMobile && (
+        <DropdownCloseButton onValueClear={() => setOpen(false)} />
+      )}
 
       <AnimatePresence>
         {open && (

@@ -57,17 +57,19 @@ const CrossButton = styled.button`
   }
 `;
 
-const Cross = styled(CrossIcon)`
-  color: white;
+const Cross = styled(CrossIcon)<{ black?: boolean }>`
+  color: ${(p) => (p.black ? 'black' : 'white')};
 `;
 
 export interface FilterButtonClearButtonProps {
   onValueClear: VoidFunction;
+  black?: boolean;
   className?: string;
 }
 
 export const FilterButtonClearButton: FC<FilterButtonClearButtonProps> = ({
   onValueClear,
+  black,
   className,
 }) => (
   <CrossButton
@@ -75,6 +77,6 @@ export const FilterButtonClearButton: FC<FilterButtonClearButtonProps> = ({
     onClick={onValueClear}
     className={className}
   >
-    <Cross />
+    <Cross black={black} />
   </CrossButton>
 );
