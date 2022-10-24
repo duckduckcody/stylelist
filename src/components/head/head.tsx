@@ -15,7 +15,7 @@ export const Head: FC<HeadProps> = ({ title }) => {
   return (
     <NextHead>
       <title>
-        {isDev && 'Dev | '}
+        {isDev ? 'Dev | ' : ''}
         {title}
       </title>
     </NextHead>
