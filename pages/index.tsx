@@ -5,12 +5,12 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { motion } from 'framer-motion';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
 import { ClotheDetails } from '../src/components/clothe-details/clothe-details';
 import { FilterButton } from '../src/components/filter-button/filter-button';
+import { Head } from '../src/components/head/head';
 import { HeaderBar } from '../src/components/header-bar/header-bar';
 import { useClothesData } from '../src/hooks/useClotheData';
 import { useFacets } from '../src/hooks/useFacets';
@@ -138,9 +138,7 @@ const Home: NextPage<{ clothes: {}[] | undefined }> = () => {
 
   return (
     <>
-      <Head>
-        <title>Stylelist</title>
-      </Head>
+      <Head title='Stylelist' />
 
       <HeaderBar />
 

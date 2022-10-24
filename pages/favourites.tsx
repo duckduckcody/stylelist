@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../src/components/card-list/card-list';
+import { Head } from '../src/components/head/head';
 import { TitleHeaderBar } from '../src/components/header-bar/header-bar';
 import { useStore } from '../src/store/useStore';
 import { ZIndexes } from '../src/styles/global';
@@ -32,6 +33,8 @@ const Favourites: NextPage = () => {
 
   return (
     <PageContainer>
+      <Head title='Stylelist | Favourites' />
+
       <StyledTitleHeaderBar />
 
       {favourites && favourites.length > 0 && (
