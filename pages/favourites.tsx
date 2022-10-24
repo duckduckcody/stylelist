@@ -46,7 +46,12 @@ const Favourites: NextPage = () => {
       )}
 
       {(!favourites || favourites.length === 0) && (
-        <p>You have no favourites</p>
+        <>
+          <p>You have no favourites</p>
+          <p>
+            Click the hearts on the products you like to see them saved here
+          </p>
+        </>
       )}
     </PageContainer>
   );

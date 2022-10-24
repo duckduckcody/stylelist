@@ -22,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
     font-size: 16px;
+    font-family: 'Lato', sans-serif;
   }
   
   *, *:before, *:after {
