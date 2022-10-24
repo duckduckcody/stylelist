@@ -37,7 +37,7 @@ const TitleBar = styled.div`
   @media (max-width: ${MOBILE_BREAKPOINT}) {
     padding: 8px 8px 0 8px;
     grid-template-columns: 1fr;
-    grid-template-rows: 100% 42px;
+    grid-template-rows: auto 42px;
     grid-template-areas:
       'title'
       'sort';
