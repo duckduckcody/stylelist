@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import CrossIcon from '../../icons/cross.svg';
+import { FilterButtonClearButton } from '../filter-button/filter-button';
 
 const InputContainer = styled.div`
   position: relative;
@@ -12,28 +12,19 @@ const Input = styled.input`
 
   height: 100%;
   width: 100%;
-  padding: 0 calc(4px + 4px + 18px + 4px) 0 8px;
+  padding: 0 calc(8px + 18px + 8px) 0 8px;
 
   border: 1px solid black;
   font-family: 'Lato', sans-serif;
 `;
 
-const CrossButton = styled.button`
-  all: unset;
-
-  cursor: pointer;
-
+const ClearValuesButton = styled(FilterButtonClearButton).attrs({
+  black: true,
+})`
   position: absolute;
-  right: 4px;
-  top: calc(50% - 11px);
-
-  height: 18px;
-  width: 18px;
-  padding: 4px;
-`;
-
-const Cross = styled(CrossIcon)`
-  color: black;
+  top: 0;
+  right: 0;
+  padding: 0 8px 0 8px;
 `;
 
 export interface SearchBoxProps {
@@ -57,10 +48,6 @@ export const SearchBox: FC<SearchBoxProps> = ({
       onChange={(event) => onChange(event?.target.value ?? '')}
     />
 
-    {value && (
-      <CrossButton onClick={onClearClick}>
-        <Cross />
-      </CrossButton>
-    )}
+    {value && <ClearValuesButton onValueClear={onClearClick} />}
   </InputContainer>
 );

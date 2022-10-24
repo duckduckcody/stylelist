@@ -35,6 +35,29 @@ const StyledFilterButton = styled(FilterButton)`
   text-transform: capitalize;
 `;
 
+const Chevron = styled(ChevronIcon)<{ $active: boolean }>`
+  width: 12px;
+  height: 12px;
+  transform: ${(p) => (p.$active ? 'rotate(180deg)' : '')};
+`;
+
+const ClearValuesButton = styled(FilterButtonClearButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 8px 0 0;
+`;
+
+const DarkenBackground = styled(motion.div)`
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: ${ZIndexes.modalBackground};
+`;
+
 const Dropdown = styled(motion.div)`
   position: relative;
 
@@ -70,28 +93,6 @@ const DropdownCloseButton = styled(FilterButtonClearButton).attrs({
   right: 0;
   height: auto;
   padding: 24px;
-`;
-
-const Chevron = styled(ChevronIcon)<{ $active: boolean }>`
-  width: 12px;
-  height: 12px;
-  transform: ${(p) => (p.$active ? 'rotate(180deg)' : '')};
-`;
-
-const StyledFilterButtonClearButton = styled(FilterButtonClearButton)`
-  position: absolute;
-  top: 0;
-  right: 8px;
-`;
-
-const DarkenBackground = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: ${ZIndexes.modalBackground};
 `;
 
 export interface FilterButtonDropdownProps {
@@ -190,7 +191,7 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
         </StyledFilterButton>
 
         {selectedOptions.length !== 0 && (
-          <StyledFilterButtonClearButton onValueClear={onValueClear} />
+          <ClearValuesButton onValueClear={onValueClear} />
         )}
       </ControlsContainer>
 
