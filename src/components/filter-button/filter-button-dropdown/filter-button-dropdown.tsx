@@ -54,6 +54,7 @@ const Dropdown = styled(motion.div)`
 
     width: 100%;
     max-height: 75vh;
+    overflow-y: scroll;
 
     border: none;
     border-top: 1px solid black;
