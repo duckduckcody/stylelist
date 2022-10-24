@@ -200,15 +200,6 @@ export const FilterButtonDropdown: FC<FilterButtonDropdownProps> = ({
               ref={floating}
               {...getFloatingProps()}
               style={menuPosition}
-              drag={isMobile ? 'y' : false}
-              dragSnapToOrigin={true}
-              dragConstraints={{ top: 0 }}
-              dragElastic={{ top: 0 }}
-              onDragEnd={(event, info) => {
-                if (info.offset.y > 30) {
-                  setOpen(false);
-                }
-              }}
             >
               {menuType === 'checkbox' && (
                 <FilterButtonCheckboxMenu
