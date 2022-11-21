@@ -18,6 +18,11 @@ export const Head: FC<HeadProps> = ({ title }) => {
         {isDev ? 'Dev | ' : ''}
         {title}
       </title>
+
+      <meta
+        name='description'
+        content='Shop and discover Australia’s most stylish brands. With more than 10,000 products in one place, Stylelist is the definitive fashion destination.'
+      ></meta>
     </NextHead>
   );
 };
