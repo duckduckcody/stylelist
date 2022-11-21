@@ -16,7 +16,7 @@ export const Head: FC<HeadProps> = ({ title }) => {
     <NextHead>
       <title>
         {isDev ? 'Dev | ' : ''}
-        {title} | Australia&apos;s Fashion in one place
+        {title} | Australia&apos;s fashion in one place
       </title>
 
       <meta
